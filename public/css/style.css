@@ -1,0 +1,62 @@
+body {
+    font-family: "Georgia",Georgia,Times,serif;
+    /*line-height: 1.5;*/
+    text-rendering: optimizelegibility;
+}
+.sidebar {
+    background: #F3615F;
+    color: #FAFAF9;    
+    display: block;
+    float:left;
+    position: fixed;
+    top: 0em;
+    bottom: 0em;
+    left: 0em;
+    width: 33.3333%;
+    
+}
+
+.content-container {
+    width: 63.66667%;
+    margin-left: 33.3333%;
+    display:inline-block;
+    float: left;
+}
+
+.post {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.post-title {
+    font-size: 2.6em;
+    
+
+}
+
+.post-title a {
+    color: #111;
+
+}
+
+.sidebar-top {
+    background: #455466;
+    padding: 5% 2em;
+
+}
+
+.sidebar-top .contents {
+    font-family:"Source Sans Pro",sans-serif;
+
+}
+
+.sidebar-top .contents h1 {
+    font-size: 2.5em;
+    margin-bottom: 0;
+}
+
+.tagline {
+    font-weight: bold;
+    margin-top: 0px;
+    font-size: 1.5em;
+}

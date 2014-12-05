@@ -1,0 +1,7 @@
+baseurl = "http://blog.ntcong.it"
+languageCode = "en-us"
+title = "Cong Nguyen"
+[params]
+  sidebartitle = "Cong Nguyen"
+  sidebartagline = "Well"
+  
