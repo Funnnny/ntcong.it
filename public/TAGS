@@ -1,36 +1,0 @@
-
-themes/hugo-redlounge/layouts/_default/single.html,82
-		<a name="top"></a>top19,595
-			function popupShare(url) {popupShare127,4335
-
-themes/hugo-redlounge/layouts/_default/list.html,35
-      <a name="top"></a>top7,156
-
-themes/hugo-redlounge/layouts/index.html,41
-            <a name="top"></a>top7,167
-
-themes/hugo-redlounge/layouts/partials/bodyend.html,0
-
-themes/hugo-redlounge/layouts/partials/authorsocial.html,0
-
-themes/hugo-redlounge/layouts/partials/footer.html,0
-
-themes/hugo-redlounge/layouts/partials/doctype.html,0
-
-themes/hugo-redlounge/layouts/partials/sidebar.html,0
-
-themes/hugo-redlounge/layouts/partials/header.html,0
-
-themes/hugo-redlounge/layouts/partials/listtop.html,0
-
-themes/hugo-redlounge/layouts/partials/headend.html,0
-
-themes/hugo-redlounge/layouts/partials/meta.html,0
-
-themes/hugo-redlounge/layouts/partials/singletop.html,0
-
-themes/hugo-redlounge/layouts/partials/socialsharing.html,0
-
-themes/hugo-redlounge/layouts/partials/og.html,0
-
-themes/hugo-redlounge/layouts/partials/sidebarheader.html,0
