@@ -1,7 +1,16 @@
-baseurl = "http://b.ntcong.it"
+baseurl = "http://blog.ntcong.it"
 languageCode = "en-us"
 title = "Cong Nguyen"
+pygmentsstyle="solarizeddark"
+disqusShortname="ntcongit"
+theme = "redlounge"
+author = "Cong Nguyen"
 [params]
-  sidebartitle = "Cong Nguyen"
-  sidebartagline = "Well"
-
+  sidebartitle = "CongNT"
+  sidebartagline = "Thoughts on Programming and anything Computer"
+[[menu.main]]
+  name = "Blog"
+  url = "/post"
+[[menu.main]]
+  name = "About"
+  url = "/about"

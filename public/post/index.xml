@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Posts on Cong Nguyen </title>
+      <generator uri="https://hugo.spf13.com">Hugo</generator>
+    <link>http://blog.ntcong.it/post/index.xml/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Fri, 07 Feb 2014 17:36:17 ICT</updated>
+    
+    <item>
+      <title>Stripe-CTF Level 1 with Golang</title>
+      <link>http://blog.ntcong.it/post/stripe-ctf-level1-with-golang/</link>
+      <pubDate>Fri, 07 Feb 2014 17:36:17 ICT</pubDate>
+      
+      <guid>http://blog.ntcong.it/post/stripe-ctf-level1-with-golang/</guid>
+      <description>
+
+&lt;p&gt;This year&amp;rsquo;s Stripe-CTF brings some interesting things to the table: Cryptocurrency. I&amp;rsquo;ve already known about cryptocurrency and Bitcoin in general, but it&amp;rsquo;s amazing how Bitcoin relates to Git.&lt;/p&gt;
+
+&lt;p&gt;The level is here:&amp;nbsp;&lt;a href=&#34;https://stripe-ctf.com/levels/1&#34;&gt;https://stripe-ctf.com/levels/1&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Basically, like Bitcoin, you have to find a block, in this case is a git commit. The commit must have its hash lower than the target difficulty, specified in the file difficulty.txt. You will compete against a bot, and you have to find and submit a block/commit before it does.&lt;/p&gt;
+
+&lt;p&gt;As I&amp;rsquo;m learning Golang, I wrote my miner using it, and managed to bring to 1MHash/s. Some people are going higher, specifically those using OpenCL/GPU to mine.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;Basic&lt;/h3&gt;
+
+&lt;p&gt;The first version of my code is very simple. First it will add myself a Gitcoin to the file &amp;ldquo;LEDGER.txt&amp;rdquo;, get the difficulty, and get the required parameters to build the commit. Those tasks will only do once per block found, so any code will work.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #839496&#34;&gt;diff&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;make&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;([]&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;diffString&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;cat&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;difficulty.txt&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;(diffString)/&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;i++&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+     &lt;span style=&#34;color: #839496&#34;&gt;n,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;strconv.ParseInt(diffString[i*&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;:i*&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;],&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;16&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+     &lt;span style=&#34;color: #839496&#34;&gt;diff&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;(diff,&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;(n))&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;tree&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;write-tree&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;parent&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;rev-parse&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;HEAD&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;timestamp&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;date&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;+%s&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I calculate diff as a byte array because SHA1 library returned the hash as an array, so I don&amp;rsquo;t have to convert SHA1 everytime; doExec is just a function to run the command and return console output as a string. The commit hash can be calculate by SHA1 the string &amp;ldquo;commit [len_commit]\0[commit_string]&amp;ldquo;. The commit string can be built by this code:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #839496&#34;&gt;baseCommit&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;fmt.Sprintf(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;tree %s\nparent %s\nauthor CTF user &amp;amp;lt;%s@stripe-ctf.com&amp;amp;gt; %s +0000\ncommitter CTF user &amp;amp;lt;%s@stripe-ctf.com&amp;amp;gt; %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;tree,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;parent,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;username,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;timestamp,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;username,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;timestamp)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You should already notice the last &amp;ldquo;nonce 1&amp;rdquo; in the commit string, I will replace it with &amp;ldquo;nonce 2&amp;rdquo; and so on until I find a commit with hash lower than difficulty. It&amp;rsquo;s surprisingly simple:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #859900&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;getSHA1(n&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;byte&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+ &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;sha1.Sum([]&lt;/span&gt;&lt;span style=&#34;color: #268bd2&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;(baseCommitHash&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;lt;complete&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;goog_259276313&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;&amp;gt;+&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;lt;/complete&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;))&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color: #859900&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;isHashValid(hash&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+ &lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;i,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;range&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+  &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;(diff)&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+   &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;false&lt;/span&gt;
+  &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+  &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;diff[i]&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+   &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;false&lt;/span&gt;
+  &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+  &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;diff[i]&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+   &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;true&lt;/span&gt;
+  &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+ &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+ &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;false&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After finding a coin, I&amp;rsquo;ll write the commit and push it, I was lazy and just pipe everything to command line. It works but maybe a little slow.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #859900&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;pushResult(result&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;done&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;bool&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;n&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;int&lt;/span&gt;
+    &lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;n&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;amp;lt;-result&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;sem&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;amp;lt;-&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;1&lt;/span&gt;  &lt;span style=&#34;color: #586e75; font-style: italic&#34;&gt;// Semaphore git command so only one git command at a time&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;c1&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;exec.Command(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;echo&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;getCommit(n,&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;))&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;c2&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;exec.Command(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;hash-object&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;-t&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;commit&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--stdin&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;-w&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;error&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;c2.Stdin,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;c1.StdoutPipe()&lt;/span&gt;
+        &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color: #268bd2&#34;&gt;panic&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;(err)&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;c2.Stdout&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;os.Stdout&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;c2.Start()&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;c1.Run()&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;c2.Wait()&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;&amp;amp;lt;-sem&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;reset&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--hard&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;fmt.Sprintf(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;%x&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;getCommitSHA(n)))&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;res&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;push&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;res&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;error&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color: #586e75; font-style: italic&#34;&gt;// done &amp;amp;lt;- true&lt;/span&gt;
+            &lt;span style=&#34;color: #586e75; font-style: italic&#34;&gt;// do not stop, just wait for a restart&lt;/span&gt;
+            &lt;span style=&#34;color: #839496&#34;&gt;time.Sleep(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;10&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;time.Second)&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color: #839496&#34;&gt;log.Println(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;Error when push, waiting for miner to restart&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+            &lt;span style=&#34;color: #839496&#34;&gt;time.Sleep(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;10&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;time.Second)&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then I just loop nonce until I found a coin. I use a result channel to communicate between miner thread and pushResult thread, and a done channel to stop when I find a commit. The bot takes about 10 mins to find a block, with just this version I managed to beat it.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Optimize further&lt;/h3&gt;
+
+&lt;p&gt;After finishing the task, I can join a Gitcoin instance with all players in Stripe-CTF. I knew that I have to optimize it because I can push it only to 200kH/s&lt;/p&gt;
+
+&lt;p&gt;Fortunately, Go has profiling built-in, so I can easily point out that, most of the time my program was waiting for fmt.Sprintf, because I used it to build the commit message.&lt;/p&gt;
+
+&lt;p&gt;So, because the commit is fixed, just the nonce changes, I was able to prebuilt the commit message and the commit hash, just by giving the commit the fixed length and nonce has 16 number. I thought I can create SHA1 with that prebuilt commit and boost the speed of SHA1 function a lot, but I can&amp;rsquo;t, so removing fmt.Sprintf was good for me.&lt;/p&gt;
+
+&lt;p&gt;And by competing with more people, I have to monitor new block, and restart my miner with a new blockchain. I built a channel into the miner, and another gorountine to monitor and send stop signal.&lt;/p&gt;
+
+&lt;p&gt;Once in a while, the miner will check for stop signal and get out of the loop.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #859900&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+&lt;span style=&#34;color: #859900&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;msg&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;amp;lt;-stop:&lt;/span&gt;
+    &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;msg&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color: #586e75; font-style: italic&#34;&gt;// fmt.Printf(&amp;quot;Miner %d stopped! Last i is %d\n&amp;quot;, begin, i)&lt;/span&gt;
+        &lt;span style=&#34;color: #859900&#34;&gt;break&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;jobOuter&lt;/span&gt;
+    &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color: #859900&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;:&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The monitor function is pretty straightforward, I have two commit hash, last and current, if last commit has different hash than current commit, I do a git hard reset, and send a stop signal.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #859900&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;monitor(stop&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;bool&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;hash,&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;newHash&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;string&lt;/span&gt;
+    &lt;span style=&#34;color: #839496&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;rev-parse&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--short&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;origin/master&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;fetch&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;origin&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;newHash&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;rev-parse&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--short&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;origin/master&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;newHash&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color: #839496&#34;&gt;doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;reset&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--hard&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;origin/master&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)&lt;/span&gt;
+            &lt;span style=&#34;color: #586e75; font-style: italic&#34;&gt;// log.Println(&amp;quot;New block found! Reseting miners!&amp;quot;)&lt;/span&gt;
+            &lt;span style=&#34;color: #839496&#34;&gt;stop&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;&amp;amp;lt;-&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;true&lt;/span&gt;
+            &lt;span style=&#34;color: #839496&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;newHash&lt;/span&gt;
+            &lt;span style=&#34;color: #839496&#34;&gt;time.Sleep(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;time.Second)&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+        &lt;span style=&#34;color: #839496&#34;&gt;time.Sleep(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;time.Second)&lt;/span&gt;
+    &lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color: #839496&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That&amp;rsquo;s almost be all, things I can/should do better:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;I have to calculate SHA1 again everytime I change nonce. I should calculate a base SHA1, and feed nonce for each loop. I can&amp;rsquo;t find anyway to do this now, so I choose to ignore.&lt;/li&gt;
+&lt;li&gt;Calling git by command line is bad, maybe use a git library. Sometimes a push does matter, so implement it directly with socket might be good (just the push)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I ended the game with 756 point, with several Gitcoins found. It&amp;rsquo;s very hard to find a coin because I only have 1.5MH/s with all my PCs, so I need a lucky moment to get one.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Bitcoin Protocol: The Basic</title>
+      <link>http://blog.ntcong.it/post/bitcoin-protocol-the-basic/</link>
+      <pubDate>Sun, 19 Jan 2014 12:51:42 ICT</pubDate>
+      
+      <guid>http://blog.ntcong.it/post/bitcoin-protocol-the-basic/</guid>
+      <description>
+
+&lt;p&gt;Ở bài trước, các bạn đã biết thế nào là cryptocurrency nói chung, và cách hoạt động của nó. Tuy nhiên bài viết chỉ rờ đến một trong những điểm nổi nhất của hệ thống Bitcoin, nếu muốn tìm hiểu một cách chuyên sâu hơn 1 chút, thì Bitcoin hoạt động như thế nào?&lt;/p&gt;
+
+&lt;p&gt;Bài viết nhằm phân tích ý nghĩa và phương thích hoạt động của loại tiền mặt này. Trước tiên, nhắc lại một chút về Cryptocurrency&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;1. Cryptocurrency/Bitcoin?&lt;/h2&gt;
+
+&lt;p&gt;Cryptocurrency được chỉ một loại tiền mặt thỏa mãn các điều kiện&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Peer-to-peer &amp;amp; Decentralized: không phụ thuộc vào bất cứ một cá nhân, máy móc nào làm nhiệm vụ quản lí.&lt;/li&gt;
+&lt;li&gt;Digital: tồn tại ở dạng số, không có một thể hiện cụ thể về mặt vật lí.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bởi vì đồng tiền là không phụ thuộc vào bất cứ ai quản lí, vì vậy việc xác nhận/kiểm tra một giao dịch cần được thực hiện bởi các thành viên trong hệ thống (P2P). Quá trình này sử dụng các thuật toán mã hóa, do đó đồng tiền được gọi là cryptocurrency.&lt;/p&gt;
+
+&lt;p&gt;Bitcoin là đồng tiền đầu tiên áp dụng cryptocurrency.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;2. Bitcoin hoạt động thế nào?&lt;/h2&gt;
+
+&lt;p&gt;Bitcoin, cũng như cryptocurrency nói chung, sử dụng các thuật toán mã hóa để xác nhận giao dịch, trong quá trình xác nhận giao dịch này, người thực thi thành công việc xác nhận một nhóm giao dịch, được thưởng một số lượng tiền tương ứng, với Bitcoin(BTC) là 25 đồng. Số lượng tiền này được giảm đi 1 nửa sau mỗi 4 năm, nhằm mục đích hạn chế số lượng BTC tối đa là 21 triệu.&lt;/p&gt;
+
+&lt;p&gt;Giống như RFC của một protocol, Bitcoin được định nghĩa bởi các thành phần riêng lẻ, và các giao thức để kết nối các thành phần lại với nhau, vì vậy ta sẽ tìm hiểu Bitcoin bằng cách phân tích các thành phần này:&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;a. Address&lt;/h3&gt;
+
+&lt;p&gt;Address là một dãy số, dài từ&amp;nbsp;27-34 kí tự, bắt đầu bằng 1 hoặc 3, ví dụ:&amp;nbsp;&lt;strong&gt;13q1kfWwR56AwTxeJoJV8bgRnQ2WYxWiY5&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Address&lt;/strong&gt;&amp;nbsp;được sinh ra rất đơn giản, enduser tạo ra 1 cặp&lt;a href=&#34;http://en.wikipedia.org/wiki/Public-key_cryptography&#34;&gt; private-public key&lt;/a&gt;, sau đó &lt;a href=&#34;https://en.bitcoin.it/wiki/Technical_background_of_Bitcoin_addresses&#34;&gt;hash public key này bằng một thuật toán có sẵn&lt;/a&gt; tạo ra Address.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;b. Transaction&lt;/h3&gt;
+
+&lt;p&gt;Một transaction chứa các thông tin sau:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;hash: hash của toàn bộ thông tin transaction này, được sử dụng như là đại diện của transaction&lt;/li&gt;
+&lt;li&gt;version number, number of inputs, number of outputs: tự cái tên nó đã giải thích&lt;/li&gt;
+&lt;li&gt;lock_time: thời gian mà transaction này thực hiện, thường là 0 tức là ngay lập tức&lt;/li&gt;
+&lt;li&gt;size&lt;/li&gt;
+&lt;li&gt;list of inputs and outputs, trong đó mỗi input và output có định dạng riêng biệt&lt;/li&gt;
+&lt;li&gt;inputs:
+
+&lt;ul&gt;
+&lt;li&gt;previous tx: hash của transaction trước đó&lt;/li&gt;
+&lt;li&gt;index: vị trí của transaction&lt;/li&gt;
+&lt;li&gt;scriptSig: &amp;lt;sig&amp;gt; &amp;lt;pubKey&amp;gt;: public key, và signature được sign bởi private key và mã hash của transaction trước đó.&amp;nbsp;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;outputs:
+
+&lt;ul&gt;
+&lt;li&gt;value: số tiền tính bằng satoshi&lt;/li&gt;
+&lt;li&gt;scriptPubKey: đoạn script được dùng để redeem số tiền này&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Vậy, để thực hiện 1 transaction, giả sử từ Alice đến Bob, thì 2 bên này phải làm những gì ?&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Alice có được address của Bob để gửi tới, đây chính là hash public key của Bob, Alice sinh ra transaction với các thông tin như trên. Trong đó, quan trọng nhất là đoạn scriptCheckSig kia, Alice đặt vào đó hash public key của Bob. Alice là người duy nhất cầm private key của mình, vì vậy &amp;lt;sig&amp;gt; và &amp;lt;pubKey&amp;gt; kia chỉ có Alice mới tạo ra được.&lt;/li&gt;
+&lt;li&gt;Alice gửi gói tin này cho toàn mạng, toàn mạng biết được và verify Alice đã gửi cho Bob.&lt;/li&gt;
+&lt;li&gt;Bob phải claim số tiền này tại thời điểm Bob muốn tiêu số tiền này, chính là hình thức Bob tạo ra 1 transaction mới. Tại thời điểm đó, Bob phải chứng minh rằng, Bob chính là Bob trong transaction Alice đã gửi.&lt;/li&gt;
+&lt;li&gt;Tương tự Alice, Bob tạo transaction mới, đặt vào đó &amp;lt;sig&amp;gt; và &amp;lt;pubKey&amp;gt; của mình, và các miner sẽ verify cho Bob như sau:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;span id=&#34;docs-internal-guid-63637fce-a624-69aa-ca81-923515518b87&#34;&gt;&lt;span style=&#34;color: #434343; font-family: Arial; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;div dir=&#34;ltr&#34;&gt;
+&lt;table style=&#34;border-collapse: collapse; border: none;&#34;&gt;&lt;colgroup&gt;&lt;col width=&#34;143&#34;&gt;&lt;/col&gt;&lt;col width=&#34;314&#34;&gt;&lt;/col&gt;&lt;col width=&#34;216&#34;&gt;&lt;/col&gt;&lt;/colgroup&gt;&lt;tbody&gt;
+&lt;tr style=&#34;height: 0px;&#34;&gt;&lt;td style=&#34;background-color: #f2f2f2; border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt; text-align: center;&#34;&gt;
+&lt;span style=&#34;background-color: #f2f2f2; color: #434343; font-family: Arial; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;Stack&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;background-color: #f2f2f2; border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt; text-align: center;&#34;&gt;
+&lt;span style=&#34;background-color: #f2f2f2; color: #434343; font-family: Arial; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;Script&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;background-color: #f2f2f2; border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt; text-align: center;&#34;&gt;
+&lt;span style=&#34;background-color: #f2f2f2; color: #434343; font-family: Arial; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;Description&lt;/span&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr style=&#34;height: 0px;&#34;&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;Empty.&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;&amp;lt;sig&amp;gt; &amp;lt;pubKey&amp;gt; OP_DUP OP_HASH160 &amp;lt;pubKeyHash&amp;gt; OP_EQUALVERIFY OP_CHECKSIG&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;scriptSig và scriptPubKey được ghép lại&lt;/span&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr style=&#34;height: 0px;&#34;&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;&amp;lt;sig&amp;gt; &amp;lt;pubKey&amp;gt;&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;OP_DUP OP_HASH160 &amp;lt;pubKeyHash&amp;gt; OP_EQUALVERIFY OP_CHECKSIG&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;đẩy 2 biến const vào stack&lt;/span&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr style=&#34;height: 0px;&#34;&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;&amp;lt;sig&amp;gt; &amp;lt;pubKey&amp;gt; &amp;lt;pubKey&amp;gt;&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;OP_HASH160 &amp;lt;pubKeyHash&amp;gt; OP_EQUALVERIFY OP_CHECKSIG&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;OP_DUP: duplicate top stack&lt;/span&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr style=&#34;height: 0px;&#34;&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;&amp;lt;sig&amp;gt; &amp;lt;pubKey&amp;gt; &amp;lt;pubHashA&amp;gt;&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;&amp;lt;pubKeyHash&amp;gt; OP_EQUALVERIFY OP_CHECKSIG&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;OP_HASH160: hash top stack&lt;/span&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr style=&#34;height: 0px;&#34;&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;&amp;lt;sig&amp;gt; &amp;lt;pubKey&amp;gt; &amp;lt;pubHashA&amp;gt; &amp;lt;pubKeyHash&amp;gt;&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;OP_EQUALVERIFY OP_CHECKSIG&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;đẩy biển const vào stack&lt;/span&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr style=&#34;height: 0px;&#34;&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;&amp;lt;sig&amp;gt; &amp;lt;pubKey&amp;gt;&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;OP_CHECKSIG&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;OP_EQUALVERIFY: check bằng nhau giữa &amp;lt;pubHashA&amp;gt; và &amp;lt;pubKeyHash&amp;gt;, chính là check address&lt;/span&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr style=&#34;height: 0px;&#34;&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;true&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;Empty.&lt;/span&gt;
+&lt;/td&gt;&lt;td style=&#34;border: 1px solid #aaaaaa; padding: 3px 3px 3px 3px; vertical-align: top;&#34;&gt;&lt;div dir=&#34;ltr&#34; style=&#34;line-height: 1; margin-bottom: 0pt; margin-top: 0pt;&#34;&gt;
+&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;OP_CHECKSIG: check &amp;lt;sig&amp;gt; bằng public_key&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&#34;background-color: transparent; color: #434343; font-family: Arial; font-size: 11px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;&#34;&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;&lt;/p&gt;
+
+&lt;p&gt;Như vậy, chỉ có Alice mới tạo được gói tin tiêu số tiền trong address của mình, và cũng chỉ có Bob mới tạo được gói tin mới tiêu số tiền mà Bob nhận được.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;c. Blocks&lt;/h3&gt;
+
+&lt;p&gt;Block là một tập hợp các transaction, thỏa mãn 1 số điều kiện nhất định. Thông tin trong 1 block gồm có:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;magic no: luôn là&amp;nbsp;0xD9B4BEF9&lt;/li&gt;
+&lt;li&gt;blocksize&lt;/li&gt;
+&lt;li&gt;header
+
+&lt;ul&gt;
+&lt;li&gt;version&lt;/li&gt;
+&lt;li&gt;hash previous block&lt;/li&gt;
+&lt;li&gt;hash merkle block: hash của tất cả các transaction&lt;/li&gt;
+&lt;li&gt;time: thời gian&lt;/li&gt;
+&lt;li&gt;target: target hiện tại&lt;/li&gt;
+&lt;li&gt;nonce: 1 số nguyên&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;các transactions&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Một block thế nào là hợp lệ? Block là hợp lệ khi hash của version + hashPrevBlock + hashMerkleBlock + time + target + nonce nhỏ hơn target. Điều này trái với nhiều bài viết thường nói là các peer sẽ verify block, thực chất ra bất cứ ai cũng có thể verify block đó, và 1 block khi được announce cho toàn mạng thì nó đã hợp lệ.&lt;/p&gt;
+
+&lt;p&gt;Để nói về chuyện tìm block, thì cần phải nói đến các miners và mining&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;d. Mining&lt;/h3&gt;
+
+&lt;p&gt;Mining là quá trình miner đi tìm block, với 1 lần tìm thấy block, miner sẽ được hưởng 1 số tiền nhất định (hiện tại là 25BTC), và được nhận bởi transaction đầu tiên trong block: transaction không có người gửi và người nhận là miner. Transaction đầu tiên này gọi là &lt;a href=&#34;https://en.bitcoin.it/wiki/Coinbase&#34;&gt;coinbase&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Vậy miner tìm ra 1 block như thế nào? Trong 1 block thì các thông tin&amp;nbsp;version + hashPrevBlock + hashMerkleBlock + time + target&amp;nbsp;là cố định (tạm gọi là hashBase) và giá trị nonce là thay đổi. Miner sẽ hash SHA256(SHA256(hashBase+0)), ra 1 giá trị, so sánh giá trị này với target, nếu nhỏ hơn thì dừng lại, thông báo block cho toàn mạng, nếu không, tăng nonce lên 1, tiếp tục hash&amp;nbsp;SHA256(SHA256(hashBase+0))cho đến khi tìm ra block.&lt;/p&gt;
+
+&lt;p&gt;Để biết được độ khó của việc này, ta thử một phép tính như sau: giả sử hashBase là &amp;ldquo;hello&amp;rdquo; và ta chỉ phải hash 1 lần&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;sha256(&amp;ldquo;hello0&amp;rdquo;)=5a936ee19a0cf3c70d8cb0006111b7a52f45ec01703e0af8cdc8c6d81ac5850c&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;để có 2 số 0 ở đầu, ta phải duyệt nonce đến 227&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;sha256(&amp;ldquo;hello227&amp;rdquo;)=001b92541ed0a22b0cb89018b561d895503206c0082c0ecf2d0b7e5182191eed&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;để có 4 số 0 ở đầu, ta phải duyệt nonce đến 60067&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;sha256(&amp;ldquo;hello60067&amp;rdquo;)=0000e49eab06aa7a6b3aef7708991b91a7e01451fd67f520b832b89b18f4e7de
+để có 6 số 0 ở đầu, ta phải duyệt đến 33290382&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;sha256(&amp;ldquo;hello33290382&amp;rdquo;)=000000865194de5c0744d72183dcce2eca2b69264b749a1798f1b6996baef7de&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Số nonce này tăng lên rất nhanh, hiện tại để nhỏ hơn target ta cần ít nhất 15 chữ số 0 ở đầu&lt;/p&gt;
+
+&lt;p&gt;Vậy chốt lại, mining đơn giản là quá trình tính hash sha256, mỗi lần với 1 số nonce khác nhau, cho đến khi tìm ra dãy số hợp lệ. Quá trình tìm nonce này không thể tính toán bằng phương pháp số, mà bắt buộc phải tính sha256 từng lần một, vì vậy nó là proof-of-work.&lt;/p&gt;
+
+&lt;p&gt;Các miners thường tập hợp lại thành 1 Pool, trong đó pool sẽ phân chia các miner tính, ví dụ miner1 tính nonce từ 0-&amp;gt;1 tỉ, miner2 tình từ 1 tỉ-&amp;gt;2 tỉ, mỗi block từ 0-&amp;gt;1 tỉ gọi là 1 share, khi tìm ra block, các miner sẽ được chia đều dựa trên số share mình submit được (càng nhiều share càng được chia nhiều). Thực tế, share được hình thành phức tạp hơn, dựa trên nguyên tắc sinh block nhưng với target thấp hơn, tuy nhiên về bản chất nó cũng chính là hình thức phân chia việc tính nonce này.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_6&#34;&gt;3. FAQ&lt;/h2&gt;
+
+&lt;p&gt;Thực chất mạng lưới Bitcoin về mặt concept hoạt động rất đơn giản, đó là lí do tại sao các Altcoin ra đời liên tục. Tuy nhiên để hiểu được nó lại cần một số kiến thức về tin học nhất định, đó là lí do tại sao nhiều người còn chưa biết nó là gì. Qua đó nảy sinh 1 số câu hỏi:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;a. Bây giờ cắm máy Mining thì có lãi ko?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&amp;nbsp;Mining đã từ lâu không còn là cuộc chơi của CPU/GPU nữa mà là của các máy chuyên dụng gọi là ASIC. Cắm máy mine Bitcoin thì chắc chắn ko bao giờ có lãi: giả sử bạn có 1 card ATI HD 7850, với độ khó hiện nay thì cần 850 năm để tìm ra 1 block, nếu join vào pool thì mỗi ngày bạn có&amp;nbsp;0.0001 BTC là khoảng 0.06USD khoảng hơn 1000 không đủ để trả tiền điện.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;b. Vậy mua ASIC thì sao?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&amp;nbsp;Câu trả lời vẫn là không, nếu ASIC là có lãi thì những người sản xuất ASIC họ bán ra làm gì? Sao họ không giữ máy lại và chạy? Đa phần các miner đã đầu tư ASIC từ lâu, và họ chạy ASIC ngoài nhiệm vụ mining kiếm tiền, họ còn góp 1 phần vào mạng lưới mining, để hệ thống Bitcoin ổn định lâu dài với khoản đầu tư từ lâu của họ.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;c. Lấy Bitcoin từ đâu?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Giống như vàng, có 2 cách để có vàng là đi đào và đi mua (hoặc là đi xin, coi như là mua với giá 0 đồng)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;d. Vậy sau khi đào hết Bitcoin, có ai đào nữa ko?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&amp;nbsp;Khi tìm ra 1 block, ngoài tiền thưởng thì người đào còn được hưởng số tiền phí giao dịch (hiện nay phí giao dịch thường là 0.001 BTC mỗi giao dịch), và miner hoàn toàn có thể loại bỏ các transaction không kèm phí trong đó. Vì vậy khi khối lượng giao dịch nhiều lên thì phí này sẽ tăng lên tương ứng.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;e. Quá trình tính toán khi tìm ra Block có hữu ích gì ko?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Không giống như Folding@Home, quá trình tính toán block không có hữu ích gì cho xã hội, nó nhằm nhiệm vụ bảo vệ mạng lưới Bitcoin, vì vậy nó chỉ hữu ích cho Bitcoin mà thôi.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;f. Chấp nhận Bitcoin làm thế nào?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Một số third-party có cung cấp dịch vụ payment, ví dụ như Coinbase. Bạn chỉ cần làm theo hướng dẫn của Coinbase, Coinbase sẽ thực hiện việc thanh toán và trả về cho bạn tiền mặt (USD, EUR) mà không phải đụng đến Bitcoin.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Kết thúc khoảng 3 tuần đọc và viết lung tung về Bitcoin&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Silk Road và những điều bạn cần biết</title>
+      <link>http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</link>
+      <pubDate>Wed, 09 Oct 2013 21:06:00 ICT</pubDate>
+      
+      <guid>http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</guid>
+      <description>&lt;p&gt;Nhân tiện một buổi họp công nghệ và bắt gặp 1 dòng chữ &amp;ldquo;Silk road bảo mật website như thế nào?&amp;rdquo;, mình phát hiện ra 1 điều là mọi người đọc báo và biết về Silk Road, chứ ko hề hiểu nó là cái gì. Và vì thế, lại 1 bài chém gió ra đời.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Vậy, câu hỏi đầu tiên, Silk Road là cái gì?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Silk Road là một chợ đen hoạt động trên mạng Tor.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Đến đây đủ để giải đáp cho câu hỏi &amp;ldquo;Silk road bảo mật website như thế nào?&amp;rdquo;: câu trả lời là &amp;ldquo;Silk Road không hề bảo mật website&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Nếu vậy thì lí do gì để có Silk Road? Silk Road được sinh ra nhằm mục đích bảo vệ thông tin người sử dụng, vì vậy Silk Road đã sử dụng những thành phần sau:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Tor network: nói 1 cách đơn giản thì Tor giúp người sử dụng giấu đi tất cả mọi thứ: location, usage&amp;hellip;nhằm mục đích ngăn chặn việc điều tra ra người dùng bằng hành vi trên mạng. Đây là bước thứ nhất: liên hệ&lt;/li&gt;
+&lt;li&gt;PGP: Mỗi dealer trên BitCoin đều sử dụng PGP để giao dịch mua bán, qua đó dealer sẽ cấp 1 public key, những người liên hệ với dealer sẽ encrypt địa chỉ, thông tin và message bằng public key đó, và chỉ dealer có private key mới giải mã để đọc được. Đây là bước thứ 2: giao dịch&lt;/li&gt;
+&lt;li&gt;BitCoin: BitCoin là một loại tiền được cho là&amp;nbsp;pseudo-anonymous, các giao dịch trên BitCoin được mã hóa và không thông qua một máy chủ tập trung nào. Ngoài ra SilkRoad còn cung cấp 1 tumbler, được sử dụng như một trung gian thứ 3 nhận tiền và gửi tiền. Đây là bước thứ 3: trả tiền.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Như vậy, một giao dịch hoàn toàn được bảo mật và dealer lẫn buyer đều anonymous. Đó chính là lí do Silk Road tồn tại: tạo lập một sân chơi, chứ không phải là một shop buôn bán drug.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Vậy, lí do tại sao tôi dám chém gió là Silk Road không hề bảo mật website?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Nếu bạn lắm thời gian và thừa dở hơi như tôi thì có thể đọc &lt;a href=&#34;http://www1.icsi.berkeley.edu/~nweaver/UlbrichtCriminalComplaint.pdf&#34;&gt;cái này&lt;/a&gt;. Một số điểm quan trọng:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;23&amp;#47;07/2013, FBI đã có một bản hoàn thiện website Silk Road, trong đó có user account và thông tin giao dịch&lt;/li&gt;
+&lt;li&gt;FBI đã nắm được&amp;nbsp;1,217,218 message trao đổi trên mạng lưới Silk Road từ 24&amp;#47;5-&amp;gt;23&amp;#47;07/2013.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Đa phần thông tin trong này không có ý nghĩa, vì những điều được nhắc tới ở trên: bảo mật giao dịch, không bảo mật website ở mức cao cấp (chỉ có dở hơi mới tin là nó không làm gì để bảo mật website cả). Tất nhiên một số người stupid không dùng PGP thì sẽ bị bắt.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lí do tại sao admin trang này, DPR bị bắt&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Người đầu tiên quảng bá Silk Road vào năm 2011, được biết đến qua điều tra tên là &amp;ldquo;altoid&amp;rdquo;&amp;nbsp;&lt;/li&gt;
+&lt;li&gt;11&amp;#47;2011, một người tên altoid post trên Bit Coin Talk, đăng tìm người và dẫn đến email tại gmail &amp;ldquo;rossulbricht&amp;rdquo;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Từ đây, FBI rất dễ dàng điều tra ra&lt;strong&gt;&amp;nbsp;Ross William Ulbricht&lt;/strong&gt;, người sáng lập trang web, bằng rất nhiều nguồn khác nhau:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;LinkedIn, Google+, Youtube đều từ cái tên mà bị truy ra&lt;/li&gt;
+&lt;li&gt;Dùng VPN log-in vào server Silk Road, từ đó bị truy ra địa chỉ nhà&lt;/li&gt;
+&lt;li&gt;Bị điều tra ra sử dụng rất nhiều ID giả&lt;/li&gt;
+&lt;li&gt;Post trên Stack Overflow với tên thật và hỏi về Tor, sau đó sửa tên thành frosty, trùng tên với SSH public key được lưu trên server Silk Road (stupid)&lt;/li&gt;
+&lt;li&gt;Cùng với nhiều biện pháp nghiệp vụ khác.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Vì vậy, sử dụng VPN chỉ là một trong những điều khiến cho DPR bị bắt, chứ không phải là nguyên nhân, bởi vì một khi đã bị bắt tên và cái ảnh, thì chắc chắn là không có lí do gì để thoát cả.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Kết luận&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Silk Road là mạng lưới chợ đen, thành công của nó nằm ở chỗ bảo vệ thông tin người mua bán, chứ không phải là bảo mật website&lt;/li&gt;
+&lt;li&gt;DPR bị bắt vì những sai lầm rất căn bản và từ rất lâu, tất cả đều liên quan đến anonymity.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Bài học được rút ra là: đừng phạm tội, nếu có phạm tội thì cũng đừng ngu như thằng này.&lt;/p&gt;
+
+&lt;p&gt;Thông tin được tổng hợp bởi một redditor thỉnh thoảng vào /r/Bitcoin và /r/SilkRoad (tất nhiên là không hề có tham gia mua bán gì)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Bitcoin - Người ta đã làm ra nó như thế nào</title>
+      <link>http://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</link>
+      <pubDate>Thu, 12 Sep 2013 16:06:44 ICT</pubDate>
+      
+      <guid>http://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</guid>
+      <description>
+
+&lt;p&gt;Bitcoin không còn là mới, nó đã xuất hiện được vài năm nay. Nhưng chỉ trong thời gian gần đây nó mới bùng nổ thành một hình thức thanh toán cực kì tiện lợi.&lt;/p&gt;
+
+&lt;p&gt;Bitcoin là một cryptocurrency, để hiểu được một cách chính xác Bitcoin là gì cần một lượng kiến thức về software, crypto, network nhất định. Tuy nhiên chúng ta có thể tiếp cận Bitcoin để hiểu nó như một người sử dụng &amp;ldquo;có hiểu biết&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Như vậy, Bitcoin được hình thành trên những concept gì?&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;1. Mô hình không tập trung&lt;/h2&gt;
+
+&lt;p&gt;Tiền mặt thông thường được lưu qua các tài khoản. Việc bạn gửi tiền từ tài khoản của mình sang tài khoản người khác được thực hiện thông qua việc gặp trực tiếp, hoặc qua ngân hàng.&lt;/p&gt;
+
+&lt;p&gt;Ngân hàng sẽ làm nhiệm vụ kiểm tra tiền của bạn có thật không, có hợp pháp không; đảm bảo việc chuyển tiền giữa bạn và người kia là duy nhất (không có chuyện gửi 2 lần); đảm bảo rằng bạn không thể chuyển tiền cho người kia rồi sau đó lấy lại chuyển cho người khác mà không có lí do. Ngoài ra tiền của bạn cũng không tự nhiên mà có, cũng phải có một ai đó in nó ra, cấp cho bạn qua một hình thức nào đó.&lt;/p&gt;
+
+&lt;p&gt;Bitcoin được sinh ra với mục tiêu không có ai là đơn vị quản lí tập trung nó cả, tức là sẽ không có ai kiểm tra tiền đó có thật không, không ai đảm bảo rằng bạn không chuyển tiền 2 lần cả. Vì vậy nó phải sinh ra một số phương pháp để phục vụ mục đích này.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;2. Định danh người - Chữ kí điện tử&lt;/h2&gt;
+
+&lt;p&gt;Việc đầu tiên trong quá trình chuyển một cục tiền điện tử, là xác định xem người gửi và người nhận là ai. Đơn cử như dùng Facebook thì phải login, dùng ngân hàng thì phải xuất thẻ CMND. Giả sử, bạn A muốn gửi cho bạn B một đồng tiền, bạn ấy sẽ viết &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng&amp;rdquo;. Làm thế nào để bạn B biết chắc chắn rằng đó là từ bạn A gửi?&lt;/p&gt;
+
+&lt;p&gt;Điều này được thực hiện bằng một thuật ngữ gọi là &lt;strong&gt;public-key cryptography&lt;/strong&gt;, tương tự như việc đóng dấu. Bạn có một con dấu và cung cấp cái hình con dấu cho mọi người biết, một khi mọi người nhìn thấy văn bản được đóng dấu, tức là tài liệu đó đã được tin tưởng rằng do bạn viết ra (coi như là con dấu không thể làm giả). Tương tự như vậy, đối với public-key crypto, bạn có một private-key (con dấu) và một public-key (hình). Bạn sẽ kí bằng private-key vào dãy &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng&amp;rdquo; ra một văn bản khác. Người nhận khi nhận được văn bản đó, sẽ dùng public-key để giải mã ra được &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng&amp;rdquo;. Như vậy, thông tin giao dịch chắc chắn đã được đảm bảo, bất cứ ai cũng có thể biết A gửi cho B 1 đồng, nhưng không thể có con dấu để giả thông báo đó được.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;3. Định danh tiền&lt;/h2&gt;
+
+&lt;p&gt;Liệu, khi bạn A gửi &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng&amp;rdquo; cho B, sau đó B gửi liên tục thông báo này đi, thì A có bị mất tiền nhiều lần không? Điều này được giải quyết một cách rất đơn giản, mỗi đồng tiền sẽ có một cái tên nhất định: &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng với mã số 007&amp;rdquo;. Tất nhiên B có gửi thông báo này đi bao nhiêu lần thì cũng chỉ có đồng 007 này được gửi cho B mà thôi.&lt;/p&gt;
+
+&lt;p&gt;Tuy nhiên, làm thế nào để B biết được đồng tiền 007 này là thật? A hoàn toàn có thể gửi cho B một đồng tiền giả, thông thường B có ngân hàng để hỏi, trong trường hợp này thì B phải làm thế nào?&lt;/p&gt;
+
+&lt;p&gt;Bitcoin sử dụng một hệ thống cây giao dịch gọi là &amp;ldquo;block chain&amp;rdquo;, nhìn một cách đơn giản thì việc kiểm tra này được thực hiện bằng cách: B sẽ tra ngược về đầu, giả sử có một bạn X gửi cho A đồng 006, sau đó A đổi là 007 gửi cho B, thì B sẽ kiểm tra xem đồng 006 có phải là thật không. Tương tự thế B check đồng 005 là bố của 006, rồi 004 là bố 005, đến khi nào B tra được đến gốc của nó để đảm bảo nó là thật.&lt;/p&gt;
+
+&lt;p&gt;Tuy nhiên điều này không ngăn được việc A từ đồng 006 đặt ra 2 mã số cho đồng tiền đó là 007 và 008, sau đó đồng thời gửi cho B và C. Cả B và C sẽ cùng kiểm tra block chain, và đều tìm về đồng 005 rồi 004 và tưởng nó là thật. Khái niệm này gọi là &amp;ldquo;double-spending&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Để chắc chắn rằng A không &amp;ldquo;double-spending&amp;rdquo;, hệ thống cần đảm bảo được cả B và C khi tra định danh đồng tiền đó đều tra từ một điểm chung duy nhất. Việc đảm bảo này được thực hiện thông qua cơ chế &amp;ldquo;proof-of-work&amp;rdquo;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;4. Proof of work&lt;/h2&gt;
+
+&lt;p&gt;Proof of work, nôm na gọi là &amp;ldquo;bằng chứng về công việc&amp;rdquo;, là một mô hình được đặt ra nhằm đảm bảo rằng, để A sinh ra được mã 007 và 008, A hoặc một người nào đó phải bỏ một công sức nhất định mà rất khó làm được 2 lần (ví dụ bắt A chạy 100km rồi mới cho A lấy tiền). Tất nhiên chuyện A chạy 100km là khó, hoặc A cũng có thể chạy 200km rồi sinh ra 2 mã kiếm tiền, đó cũng là một vấn đề mà ta sẽ nhắc đến sau.&lt;/p&gt;
+
+&lt;p&gt;Quá trình này gọi là quá trình kiểm định, qua đó sẽ có một số người kiểm định nhất định (bao gồm cả A và B), những người này sẽ thực hiện việc chạy 100km này, sau đó kí vào và xác nhận việc X gửi cho A, hay A gửi cho B là tin được tại thời điểm đó.&lt;/p&gt;
+
+&lt;p&gt;Như vậy, khi ta thấy một đồng tiền, ta đảm bảo rằng bố của nó đã phải bỏ một số công sức có được nó, một cách nào đó ta tin rằng việc chuyển từ 006-&amp;gt;007 là &lt;strong&gt;tạm tin được.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Quay lại ví dụ trên, giả sử ông sở hữu đồng 006 là ông X có đồng 005 chạy 200km và in ra 2 đồng là 006 gửi cho A và 006&amp;rsquo; gửi cho Y. Sau đó có 10 người kí rằng tin là X chuyển sang A là hợp lệ, và 3 người kí vào là X gửi cho Y là hợp lệ. Như vậy đồng tiền này đã được &lt;strong&gt;tạm tin&lt;/strong&gt;&amp;nbsp;bởi X và A, và như thế việc gửi cho A là &lt;strong&gt;tạm hợp lệ&lt;/strong&gt;, còn tiền sở hữu của Y là không hợp lệ. Như vậy Y hay B có thể đơn giản tránh việc bị lừa bằng cách đợi một số người kí vào giao dịch đó rồi mới tin là mình được nhận tiền. &amp;nbsp;Người kiểm định thường ghép nhiều giao dịch vào kiểm định một thể, và sau khi hoàn thành việc kiểm định, người đó được thưởng một số tiền nhất định cùng với phí giao dịch.&lt;/p&gt;
+
+&lt;p&gt;Bitcoin sử dụng cơ chế crypto, nhìn một cách đơn giản, thì Bitcoin yêu cầu người muốn kiểm chứng giao dịch phải tìm một dãy sha256: sha256(data+number), trong đó data là thông tin giao dịch: &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng với mã số 007&amp;rdquo; và number là một số bất kì, sao cho sha256(data+number) phải bắt đầu bằng một số lượng số 0 nhất định. Việc này là rất mất công và yêu cầu người kiểm định phải tìm ra số đó, sau khi tìm ra một dãy số thỏa mãn, gọi là một &lt;strong&gt;block&lt;/strong&gt;, thì người này được hưởng 50 đồng Bitcoin (giảm xuống theo thời gian, hiện nay là 25 đồng).&lt;/p&gt;
+
+&lt;p&gt;Như vậy, đồng thời với việc kiểm tra giao dịch, ta cũng giải quyết được vấn đề &lt;strong&gt;in và cấp tiền&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_4&#34;&gt;5. Bitcoin&lt;/h2&gt;
+
+&lt;p&gt;Như vậy, Bitcoin được tổ chức như thế nào?&lt;/p&gt;
+
+&lt;p&gt;Mỗi người sẽ có một cái ví điện tử, gọi là &lt;strong&gt;wallet&lt;/strong&gt;, &amp;nbsp;mỗi ví này sẽ có nhiều địa chỉ (như một ngăn ví), mỗi địa chỉ này chứa 1 số tiền nhất định, gọi là &lt;strong&gt;address.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Việc giao dịch tiền từ một address của người này sang address người khác gọi là một &lt;strong&gt;transaction.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Các giao dịch này được ghép lại và kiểm định, kết hợp với số tìm được thỏa mãn điều kiện, thành một &lt;strong&gt;block.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Những người kiểm định, tìm block với mục tiêu được thưởng tiền, gọi là &lt;strong&gt;miners.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Những block được kết nối với nhau thành một cây, block sau chứa dãy serial của block trước, cây này gọi là &lt;strong&gt;block chain.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_5&#34;&gt;6. Kết luận&lt;/h2&gt;
+
+&lt;p&gt;Tuy đã giải quyết được phần lớn vấn đề của một đồng tiền điện tử. Bitcoin vẫn có rất nhiều vấn đề còn tồn tại:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Nếu như A mua toàn bộ người kiểm định (thực ra chỉ cần mua trên 50%), thì A hoàn toàn có thể sinh ra 2 đồng tiền từ một đồng với số chữ kí là như nhau, người nhận sau đó là B không thể kiểm tra được đó có phải là tiền hợp lệ hay không.&lt;/li&gt;
+&lt;li&gt;Trong quá trình hình thành đồng tiền, sẽ có rất ít người thực hiện việc kiểm định, vì vậy hệ thống cần đặt khả năng tìm được &lt;strong&gt;block&lt;/strong&gt; là dễ dàng, việc này rất dễ gây ra chuyện tìm ra 2 block một lúc và việc chọn 1 trong 2 block sẽ gây ra block còn lại cùng với những người công nhận nó bị mất công sức (đi kèm với việc sẽ không kiểm chứng được giao dịch trong thời gian ngắn)&lt;/li&gt;
+&lt;li&gt;Địa chì là public, toàn bộ giao dịch cũng được theo dõi một cách thỏa mái. Vì vậy việc bị theo dõi đánh cắp là hoàn toàn có thể. Wallet lại chỉ là một dãy số, rất nguy hiểm khi bị đánh mất.&lt;/li&gt;
+&lt;li&gt;Toàn bộ giao dịch đều thông qua Network, rất dễ bị tấn công bởi DDOS, hoặc bị lọc các gói tin khiến thông tin về block bị thiếu sót, dễ bị tấn công double-spending&lt;/li&gt;
+&lt;li&gt;Việc tạo ra tiền: block là do các máy ngang hàng thực hiện, vì vậy hacker có thể dễ dàng thay đổi các thông số khiến cho block tạo ra bởi các máy này là không sử dụng được (ví dụ thay đổi gói tin ntp khiến các node nhận sai giờ, khiến cho block được tạo ra với thời gian chậm hơn thời gian thật)&lt;/li&gt;
+&lt;li&gt;Blockchain chứa thông tin của toàn bộ các block liên kết với nhau, vì vậy client cần phải lưu trữ với dung lượng lơn (đối với Bitcoin hiện nay là khoảng 15GB).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Mong rằng bài viết sau sẽ làm rõ hơn về giao thức của Bitcoin về mặt technical một cách nâng cao hơn.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Phiếm bàn chuyện đặt tên</title>
+      <link>http://blog.ntcong.it/post/chuyen_dat_ten/</link>
+      <pubDate>Mon, 21 Jan 2013 16:18:00 ICT</pubDate>
+      
+      <guid>http://blog.ntcong.it/post/chuyen_dat_ten/</guid>
+      <description>&lt;p&gt;Code mình viết ra cũng như con đẻ của mình vậy, chuyện đặt cho nó cái tên để gọi là chuyện vô cùng quan trọng. Đặt tên sao để cho tên nó hay, có ý nghĩa, lại còn phải để người khác dễ gọi, chưa kể là còn phải tránh tên dễ suy luận không là bạn bè của con nó chửi xéo.&lt;/p&gt;
+
+&lt;p&gt;Chắc 100% người đụng vào code đều biết mấy kiểu đặt tên họ:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;viết_thường_kèm_gạch_dưới&lt;/li&gt;
+&lt;li&gt;ViếtHoaChữCáiĐầu&lt;/li&gt;
+&lt;li&gt;VIẾT_HOA_KÈM_GẠCH&lt;/li&gt;
+&lt;li&gt;một vài loại biến thể khác&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Ngoài ra một số quy tắc khác như tên biến int thì bắt đầu bằng chữ i, class bắt đầu bằng cls, rồi thì là const thì viết hoa tất, quy tắc thì có lẽ chỉ dành cho project manager ngồi bịa ra viết tài liệu rồi cho các bạn đọc, đọc xong rồi nhớ áp dụng là xong.&lt;/p&gt;
+
+&lt;p&gt;Đã phiếm bàn thì bàn cái gì cho nó hay tí, gọi là &lt;strong&gt;&amp;ldquo;đặt tên một cách thông minh&amp;rdquo;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Đầu tiên có lẽ cần trích đến nguyên tắc đặt tên của Golang: short, concise, evocative; tạm dịch là ngắn gọn, súc tích và tạo ấn tượng.&lt;/p&gt;
+
+&lt;p&gt;Ngắn gọn nhưng súc tích là một điểm đến rất khó khi đặt tên, một vài ví dụ như:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1.&lt;/strong&gt; &lt;strong&gt;setup_and_run(new_work, job)&lt;/strong&gt; : ngắn gọn, đầy đủ, rõ nghĩa&lt;/p&gt;
+
+&lt;p&gt;do_setup_and_run: ai chả biết là làm ?&lt;/p&gt;
+
+&lt;p&gt;setup_new_and_run: đã setup&amp;hellip;(new_work) rồi lại còn có new ở tên.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2.&lt;/strong&gt; &lt;strong&gt;io.NewIO(),&lt;/strong&gt; &lt;strong&gt;Device.NewDevice():&lt;/strong&gt; trong package A có hàm NewA là một lỗi khá phổ biến, cách đặt thừa tên này dẫn đến việc đọc code rất là căng thẳng.&lt;/p&gt;
+
+&lt;p&gt;Tránh điều này rất đơn giản, ta có thể dùng io.New() nếu cần làm 1 số việc và trả về object IO, hoặc sử dụng trực tiếp io.IO()&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; &lt;strong&gt;god.Do(action)&lt;/strong&gt; &lt;strong&gt;và&lt;/strong&gt; &lt;strong&gt;_god.DoOrWaitTilDone(action):&lt;/strong&gt; cách gọi thứ 2 tuy giải thích được việc hàm này sẽ thực hiện hoặc chờ nếu action đã đang thực hiện, tuy nhiên việc này nên đặt trong comment thì hơn là đặt vào tên. Nên nhớ nói dài là nói dại.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4. from what import what_exception:&lt;/strong&gt; hay thường được biết đến với dòng from what.what&lt;em&gt;exception import WhatNotFound. Tại sao lại là what.what_exception ? Bỏ cái đoạn what&lt;/em&gt; có làm nó khó hiểu hơn ko ? Có lẽ tự ai cũng hiểu: from what.exception import WhatNotFound&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;5. from what.exception import WhatNotFound&lt;em&gt;Exception&lt;/em&gt;&lt;/strong&gt;: tại sao ??? WhatNotFound tốt, WhatError tốt, WhatYeahException tốt, NotFoundException vừa trùng lặp lại khó nhớ.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;6. User.username, User.user_email:&lt;/strong&gt; khỏi nói chắc ai cũng biết là thừa, User.name, User.email là 2 cái tên ngắn gọn và tốt hơn rất nhiều&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;7. from devices.device import Device:&lt;/strong&gt; move Device import qua &lt;strong&gt;init&lt;/strong&gt; là cách tránh tình trạng này rất dễ dàng, nên để nó là from devices import Device&lt;/p&gt;
+
+&lt;p&gt;Vậy, tránh việc đặt tên xấu như thế nào?&lt;/p&gt;
+
+&lt;p&gt;Thực ra, tên xấu ngay bản thân nó đã thể hiện được cách tránh, đã là cái tên thì phải đọc, đọc lên thấy&amp;hellip;xấu thì phải suy nghĩ ngay:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. Tên quá dài:&lt;/strong&gt; đặt 1 cái tên xong thấy nó quá dài, hãy đọc lại thử 1 lần nữa xem nó có vấn đề gì không. Đừng quá ham nhét nhiều thông tin vào tên biến, tên hàm. Súc tích không có nghĩa là đầy đủ thông tin. Dành thời gian thừa khi nghĩ tên vào việc viết document hoặc comment cho rõ ràng.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. Tên lặp lại quá nhiều:&lt;/strong&gt; khi gọi vào biến đó hoặc hàm đó, bạn thấy rằng có 1 từ đang lặp lại 2 lần hay thậm chí 3 lần, dừng lại và nghĩ xem tại sao nó lặp lại, và việc lặp lại đó có ý nghĩa gì không. Điều này đúng với cả từ trùng nghĩa lặp lại như NotFoundException.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. Tên đọc thấy&amp;hellip;trẹo lưỡi:&lt;/strong&gt; tên xấu, ví dụ như earth.create_a_new_god(), chưa đọc đã thấy nó trẹo cả lưỡi rồi, earth.new_god() có lẽ sẽ tốt hơn rất nhiều, chỉ cần chú ý một chút để sửa.&lt;/p&gt;
+
+&lt;p&gt;Cuối cùng, code mình code ra, tên mình đặt, con mình mình nuôi, thế nên chú ý cho nó cái tên hay một chút, sau này có chuyển cho ai nuôi thì người ta cũng thích. Tất nhiên cũng đừng có nghĩ nhiều quá, đôi khi cũng cần một &lt;em&gt;&amp;ldquo;ngoại lệ&amp;rdquo;&lt;/em&gt; nho nhỏ, bởi vì dù sao, mình đặt tên ra thì mình là người gọi nhiều nhất, đặt theo ý người khác cũng chả vui gì.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;em&gt;Bài viết bậy viết bạ đánh dấu 2 năm không blog&lt;/em&gt;&amp;nbsp;&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
