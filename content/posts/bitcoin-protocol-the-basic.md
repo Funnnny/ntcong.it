@@ -2,6 +2,8 @@
 date = "2014-01-19T12:51:42+07:00"
 title = "Bitcoin Protocol: The Basic"
 author = "Cong Nguyen"
+Categories = ["thought", "bitcoin"]
+Tags = ["thought", "bitcoin"]
 
 +++
 

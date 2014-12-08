@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Stripe-CTF Level 1 with Golang // Cong Nguyen
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Cong Nguyen">
+
+  <meta property="og:title" content="Stripe-CTF Level 1 with Golang" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="http://blog.ntcong.it/posts/stripe-ctf-level1-with-golang/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="http://blog.ntcong.it/css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:900,500,100,300,700,400' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Cong Nguyen" />
+
+  
+  <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/tomorrow-night-bright.min.css">
+  <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="/css/categories.css">
+  
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+    <h1 class="brand-title">CongNT</h1>
+    <h2 class="brand-tagline">Thoughts on Programming and anything Computer</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://blog.ntcong.it">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/about">About</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/posts">Blog</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+      
+        
+        <a href="http://github.com/Funnnny" target="_blank"><i class='fa fa-github'></i></a>
+        
+      
+        
+        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
+        
+      
+        
+        <a href="https://plus.google.com/&#43;CongNguyen" target="_blank"><i class='fa fa-google-plus'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#toc_0">Basic</a></li>
+<li><a href="#toc_1">Optimize further</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/posts/stripe-ctf-level1-with-golang/">Stripe-CTF Level 1 with Golang</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>7</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Feb</span> <span class="post-date-year">2014</span>
+            	</span>
+            	
+            
+            	
+            		<span class="post-author-single">By <a class="post-author"  target="">Cong Nguyen</a></span>
+            		
+
+
+
+
+            	
+            
+
+			
+			
+				<div class="post-categories">
+				
+					<a class="post-category post-category-development" href="http://blog.ntcong.it/categories/development">development</a>
+				
+					<a class="post-category post-category-go" href="http://blog.ntcong.it/categories/go">go</a>
+				
+				</div>
+			
+
+			
+
+			
+
+            
+
+<p>This year&rsquo;s Stripe-CTF brings some interesting things to the table: Cryptocurrency. I&rsquo;ve already known about cryptocurrency and Bitcoin in general, but it&rsquo;s amazing how Bitcoin relates to Git.</p>
+
+<p>The level is here:&nbsp;<a href="https://stripe-ctf.com/levels/1">https://stripe-ctf.com/levels/1</a></p>
+
+<p>Basically, like Bitcoin, you have to find a block, in this case is a git commit. The commit must have its hash lower than the target difficulty, specified in the file difficulty.txt. You will compete against a bot, and you have to find and submit a block/commit before it does.</p>
+
+<p>As I&rsquo;m learning Golang, I wrote my miner using it, and managed to bring to 1MHash/s. Some people are going higher, specifically those using OpenCL/GPU to mine.</p>
+
+<h3 id="toc_0">Basic</h3>
+
+<p>The first version of my code is very simple. First it will add myself a Gitcoin to the file &ldquo;LEDGER.txt&rdquo;, get the difficulty, and get the required parameters to build the commit. Those tasks will only do once per block found, so any code will work.</p>
+
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #839496">diff</span> <span style="color: #839496">=</span> <span style="color: #268bd2">make</span><span style="color: #839496">([]</span><span style="color: #859900">byte</span><span style="color: #839496">,</span> <span style="color: #2aa198">0</span><span style="color: #839496">)</span>
+<span style="color: #839496">diffString</span> <span style="color: #839496">:=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;cat&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;difficulty.txt&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+<span style="color: #859900">for</span> <span style="color: #839496">i</span> <span style="color: #839496">:=</span> <span style="color: #2aa198">0</span><span style="color: #839496">;</span> <span style="color: #839496">i</span> <span style="color: #839496">&lt;</span> <span style="color: #268bd2">len</span><span style="color: #839496">(diffString)/</span><span style="color: #2aa198">2</span><span style="color: #839496">;</span> <span style="color: #839496">i++</span> <span style="color: #839496">{</span>
+     <span style="color: #839496">n,</span> <span style="color: #839496">_</span> <span style="color: #839496">:=</span> <span style="color: #839496">strconv.ParseInt(diffString[i*</span><span style="color: #2aa198">2</span><span style="color: #839496">:i*</span><span style="color: #2aa198">2</span><span style="color: #839496">+</span><span style="color: #2aa198">2</span><span style="color: #839496">],</span> <span style="color: #2aa198">16</span><span style="color: #839496">,</span> <span style="color: #2aa198">0</span><span style="color: #839496">)</span>
+     <span style="color: #839496">diff</span> <span style="color: #839496">=</span> <span style="color: #268bd2">append</span><span style="color: #839496">(diff,</span> <span style="color: #268bd2">byte</span><span style="color: #839496">(n))</span>
+<span style="color: #839496">}</span>
+<span style="color: #839496">tree</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;write-tree&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+<span style="color: #839496">parent</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;rev-parse&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;HEAD&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+<span style="color: #839496">timestamp</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;date&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;+%s&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+</pre></div>
+
+<p>I calculate diff as a byte array because SHA1 library returned the hash as an array, so I don&rsquo;t have to convert SHA1 everytime; doExec is just a function to run the command and return console output as a string. The commit hash can be calculate by SHA1 the string &ldquo;commit [len_commit]\0[commit_string]&ldquo;. The commit string can be built by this code:</p>
+
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #839496">baseCommit</span> <span style="color: #839496">=</span> <span style="color: #839496">fmt.Sprintf(</span><span style="color: #2aa198">&quot;tree %s\nparent %s\nauthor CTF user &amp;lt;%s@stripe-ctf.com&amp;gt; %s +0000\ncommitter CTF user &amp;lt;%s@stripe-ctf.com&amp;gt; %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1&quot;</span><span style="color: #839496">,</span> <span style="color: #839496">tree,</span> <span style="color: #839496">parent,</span> <span style="color: #839496">username,</span> <span style="color: #839496">timestamp,</span> <span style="color: #839496">username,</span> <span style="color: #839496">timestamp)</span>
+</pre></div>
+
+<p>You should already notice the last &ldquo;nonce 1&rdquo; in the commit string, I will replace it with &ldquo;nonce 2&rdquo; and so on until I find a commit with hash lower than difficulty. It&rsquo;s surprisingly simple:</p>
+
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">func</span> <span style="color: #839496">getSHA1(n</span> <span style="color: #859900">int</span><span style="color: #839496">)</span> <span style="color: #839496">[</span><span style="color: #2aa198">20</span><span style="color: #839496">]</span><span style="color: #859900">byte</span> <span style="color: #839496">{</span>
+ <span style="color: #859900">return</span> <span style="color: #839496">sha1.Sum([]</span><span style="color: #268bd2">byte</span><span style="color: #839496">(baseCommitHash</span> <span style="color: #839496">&lt;complete</span> <span style="color: #839496">id=</span><span style="color: #2aa198">&quot;goog_259276313&quot;</span><span style="color: #839496">&gt;+</span> <span style="color: #839496">&lt;/complete&gt;</span><span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">))</span>
+<span style="color: #839496">}</span>
+<span style="color: #859900">func</span> <span style="color: #839496">isHashValid(hash</span> <span style="color: #839496">[</span><span style="color: #2aa198">20</span><span style="color: #839496">]</span><span style="color: #859900">byte</span><span style="color: #839496">)</span> <span style="color: #859900">bool</span> <span style="color: #839496">{</span>
+ <span style="color: #859900">for</span> <span style="color: #839496">i,</span> <span style="color: #839496">char</span> <span style="color: #839496">:=</span> <span style="color: #859900">range</span> <span style="color: #839496">hash</span> <span style="color: #839496">{</span>
+  <span style="color: #859900">if</span> <span style="color: #839496">i</span> <span style="color: #839496">&gt;=</span> <span style="color: #268bd2">len</span><span style="color: #839496">(diff)</span> <span style="color: #839496">{</span>
+   <span style="color: #859900">return</span> <span style="color: #859900">false</span>
+  <span style="color: #839496">}</span>
+  <span style="color: #859900">if</span> <span style="color: #839496">char</span> <span style="color: #839496">&gt;</span> <span style="color: #839496">diff[i]</span> <span style="color: #839496">{</span>
+   <span style="color: #859900">return</span> <span style="color: #859900">false</span>
+  <span style="color: #839496">}</span>
+  <span style="color: #859900">if</span> <span style="color: #839496">char</span> <span style="color: #839496">&lt;</span> <span style="color: #839496">diff[i]</span> <span style="color: #839496">{</span>
+   <span style="color: #859900">return</span> <span style="color: #859900">true</span>
+  <span style="color: #839496">}</span>
+ <span style="color: #839496">}</span>
+ <span style="color: #859900">return</span> <span style="color: #859900">false</span>
+<span style="color: #839496">}</span>
+</pre></div>
+
+<p>After finding a coin, I&rsquo;ll write the commit and push it, I was lazy and just pipe everything to command line. It works but maybe a little slow.</p>
+
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">func</span> <span style="color: #839496">pushResult(result</span> <span style="color: #859900">chan</span> <span style="color: #859900">int</span><span style="color: #839496">,</span> <span style="color: #839496">done</span> <span style="color: #859900">chan</span> <span style="color: #859900">bool</span><span style="color: #839496">)</span> <span style="color: #839496">{</span>
+    <span style="color: #859900">var</span> <span style="color: #839496">n</span> <span style="color: #859900">int</span>
+    <span style="color: #859900">for</span> <span style="color: #839496">{</span>
+        <span style="color: #839496">n</span> <span style="color: #839496">=</span> <span style="color: #839496">&amp;lt;-result</span>
+        <span style="color: #839496">sem</span> <span style="color: #839496">&amp;lt;-</span> <span style="color: #2aa198">1</span>  <span style="color: #586e75; font-style: italic">// Semaphore git command so only one git command at a time</span>
+        <span style="color: #839496">c1</span> <span style="color: #839496">:=</span> <span style="color: #839496">exec.Command(</span><span style="color: #2aa198">&quot;echo&quot;</span><span style="color: #839496">,</span> <span style="color: #839496">getCommit(n,</span> <span style="color: #859900">false</span><span style="color: #839496">))</span>
+        <span style="color: #839496">c2</span> <span style="color: #839496">:=</span> <span style="color: #839496">exec.Command(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;hash-object&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;-t&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;commit&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--stdin&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;-w&quot;</span><span style="color: #839496">)</span>
+        <span style="color: #859900">var</span> <span style="color: #839496">err</span> <span style="color: #859900">error</span>
+        <span style="color: #839496">c2.Stdin,</span> <span style="color: #839496">err</span> <span style="color: #839496">=</span> <span style="color: #839496">c1.StdoutPipe()</span>
+        <span style="color: #859900">if</span> <span style="color: #839496">err</span> <span style="color: #839496">!=</span> <span style="color: #859900">nil</span> <span style="color: #839496">{</span>
+            <span style="color: #268bd2">panic</span><span style="color: #839496">(err)</span>
+        <span style="color: #839496">}</span>
+        <span style="color: #839496">c2.Stdout</span> <span style="color: #839496">=</span> <span style="color: #839496">os.Stdout</span>
+        <span style="color: #839496">_</span> <span style="color: #839496">=</span> <span style="color: #839496">c2.Start()</span>
+        <span style="color: #839496">_</span> <span style="color: #839496">=</span> <span style="color: #839496">c1.Run()</span>
+        <span style="color: #839496">_</span> <span style="color: #839496">=</span> <span style="color: #839496">c2.Wait()</span>
+        <span style="color: #839496">&amp;lt;-sem</span>
+        <span style="color: #839496">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;reset&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--hard&quot;</span><span style="color: #839496">,</span> <span style="color: #839496">fmt.Sprintf(</span><span style="color: #2aa198">&quot;%x&quot;</span><span style="color: #839496">,</span> <span style="color: #839496">getCommitSHA(n)))</span>
+        <span style="color: #839496">res</span> <span style="color: #839496">:=</span> <span style="color: #839496">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;push&quot;</span><span style="color: #839496">)</span>
+        <span style="color: #859900">if</span> <span style="color: #839496">res</span> <span style="color: #839496">!=</span> <span style="color: #2aa198">&quot;error&quot;</span> <span style="color: #839496">{</span>
+            <span style="color: #586e75; font-style: italic">// done &amp;lt;- true</span>
+            <span style="color: #586e75; font-style: italic">// do not stop, just wait for a restart</span>
+            <span style="color: #839496">time.Sleep(</span><span style="color: #2aa198">10</span> <span style="color: #839496">*</span> <span style="color: #839496">time.Second)</span>
+        <span style="color: #839496">}</span> <span style="color: #859900">else</span> <span style="color: #839496">{</span>
+            <span style="color: #839496">log.Println(</span><span style="color: #2aa198">&quot;Error when push, waiting for miner to restart&quot;</span><span style="color: #839496">)</span>
+            <span style="color: #839496">time.Sleep(</span><span style="color: #2aa198">10</span> <span style="color: #839496">*</span> <span style="color: #839496">time.Second)</span>
+        <span style="color: #839496">}</span>
+    <span style="color: #839496">}</span>
+<span style="color: #839496">}</span>
+</pre></div>
+
+<p>Then I just loop nonce until I found a coin. I use a result channel to communicate between miner thread and pushResult thread, and a done channel to stop when I find a commit. The bot takes about 10 mins to find a block, with just this version I managed to beat it.</p>
+
+<h3 id="toc_1">Optimize further</h3>
+
+<p>After finishing the task, I can join a Gitcoin instance with all players in Stripe-CTF. I knew that I have to optimize it because I can push it only to 200kH/s</p>
+
+<p>Fortunately, Go has profiling built-in, so I can easily point out that, most of the time my program was waiting for fmt.Sprintf, because I used it to build the commit message.</p>
+
+<p>So, because the commit is fixed, just the nonce changes, I was able to prebuilt the commit message and the commit hash, just by giving the commit the fixed length and nonce has 16 number. I thought I can create SHA1 with that prebuilt commit and boost the speed of SHA1 function a lot, but I can&rsquo;t, so removing fmt.Sprintf was good for me.</p>
+
+<p>And by competing with more people, I have to monitor new block, and restart my miner with a new blockchain. I built a channel into the miner, and another gorountine to monitor and send stop signal.</p>
+
+<p>Once in a while, the miner will check for stop signal and get out of the loop.</p>
+
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">select</span> <span style="color: #839496">{</span>
+<span style="color: #859900">case</span> <span style="color: #839496">msg</span> <span style="color: #839496">:=</span> <span style="color: #839496">&amp;lt;-stop:</span>
+    <span style="color: #859900">if</span> <span style="color: #839496">msg</span> <span style="color: #839496">{</span>
+        <span style="color: #586e75; font-style: italic">// fmt.Printf(&quot;Miner %d stopped! Last i is %d\n&quot;, begin, i)</span>
+        <span style="color: #859900">break</span> <span style="color: #839496">jobOuter</span>
+    <span style="color: #839496">}</span>
+<span style="color: #859900">default</span><span style="color: #839496">:</span>
+<span style="color: #839496">}</span>
+</pre></div>
+
+<p>The monitor function is pretty straightforward, I have two commit hash, last and current, if last commit has different hash than current commit, I do a git hard reset, and send a stop signal.</p>
+
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">func</span> <span style="color: #839496">monitor(stop</span> <span style="color: #859900">chan</span> <span style="color: #859900">bool</span><span style="color: #839496">)</span> <span style="color: #839496">{</span>
+    <span style="color: #859900">var</span> <span style="color: #839496">hash,</span> <span style="color: #839496">newHash</span> <span style="color: #859900">string</span>
+    <span style="color: #839496">hash</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;rev-parse&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--short&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;origin/master&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+    <span style="color: #859900">for</span> <span style="color: #839496">{</span>
+        <span style="color: #839496">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;fetch&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;origin&quot;</span><span style="color: #839496">)</span>
+        <span style="color: #839496">newHash</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;rev-parse&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--short&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;origin/master&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+        <span style="color: #859900">if</span> <span style="color: #839496">hash</span> <span style="color: #839496">!=</span> <span style="color: #839496">newHash</span> <span style="color: #839496">{</span>
+            <span style="color: #839496">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;reset&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--hard&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;origin/master&quot;</span><span style="color: #839496">)</span>
+            <span style="color: #586e75; font-style: italic">// log.Println(&quot;New block found! Reseting miners!&quot;)</span>
+            <span style="color: #839496">stop</span> <span style="color: #839496">&amp;lt;-</span> <span style="color: #859900">true</span>
+            <span style="color: #839496">hash</span> <span style="color: #839496">=</span> <span style="color: #839496">newHash</span>
+            <span style="color: #839496">time.Sleep(</span><span style="color: #2aa198">1</span> <span style="color: #839496">*</span> <span style="color: #839496">time.Second)</span>
+        <span style="color: #839496">}</span>
+        <span style="color: #839496">time.Sleep(</span><span style="color: #2aa198">1</span> <span style="color: #839496">*</span> <span style="color: #839496">time.Second)</span>
+    <span style="color: #839496">}</span>
+<span style="color: #839496">}</span>
+</pre></div>
+
+<p>That&rsquo;s almost be all, things I can/should do better:</p>
+
+<ol>
+<li>I have to calculate SHA1 again everytime I change nonce. I should calculate a base SHA1, and feed nonce for each loop. I can&rsquo;t find anyway to do this now, so I choose to ignore.</li>
+<li>Calling git by command line is bad, maybe use a git library. Sometimes a push does matter, so implement it directly with socket might be good (just the push)</li>
+</ol>
+
+<p>I ended the game with 756 point, with several Gitcoins found. It&rsquo;s very hard to find a coin because I only have 1.5MH/s with all my PCs, so I need a lucky moment to get one.</p>
+
+	
+			
+
+			
+				<div class="tags-list">
+					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+					
+	                <a class="post-tag post-tag-development" href="http://blog.ntcong.it/tags/development">development</a>,
+	                
+	                <a class="post-tag post-tag-go" href="http://blog.ntcong.it/tags/go">go</a>,
+	                
+				</div>
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+					<div class="paging-newer">
+						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
+						<a class="paging-link" href="/posts/goodbye-blogspot-hello-hugo/">Goodbye Blogspot, Hello Hugo</a>
+		            </div>
+		            
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/posts/bitcoin-protocol-the-basic/">Bitcoin Protocol: The Basic</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ntcongit';
+    var disqus_identifier = 'http:\/\/blog.ntcong.it\/posts\/stripe-ctf-level1-with-golang\/';
+    var disqus_title = 'Stripe-CTF Level 1 with Golang';
+    var disqus_url = 'http:\/\/blog.ntcong.it\/posts\/stripe-ctf-level1-with-golang\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2014. All rights reserved. </p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>

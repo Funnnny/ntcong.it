@@ -2,7 +2,8 @@
 date = "2014-02-07T17:36:17+07:00"
 title = "Stripe-CTF Level 1 with Golang"
 author = "Cong Nguyen"
-
+Tags = ["development", "go"]
+Categories = ["development", "go"]
 +++
 
 This year's Stripe-CTF brings some interesting things to the table: Cryptocurrency. I've already known about cryptocurrency and Bitcoin in general, but it's amazing how Bitcoin relates to Git.

@@ -8,9 +8,26 @@ author = "Cong Nguyen"
 [params]
   sidebartitle = "CongNT"
   sidebartagline = "Thoughts on Programming and anything Computer"
+  categoriescss = "/css/categories.css"
 [[menu.main]]
   name = "Blog"
-  url = "/post"
+  url = "/posts"
 [[menu.main]]
   name = "About"
   url = "/about"
+[[menu.social]]
+  pre = "<i class='fa fa-rss'></i>"
+  url = "http://blog.ntcong.it/posts/index.xml"
+  identifier = "RSS"
+[[menu.social]]
+  pre = "<i class='fa fa-google-plus'></i>"
+  url = "https://plus.google.com/+CongNguyen"
+  identifier = "Google+"
+[[menu.social]]
+  pre = "<i class='fa fa-facebook'></i>"
+  url = "https://facebook.com/ntcong.it"
+  identifier = "Facebook"
+[[menu.social]]
+  pre = "<i class='fa fa-github'></i>"
+  url = "http://github.com/Funnnny"
+  identifier = "Facebook"
