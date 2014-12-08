@@ -1,6 +1,7 @@
 +++
 date = "2013-09-12T16:06:44+07:00"
 title = "Bitcoin - Người ta đã làm ra nó như thế nào"
+author = "Cong Nguyen"
 
 +++
 

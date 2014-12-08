@@ -1,6 +1,7 @@
 +++
 date = "2013-10-09T21:06:00+07:00"
 title = "Silk Road và những điều bạn cần biết"
+author = "Cong Nguyen"
 
 +++
 

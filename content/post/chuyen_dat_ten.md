@@ -1,6 +1,7 @@
 +++
 date = "2013-01-21T16:18:00+07:00"
 title = "Phiếm bàn chuyện đặt tên"
+author = "Cong Nguyen"
 
 +++
 
