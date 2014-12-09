@@ -108,6 +108,17 @@ h2.brand-tagline {
 	color:#E54028;
 }
 
+.sidebar-avatar-wrapper {
+	width: 80px;
+	height: 80px;
+	border-radius: 80px;
+    overflow: hidden;
+    margin-left: 1rem;
+    float: right;
+}
+.sidebar-avatar {
+    height: 82px;
+}
 /* Nav */
 .nav-list {
     margin: 0;
