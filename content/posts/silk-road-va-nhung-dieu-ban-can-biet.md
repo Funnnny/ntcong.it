@@ -2,8 +2,12 @@
 date = "2013-10-09T21:06:00+07:00"
 title = "Silk Road và những điều bạn cần biết"
 author = "Cong Nguyen"
+authorlink = "http://ntcong.it"
+authorfacebook = "http://facebook.com/ntcong.it"
+authorgoogleplus = "https://plus.google.com/+CongNguyen"
 Categories = ["thought", "bitcoin"]
 Tags = ["thought", "bitcoin"]
+thumbnail = "img/silkroad.png"
 
 +++
 

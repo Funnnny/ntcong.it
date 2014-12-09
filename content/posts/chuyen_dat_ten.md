@@ -2,6 +2,9 @@
 date = "2013-01-21T16:18:00+07:00"
 title = "Phiếm bàn chuyện đặt tên"
 author = "Cong Nguyen"
+authorlink = "http://ntcong.it"
+authorfacebook = "http://facebook.com/ntcong.it"
+authorgoogleplus = "https://plus.google.com/+CongNguyen"
 Tags = ["development", "thought"]
 Categories = ["development", "thought"]
 

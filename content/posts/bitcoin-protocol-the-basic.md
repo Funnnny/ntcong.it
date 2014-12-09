@@ -2,8 +2,12 @@
 date = "2014-01-19T12:51:42+07:00"
 title = "Bitcoin Protocol: The Basic"
 author = "Cong Nguyen"
+authorlink = "http://ntcong.it"
+authorfacebook = "http://facebook.com/ntcong.it"
+authorgoogleplus = "https://plus.google.com/+CongNguyen"
 Categories = ["thought", "bitcoin"]
 Tags = ["thought", "bitcoin"]
+thumbnail = "img/bitcoin.png"
 
 +++
 

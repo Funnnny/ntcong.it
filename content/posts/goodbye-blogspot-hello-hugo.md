@@ -5,6 +5,10 @@ Tags = ["blog", "go"]
 date = "2014-12-08T11:22:36+07:00"
 title = "Goodbye Blogspot, Hello Hugo"
 author = "Cong Nguyen"
+authorlink = "http://ntcong.it"
+authorfacebook = "http://facebook.com/ntcong.it"
+authorgoogleplus = "https://plus.google.com/+CongNguyen"
+thumbnail = "img/hugo.png"
 
 +++
 

@@ -2,8 +2,12 @@
 date = "2013-09-12T16:06:44+07:00"
 title = "Bitcoin - Người ta đã làm ra nó như thế nào"
 author = "Cong Nguyen"
+authorlink = "http://ntcong.it"
+authorfacebook = "http://facebook.com/ntcong.it"
+authorgoogleplus = "https://plus.google.com/+CongNguyen"
 Categories = ["thought", "bitcoin"]
 Tags = ["thought", "bitcoin"]
+thumbnail = "img/bitcoin.png"
 
 +++
 
