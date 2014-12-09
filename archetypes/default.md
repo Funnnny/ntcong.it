@@ -6,7 +6,7 @@ authorfacebook = "http://facebook.com/ntcong.it"
 authorgoogleplus = "https://plus.google.com/+CongNguyen"
 Categories = []
 Tags = []
-thumbnail = "img/avatar.png"
+thumbnail = "/img/avatar.png"
 
 +++
 

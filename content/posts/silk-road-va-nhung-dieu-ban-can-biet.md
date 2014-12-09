@@ -7,7 +7,7 @@ authorfacebook = "http://facebook.com/ntcong.it"
 authorgoogleplus = "https://plus.google.com/+CongNguyen"
 Categories = ["thought", "bitcoin"]
 Tags = ["thought", "bitcoin"]
-thumbnail = "img/silkroad.png"
+thumbnail = "/img/silkroad.png"
 
 +++
 

@@ -8,5 +8,5 @@ notoc = true
 noauthor = true
 +++
 
-I'm a programmer from Vietnam. Nothing to see much here since I'm just building the site.
+I'm a programmer from Vietnam. Nothing to see much here since I'm still building the site.
 

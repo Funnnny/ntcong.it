@@ -7,7 +7,7 @@ authorfacebook = "http://facebook.com/ntcong.it"
 authorgoogleplus = "https://plus.google.com/+CongNguyen"
 Tags = ["development", "go"]
 Categories = ["development", "go"]
-thumbnail = "img/stripe.png"
+thumbnail = "/img/stripe.png"
 +++
 
 This year's Stripe-CTF brings some interesting things to the table: Cryptocurrency. I've already known about cryptocurrency and Bitcoin in general, but it's amazing how Bitcoin relates to Git.

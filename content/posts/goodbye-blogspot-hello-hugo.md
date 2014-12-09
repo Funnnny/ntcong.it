@@ -8,7 +8,7 @@ author = "Cong Nguyen"
 authorlink = "http://ntcong.it"
 authorfacebook = "http://facebook.com/ntcong.it"
 authorgoogleplus = "https://plus.google.com/+CongNguyen"
-thumbnail = "img/hugo.png"
+thumbnail = "/img/hugo.png"
 
 +++
 
