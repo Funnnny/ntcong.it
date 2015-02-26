@@ -31,7 +31,7 @@
   
   
 
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/redlounge.css">
+  <link rel="stylesheet" href="http://blog.ntcong.it//css/redlounge.css">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Roboto:900,500,100,300,700,400' rel='stylesheet' type='text/css'>
   <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
@@ -67,11 +67,11 @@
 
     <nav class="nav">
       <ul class="nav-list">
-        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://blog.ntcong.it">Home</a></li>
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://blog.ntcong.it/">Home</a></li>
         
-          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/about">About</a></li>
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/about/">About</a></li>
         
-          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/posts">Blog</a></li>
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/posts/">Blog</a></li>
         
       </ul>
     </nav>
@@ -80,15 +80,15 @@
     <div class="social-buttons">
       
         
-        <a href="https://plus.google.com/&#43;CongNguyen" target="_blank"><i class='fa fa-google-plus'></i></a>
-        
-      
-        
         <a href="http://github.com/Funnnny" target="_blank"><i class='fa fa-github'></i></a>
         
       
         
         <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
+        
+      
+        
+        <a href="https://plus.google.com/&#43;CongNguyen" target="_blank"><i class='fa fa-google-plus'></i></a>
         
       
       
@@ -111,9 +111,9 @@
 				<small class="toc-label">Contents</small>
 		   	 	<nav id="TableOfContents">
 <ul>
-<li><a href="#toc_0">The Captcha</a></li>
-<li><a href="#toc_1">Break it with Python and Google Tesseract</a></li>
-<li><a href="#toc_2">Wait, is it that simple?</a></li>
+<li><a href="#the-captcha:02a117938cf5deaed3c0cd35f6f81d2c">The Captcha</a></li>
+<li><a href="#break-it-with-python-and-google-tesseract:02a117938cf5deaed3c0cd35f6f81d2c">Break it with Python and Google Tesseract</a></li>
+<li><a href="#wait-is-it-that-simple:02a117938cf5deaed3c0cd35f6f81d2c">Wait, is it that simple?</a></li>
 </ul>
 </nav>
 		    </div>
@@ -150,9 +150,9 @@
 			
 				<div class="post-categories">
 				
-					<a class="post-category post-category-programming" href="http://blog.ntcong.it/categories/programming">programming</a>
+					<a class="post-category post-category-programming" href="http://blog.ntcong.it//categories/programming">programming</a>
 				
-					<a class="post-category post-category-python" href="http://blog.ntcong.it/categories/python">python</a>
+					<a class="post-category post-category-python" href="http://blog.ntcong.it//categories/python">python</a>
 				
 				</div>
 			
@@ -163,7 +163,7 @@
 
             
 
-<h1 id="toc_0">The Captcha</h1>
+<h1 id="the-captcha:02a117938cf5deaed3c0cd35f6f81d2c">The Captcha</h1>
 
 <p>VNExpress, Chungta.vn, ngoisao.net, they&rsquo;re all using a simple Captcha system to prevent bot voting/submit email. But unfortunately, the system is so easy, we can get around it in five minutes. (So, the voting poll, and all the competition based on voting in VNExpress is useless)</p>
 
@@ -180,29 +180,31 @@
 
 <p>So you can download the file, store it somewhere, use OCR on it, do some other transformation, and compare the result. If it does not give a acceptable accurate answer, I can just request another (and do it cheap). They are generous enough to give me a link to do it: <a href="http://beta.chungta.vn/captcha/show2">http://beta.chungta.vn/captcha/show2</a></p>
 
-<h1 id="toc_1">Break it with Python and Google Tesseract</h1>
+<h1 id="break-it-with-python-and-google-tesseract:02a117938cf5deaed3c0cd35f6f81d2c">Break it with Python and Google Tesseract</h1>
 
 <p><a href="https://code.google.com/p/tesseract-ocr/">Google Tesseract</a> is a very popular OCR engine, with a very accurate result. Combined with Python (because I know it) and PIL, you can do a lot of different thing with it.</p>
 
 <p>Install everything is easy, if you&rsquo;re using Windows, just download tesseract, python and PIL pre-built binary file (aka .exe) and install. If you&rsquo;re using Linux, install it with your package manager:</p>
 
-<div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #cb4b16">$sudo</span> apt-get install tesseract-ocr
-<span style="color: #cb4b16">$pip</span> install pytesseract
-<span style="color: #cb4b16">$pip</span> install pillow
-</pre></div>
+<p><pre><code>$sudo apt-get install tesseract-ocr
+$pip install pytesseract
+$pip install pillow
+</code></pre>
+</p>
 
 <p>So what do we have to do? First we get a captcha with the <a href="http://beta.chungta.vn/captcha/show2">above link</a>, the response is just a json text file. Then we extract the image id, the image above has id:&ldquo;22b3fefb9d316f98489085252bd0d896&rdquo;. Then we download the image by append the id to the url: &ldquo;<a href="http://beta.chungta.vn/captcha/viewimg/id/&quot;">http://beta.chungta.vn/captcha/viewimg/id/&quot;</a>. And last, some magic:</p>
 
-<div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #cb4b16">from</span> <span style="color: #b58900">PIL</span> <span style="color: #cb4b16">import</span> <span style="color: #586e75">Image</span>
-<span style="color: #cb4b16">import</span> <span style="color: #b58900">pytesseract</span>
+<p><pre><code>from PIL import Image
+import pytesseract
 
 
-<span style="color: #859900">print</span> <span style="color: #586e75">pytesseract</span><span style="color: #657b83">.</span><span style="color: #586e75">image_to_string</span><span style="color: #657b83">(</span><span style="color: #586e75">Image</span><span style="color: #657b83">.</span><span style="color: #586e75">open</span><span style="color: #657b83">(</span><span style="color: #2aa198">&#39;captcha.png&#39;</span><span style="color: #657b83">))</span>
-</pre></div>
+print pytesseract.image_to_string(Image.open('captcha.png'))
+</code></pre>
+</p>
 
 <p>and the result is: &lsquo;5y47&rsquo;</p>
 
-<h1 id="toc_2">Wait, is it that simple?</h1>
+<h1 id="wait-is-it-that-simple:02a117938cf5deaed3c0cd35f6f81d2c">Wait, is it that simple?</h1>
 
 <p>It is, it showed how ridiculous easy the captcha is. Now we just need to pre-fill the POST data with the id and captcha text, and also the mail content, and what left to do is automated-contact-us-spam-bot.</p>
 
@@ -214,24 +216,26 @@
 <li>First, convert the image to RGB, then load the image into an array:</li>
 </ul>
 
-<div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #586e75">img</span> <span style="color: #657b83">=</span> <span style="color: #586e75">Image</span><span style="color: #657b83">.</span><span style="color: #586e75">open</span><span style="color: #657b83">(</span><span style="color: #2aa198">&#39;captcha.png&#39;</span><span style="color: #657b83">)</span>
-<span style="color: #586e75">img</span> <span style="color: #657b83">=</span> <span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">convert</span><span style="color: #657b83">(</span><span style="color: #2aa198">&#39;RGB&#39;</span><span style="color: #657b83">)</span>
-<span style="color: #586e75">data</span> <span style="color: #657b83">=</span> <span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">load</span><span style="color: #657b83">()</span>
-</pre></div>
+<p><pre><code>img = Image.open('captcha.png')
+img = img.convert('RGB')
+data = img.load()
+</code></pre>
+</p>
 
 <ul>
 <li>Then, we flip the color for each pixel: set black for color blacker than a little black, and white for others.</li>
 </ul>
 
-<div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #859900">for</span> <span style="color: #586e75">y</span> <span style="color: #859900">in</span> <span style="color: #268bd2">xrange</span><span style="color: #657b83">(</span><span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">size</span><span style="color: #657b83">[</span><span style="color: #2aa198">1</span><span style="color: #657b83">]):</span>
-    <span style="color: #859900">for</span> <span style="color: #586e75">x</span> <span style="color: #859900">in</span> <span style="color: #268bd2">xrange</span><span style="color: #657b83">(</span><span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">size</span><span style="color: #657b83">[</span><span style="color: #2aa198">0</span><span style="color: #657b83">]):</span>
-        <span style="color: #859900">if</span> <span style="color: #586e75">data</span><span style="color: #657b83">[</span><span style="color: #586e75">x</span><span style="color: #657b83">,</span><span style="color: #586e75">y</span><span style="color: #657b83">]</span> <span style="color: #586e75">should</span> <span style="color: #586e75">be</span> <span style="color: #586e75">black</span><span style="color: #657b83">:</span>
-            <span style="color: #586e75">data</span><span style="color: #657b83">[</span><span style="color: #586e75">x</span><span style="color: #657b83">,</span><span style="color: #586e75">y</span><span style="color: #657b83">]</span> <span style="color: #657b83">=</span> <span style="color: #657b83">(</span><span style="color: #2aa198">0</span><span style="color: #657b83">,</span> <span style="color: #2aa198">0</span><span style="color: #657b83">,</span> <span style="color: #2aa198">0</span><span style="color: #657b83">,</span> <span style="color: #2aa198">255</span><span style="color: #657b83">)</span>
-        <span style="color: #859900">if</span> <span style="color: #586e75">data</span><span style="color: #657b83">[</span><span style="color: #586e75">x</span><span style="color: #657b83">,</span><span style="color: #586e75">y</span><span style="color: #657b83">]</span> <span style="color: #586e75">should</span> <span style="color: #586e75">be</span> <span style="color: #586e75">white</span><span style="color: #657b83">:</span>
-            <span style="color: #586e75">data</span><span style="color: #657b83">[</span><span style="color: #586e75">x</span><span style="color: #657b83">,</span><span style="color: #586e75">y</span><span style="color: #657b83">]</span> <span style="color: #657b83">=</span> <span style="color: #657b83">(</span><span style="color: #2aa198">255</span><span style="color: #657b83">,</span> <span style="color: #2aa198">255</span><span style="color: #657b83">,</span> <span style="color: #2aa198">255</span><span style="color: #657b83">,</span> <span style="color: #2aa198">255</span><span style="color: #657b83">)</span>
-<span style="color: #93a1a1; font-style: italic"># and save</span>
-<span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">save</span><span style="color: #657b83">(</span><span style="color: #2aa198">&quot;output.png&quot;</span><span style="color: #657b83">)</span>
-</pre></div>
+<p><pre><code>for y in xrange(img.size[1]):
+    for x in xrange(img.size[0]):
+        if data[x,y] should be black:
+            data[x,y] = (0, 0, 0, 255)
+        if data[x,y] should be white:
+            data[x,y] = (255, 255, 255, 255)
+# and save
+img.save("output.png")
+</code></pre>
+</p>
 
 <p>And then you can just use pytesseract&rsquo;s image_to_string. Sometimes I have to scale the image, and then do a simple anti-alias. But if you implement a good brute-force bot, you can just retry a few times, because the success rate is high.</p>
 
@@ -244,9 +248,9 @@
 				<div class="tags-list">
 					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
 					
-	                <a class="post-tag post-tag-programming" href="http://blog.ntcong.it/tags/programming">programming</a>,
+	                <a class="post-tag post-tag-programming" href="http://blog.ntcong.it//tags/programming">programming</a>,
 	                
-	                <a class="post-tag post-tag-python" href="http://blog.ntcong.it/tags/python">python</a>,
+	                <a class="post-tag post-tag-python" href="http://blog.ntcong.it//tags/python">python</a>,
 	                
 				</div>
 			
@@ -291,7 +295,7 @@
 		</ul>
 	</div>
 
-	<p>&copy; 2014. All rights reserved. </p>
+	<p>&copy; 2015. All rights reserved. </p>
 </div>
     </div>
   </div>
