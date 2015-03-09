@@ -33,9 +33,9 @@ So you can download the file, store it somewhere, use OCR on it, do some other t
 Install everything is easy, if you're using Windows, just download tesseract, python and PIL pre-built binary file (aka .exe) and install. If you're using Linux, install it with your package manager:
 
 {{% highlight bash %}}
-    $sudo apt-get install tesseract-ocr
-    $pip install pytesseract
-    $pip install pillow
+$sudo apt-get install tesseract-ocr
+$pip install pytesseract
+$pip install pillow
 {{% /highlight %}}
 
 So what do we have to do? First we get a captcha with the [above link](http://beta.chungta.vn/captcha/show2), the response is just a json text file. Then we extract the image id, the image above has id:"22b3fefb9d316f98489085252bd0d896". Then we download the image by append the id to the url: "http://beta.chungta.vn/captcha/viewimg/id/". And last, some magic:
