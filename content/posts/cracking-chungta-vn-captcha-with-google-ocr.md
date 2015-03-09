@@ -40,13 +40,13 @@ $pip install pillow
 
 So what do we have to do? First we get a captcha with the [above link](http://beta.chungta.vn/captcha/show2), the response is just a json text file. Then we extract the image id, the image above has id:"22b3fefb9d316f98489085252bd0d896". Then we download the image by append the id to the url: "http://beta.chungta.vn/captcha/viewimg/id/". And last, some magic:
 
-{{% highlight python %}}
+{{< highlight python >}}
     from PIL import Image
     import pytesseract
 
 
     print pytesseract.image_to_string(Image.open('captcha.png'))
-{{% /highlight %}}
+{{< /highlight >}}
 
 and the result is: '5y47'
 
@@ -60,15 +60,15 @@ after using Image.open to open the file, you have to:
 
 - First, convert the image to RGB, then load the image into an array:
 
-{{% highlight python %}}
+{{< highlight python >}}
     img = Image.open('captcha.png')
     img = img.convert('RGB')
     data = img.load()
-{{% /highlight %}}
+{{< /highlight >}}
 
 - Then, we flip the color for each pixel: set black for color blacker than a little black, and white for others.
 
-{{% highlight python %}}
+{{< highlight python >}}
     for y in xrange(img.size[1]):
         for x in xrange(img.size[0]):
             if data[x,y] should be black:
@@ -78,7 +78,7 @@ after using Image.open to open the file, you have to:
     # and save
     img.save("output.png")
                 
-{{% /highlight %}}
+{{< /highlight >}}
 
 And then you can just use pytesseract's image_to_string. Sometimes I have to scale the image, and then do a simple anti-alias. But if you implement a good brute-force bot, you can just retry a few times, because the success rate is high.
 
