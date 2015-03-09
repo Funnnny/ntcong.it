@@ -40,9 +40,9 @@
 
 &lt;p&gt;Install everything is easy, if you&amp;rsquo;re using Windows, just download tesseract, python and PIL pre-built binary file (aka .exe) and install. If you&amp;rsquo;re using Linux, install it with your package manager:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;    &lt;span style=&#34;color: #cb4b16&#34;&gt;$sudo&lt;/span&gt; apt-get install tesseract-ocr
-    &lt;span style=&#34;color: #cb4b16&#34;&gt;$pip&lt;/span&gt; install pytesseract
-    &lt;span style=&#34;color: #cb4b16&#34;&gt;$pip&lt;/span&gt; install pillow
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #cb4b16&#34;&gt;$sudo&lt;/span&gt; apt-get install tesseract-ocr
+&lt;span style=&#34;color: #cb4b16&#34;&gt;$pip&lt;/span&gt; install pytesseract
+&lt;span style=&#34;color: #cb4b16&#34;&gt;$pip&lt;/span&gt; install pillow
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
 
