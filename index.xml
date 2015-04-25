@@ -6,8 +6,91 @@
     <description>Recent content on Cong Nguyen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Dec 2014 10:05:51 +0700</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2015 17:16:23 +0700</lastBuildDate>
     <atom:link href="http://blog.ntcong.it/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>How VCB OTP work and How not to do it</title>
+      <link>http://blog.ntcong.it/posts/how-vcb-do-otp-or-how-not-to-do-it/</link>
+      <pubDate>Fri, 24 Apr 2015 17:16:23 +0700</pubDate>
+      
+      <guid>http://blog.ntcong.it/posts/how-vcb-do-otp-or-how-not-to-do-it/</guid>
+      <description>
+
+&lt;h1 id=&#34;the-app:facd3c79284655dfd0d0ccd908208d13&#34;&gt;The App&lt;/h1&gt;
+
+&lt;p&gt;So recently VCB released a Smart OTP app for Android (not so recently anymore since I&amp;rsquo;m holding up the post for a while). They seem to be the first bank to release a app-based OTP, so let&amp;rsquo;s take a look at how they did it.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m not an Android programmer by any mean, so it takes a while to be able to understand the code and to collect the tools, you may have better results if you are. And also I&amp;rsquo;m a terrible programmer, so just take my words with a grain of salt.&lt;/p&gt;
+
+&lt;p&gt;Anyway, the process of decompiler is pretty easy:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use apktool to extract the dex file and Android data files&lt;/li&gt;
+&lt;li&gt;Use a dex2jar decompiler to convert classes.dex to a jar file&lt;/li&gt;
+&lt;li&gt;Use a general jar decompiler to convert it back to java files&lt;/li&gt;
+&lt;li&gt;Open in Eclipse and setup debug environment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you want to decompiler yourself, you might need to do a little homework.&lt;/p&gt;
+
+&lt;h1 id=&#34;the-problem:facd3c79284655dfd0d0ccd908208d13&#34;&gt;The Problem&lt;/h1&gt;
+
+&lt;p&gt;First, you have to register your device. In the a/a.java file, they call some webservice from smartotp.vietcombank.com.vn. You will send your number, Mac address and time, and also your confirmation number. Then they will send you back an otp master key. I will trust them to do the right thing and generate that key properly. So let&amp;rsquo;s jump right at the smartotp website.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.ntcong.it/img/vcb_web.png&#34; alt=&#34;VCB Web&#34; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Woa, a big red certificate icon: not a good sign. And they list all the web service methods and HOW to call them. &lt;strong&gt;Classic .Net Service1.asmx :)&lt;/strong&gt;. You can study further to know how they encrypt and send the request, or you can have fun just by repeatedly sending confirmation and lock your friends from register.&lt;/p&gt;
+
+&lt;p&gt;After that I register with the service, and then setup the passcode. Pretty good practice right? You have OTP combined with passcode.
+Not that simple, turned out they save app&amp;rsquo;s data in /data/data/vietcombank&amp;hellip;/shared_prefs. The file has some pretty suspicious variables: &lt;strong&gt;pHashPassCode&lt;/strong&gt; and &lt;strong&gt;pX_FACTOR&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Look for the pHashPassCode variable and see how they use it: they merge it with device&amp;rsquo;s Mac address, and md5 the result. Luckily, it&amp;rsquo;s just a 4 numbers passcode, we can brute force it. Or better, set it to &amp;ldquo;1234&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s pretty sad to see how a big company can&amp;rsquo;t even learn to use the passcode right. What the point of a passcode when people can just replace it with another? Generally we encrypt all the variable or the preference file itself with a key derived from that passcode. Technically someone can still bruteforce if they know the algorithm, but there are methods to prevent it, and even then it&amp;rsquo;s so much better.&lt;/p&gt;
+
+&lt;p&gt;And last, let&amp;rsquo;s take a look at the OTP itself. It seems to be a &lt;em&gt;complicated&lt;/em&gt; algorithm:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #586e75&#34;&gt;gg&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;L&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;str1&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;D&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;str1&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;L&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;D&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;str1&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;))&lt;/span&gt; 
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;str1: just a floor of time/80 (which means the otp will change each 80s)&lt;/li&gt;
+&lt;li&gt;D: your phone number&lt;/li&gt;
+&lt;li&gt;key: the transaction key in VCB&amp;rsquo;s e-banking&lt;/li&gt;
+&lt;li&gt;L: phone&amp;rsquo;s mac address&lt;/li&gt;
+&lt;li&gt;y: the secret&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You might think I forgot the pX_FACTOR above, but no, the pX_FACTOR is y-the-secret here.&lt;/p&gt;
+
+&lt;p&gt;And a: it&amp;rsquo;s just a md5 function&lt;/p&gt;
+
+&lt;p&gt;So, you don&amp;rsquo;t even need the passcode, just get pX_FACTOR and use it at your PC. Android even have a helpful command: run-as package so you can easily extract the code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;adb shell run-as vietcombank... cat /data/data/vietcombank.../shared_prefs/...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Convenience, right?&lt;/p&gt;
+
+&lt;h1 id=&#34;closing:facd3c79284655dfd0d0ccd908208d13&#34;&gt;Closing&lt;/h1&gt;
+
+&lt;p&gt;I did this nearly two months ago, so something might be missing here. Also I did not know anything better so don&amp;rsquo;t mock me if I&amp;rsquo;m wrong:)&lt;/p&gt;
+
+&lt;p&gt;But anyway, here the problem with VCB:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Don&amp;rsquo;t use half-assed security implementation. Passcode is nice, but if you decided to implement passcode, do it right. Don&amp;rsquo;t just add passcode for the sake of passcode, let&amp;rsquo;s the user use a better alternative (like the OS&amp;rsquo;s screen lock).&lt;/li&gt;
+&lt;li&gt;Next time secure your web API, it&amp;rsquo;s not a good thing to expose your web service like that.&lt;/li&gt;
+&lt;li&gt;I think the secret (or the OTP master key) is a md5 string. Why use a broken algorithm instead of a better implementation? The secret is using just as a string, you can use any hash function for it.&lt;/li&gt;
+&lt;li&gt;And the OTP: well, it&amp;rsquo;s your choice to do it yourself (or because I&amp;rsquo;m stupid and I don&amp;rsquo;t recognize the standard here :) ). But still, don&amp;rsquo;t use md5. No one charged you for any other methods.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I should invest more time into this app, but it&amp;rsquo;s just an OTP generator (and there&amp;rsquo;s standard out there), so why bother :)&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR</title>
