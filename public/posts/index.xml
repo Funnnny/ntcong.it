@@ -19,7 +19,7 @@
 
 &lt;h1 id=&#34;the-app:facd3c79284655dfd0d0ccd908208d13&#34;&gt;The App&lt;/h1&gt;
 
-&lt;p&gt;So recently VCB released a Smart OTP app for Android (not so recently anymore since I&amp;rsquo;m holding up the post for a while). They seem to be the first bank to release a app-based OTP, so let&amp;rsquo;s take a look at how they did it.&lt;/p&gt;
+&lt;p&gt;So recently Vietcombank released a Smart OTP app for Android (not so recently anymore since I&amp;rsquo;m holding up the post for a while). They seem to be the first bank to release a app-based OTP, so let&amp;rsquo;s take a look at how they did it.&lt;/p&gt;
 
 &lt;p&gt;I&amp;rsquo;m not an Android programmer by any mean, so it takes a while to be able to understand the code and to collect the tools, you may have better results if you are. And also I&amp;rsquo;m a terrible programmer, so just take my words with a grain of salt.&lt;/p&gt;
 

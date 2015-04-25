@@ -12,7 +12,7 @@ title = "How VCB OTP work and How not to do it"
 +++
 
 # The App
-So recently VCB released a Smart OTP app for Android (not so recently anymore since I'm holding up the post for a while). They seem to be the first bank to release a app-based OTP, so let's take a look at how they did it.
+So recently Vietcombank released a Smart OTP app for Android (not so recently anymore since I'm holding up the post for a while). They seem to be the first bank to release a app-based OTP, so let's take a look at how they did it.
 
 I'm not an Android programmer by any mean, so it takes a while to be able to understand the code and to collect the tools, you may have better results if you are. And also I'm a terrible programmer, so just take my words with a grain of salt.
 
