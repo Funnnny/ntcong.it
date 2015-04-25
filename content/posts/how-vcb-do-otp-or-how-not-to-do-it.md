@@ -7,7 +7,7 @@ authorgoogleplus = "https://plus.google.com/+CongNguyen"
 authorlink = "http://ntcong.it"
 date = "2015-04-24T17:16:23+07:00"
 thumbnail = "/img/avatar.png"
-title = "How VCB OTP work and How not to do it"
+title = "How VCB OTP works and How not to do it"
 
 +++
 
