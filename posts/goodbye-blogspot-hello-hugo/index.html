@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<title>Goodbye Blogspot, Hello Hugo - Cong Nguyen</title>
+	<meta name="author" content="map[]">
+
+	
+	
+	<meta name="description" content="">
+	
+
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+	<link rel="canonical" href="http://localhost:1313/posts/goodbye-blogspot-hello-hugo/">
+	<link href="http://localhost:1313//favicon.png" rel="shortcut icon">
+	<link href="http://localhost:1313//css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="http://localhost:1313//css/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+  
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	
+	
+</div>
+
+<nav id="main-nav"><ul class="main">
+    <li><a href="/">Blog</a></li>
+    <li><a href="http://about.me/shashankmehta">About</a></li>
+    <li><a href="/post/">Archives</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+	</div>
+</nav>
+</header>
+			</div>
+		</div>
+		<div class="mid-col">
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner">
+					<div itemscope itemtype="http://schema.org/Blog">
+					<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <h1 class="title" itemprop="name">Goodbye Blogspot, Hello Hugo</h1>
+	<div class="entry-content" itemprop="articleBody">
+
+<h1 id="goodbye-any-traditional-blogging-system:6bf65216e2bb0f20637aa35fde252b26">Goodbye (any) traditional blogging system</h1>
+
+<p>I used Wordpress for like 8 years, wrote some plugins myself (some that I already published), eventually got tired of managing my own hosting, and switched to wordpress.com. Then Wordpress.com want 15 dollar a year just for custom domain feature, and I switched to Blogspot. I happily used Blogspot for a while, but even so, the experience is not that great. Some example:</p>
+
+<ul>
+<li>Bloated: there are so many features I don&rsquo;t use, and the feature I use, I have to code it in manually.</li>
+<li>Editor: I hate the WYSIWYG editor, it&rsquo;s bloated (again) with the non-standard tag, bbcode. It&rsquo;s easy to break with my horrible Internet. And it doesn&rsquo;t behave the way I want it to. I wanted to use Markdown, but write in Markdown, then convert to HTML and copy to the WYSIWYG editor, it&rsquo;s not a pleasant way.</li>
+<li>Ugly Themes: It seems that no one want to use a minialist theme with Blogspot (or even Wordpress). I&rsquo;m happy to remove away most features for a minimalistic approach, but to no avail. Every minimal templates/themes want to retain the most core-feature (which is not a bad thing). I&rsquo;m a horrible designer, I know very little about CSS, so in the end, it&rsquo;s still a problem I had to deal with.</li>
+<li>Bloated website: The website bundle with a lot of useless things: some stupid Google&rsquo;s javascript that I don&rsquo;t bother to read, Google+ js, some other Google&rsquo;s one, then some Google+, a lot of default Blogspot CSS, jQuery, api.js, source code highlighting script&hellip;Every features I added, I had to add some javascript/library too.</li>
+<li>Always online: I used some offline clients, but the trust is: you will never know how your post display until you submit the post. Only to find some problem, and have to fire up the online editor. And the downtime, every person in the world tells me Google&rsquo;s uptime is the best, but I occasionally find some problem with the editor, or the admin interface.</li>
+</ul>
+
+<p>I can make myself a static website, I even had one before I use Wordpress (with a lot of marquee). I don&rsquo;t write much anyway, but again I&rsquo;m a horrible designer, the website would be ugly.</p>
+
+<p>Then I heard about Jekyll, and then Octopress, and some alternatives like Brunch, Hyde. But nothing catches my attention (maybe because I don&rsquo;t really like Ruby). One day, I read about Hugo and decided it&rsquo;s time to switch.</p>
+
+<h1 id="hello-static-website-generator-hugo:6bf65216e2bb0f20637aa35fde252b26">Hello static website generator (Hugo)</h1>
+
+<p>I install hugo, build some test page with it, and then deploy the page to Github Pages in like 30 minutes. And I really like it:</p>
+
+<ul>
+<li>Being able to write my post in my editor: I use vim-binding so writing in normal or WYSIWYG editor feels missing something</li>
+<li>I can host my own blog (so I can do whatever I want) and also don&rsquo;t have to manage it, because it integrated nicely with my work flow: Markdown+Git+Github Pages.</li>
+<li>Markdown is amazing, no more weird problem with WYSIWYG.</li>
+<li>No more jQuery, no more google-prettify. Most things that can be done in server, like paginate and syntax highlighting, will be done when you regenerate your post. Less JS dependancy = real minimalistic website</li>
+<li>Go: Go is amazing and you should learn/use it.</li>
+</ul>
+
+<p>The only thing bugs me right now is the lack of themes, and it requires you have some decent knowledge about Go to solve some quirks. But it also give me some reason to tinkering with my setup.</p>
+</div></article>
+					
+						<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	
+	</div>
+	
+</div>
+
+					
+					
+					
+
+
+				    </div>
+				</div>
+			</div>
+			<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Cong Nguyen
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>
+<script src="http://localhost:1313//js/slash.js"></script>
+<script src="http://localhost:1313//js/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script></footer>
+		</div>
+	</div>
+	
+</body>
+</html>

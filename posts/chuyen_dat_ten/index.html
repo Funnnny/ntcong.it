@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<title>Phiếm bàn chuyện đặt tên - Cong Nguyen</title>
+	<meta name="author" content="map[]">
+
+	
+	
+	<meta name="description" content="">
+	
+
+	
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+	<link rel="canonical" href="http://localhost:1313/posts/chuyen_dat_ten/">
+	<link href="http://localhost:1313//favicon.png" rel="shortcut icon">
+	<link href="http://localhost:1313//css/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="http://localhost:1313//css/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+  
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	
+	
+</div>
+
+<nav id="main-nav"><ul class="main">
+    <li><a href="/">Blog</a></li>
+    <li><a href="http://about.me/shashankmehta">About</a></li>
+    <li><a href="/post/">Archives</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+	</div>
+</nav>
+</header>
+			</div>
+		</div>
+		<div class="mid-col">
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner">
+					<div itemscope itemtype="http://schema.org/Blog">
+					<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <h1 class="title" itemprop="name">Phiếm bàn chuyện đặt tên</h1>
+	<div class="entry-content" itemprop="articleBody"><p>Code mình viết ra cũng như con đẻ của mình vậy, chuyện đặt cho nó cái tên để gọi là chuyện vô cùng quan trọng. Đặt tên sao để cho tên nó hay, có ý nghĩa, lại còn phải để người khác dễ gọi, chưa kể là còn phải tránh tên dễ suy luận không là bạn bè của con nó chửi xéo.</p>
+
+<p>Chắc 100% người đụng vào code đều biết mấy kiểu đặt tên họ:</p>
+
+<ul>
+<li>viết_thường_kèm_gạch_dưới</li>
+<li>ViếtHoaChữCáiĐầu</li>
+<li>VIẾT_HOA_KÈM_GẠCH</li>
+<li>một vài loại biến thể khác</li>
+</ul>
+
+<p>Ngoài ra một số quy tắc khác như tên biến int thì bắt đầu bằng chữ i, class bắt đầu bằng cls, rồi thì là const thì viết hoa tất, quy tắc thì có lẽ chỉ dành cho project manager ngồi bịa ra viết tài liệu rồi cho các bạn đọc, đọc xong rồi nhớ áp dụng là xong.</p>
+
+<p>Đã phiếm bàn thì bàn cái gì cho nó hay tí, gọi là <strong>&ldquo;đặt tên một cách thông minh&rdquo;.</strong></p>
+
+<p>Đầu tiên có lẽ cần trích đến nguyên tắc đặt tên của Golang: short, concise, evocative; tạm dịch là ngắn gọn, súc tích và tạo ấn tượng.</p>
+
+<p>Ngắn gọn nhưng súc tích là một điểm đến rất khó khi đặt tên, một vài ví dụ như:</p>
+
+<p><strong>1.</strong> <strong>setup_and_run(new_work, job)</strong> : ngắn gọn, đầy đủ, rõ nghĩa</p>
+
+<p>do_setup_and_run: ai chả biết là làm ?</p>
+
+<p>setup_new_and_run: đã setup&hellip;(new_work) rồi lại còn có new ở tên.</p>
+
+<p><strong>2.</strong> <strong>io.NewIO(),</strong> <strong>Device.NewDevice():</strong> trong package A có hàm NewA là một lỗi khá phổ biến, cách đặt thừa tên này dẫn đến việc đọc code rất là căng thẳng.</p>
+
+<p>Tránh điều này rất đơn giản, ta có thể dùng io.New() nếu cần làm 1 số việc và trả về object IO, hoặc sử dụng trực tiếp io.IO()</p>
+
+<p><strong>3.</strong> <strong>god.Do(action)</strong> <strong>và</strong> <strong>_god.DoOrWaitTilDone(action):</strong> cách gọi thứ 2 tuy giải thích được việc hàm này sẽ thực hiện hoặc chờ nếu action đã đang thực hiện, tuy nhiên việc này nên đặt trong comment thì hơn là đặt vào tên. Nên nhớ nói dài là nói dại.</p>
+
+<p><strong>4. from what import what_exception:</strong> hay thường được biết đến với dòng from what.what<em>exception import WhatNotFound. Tại sao lại là what.what_exception ? Bỏ cái đoạn what</em> có làm nó khó hiểu hơn ko ? Có lẽ tự ai cũng hiểu: from what.exception import WhatNotFound</p>
+
+<p><strong>5. from what.exception import WhatNotFound<em>Exception</em></strong>: tại sao ??? WhatNotFound tốt, WhatError tốt, WhatYeahException tốt, NotFoundException vừa trùng lặp lại khó nhớ.</p>
+
+<p><strong>6. User.username, User.user_email:</strong> khỏi nói chắc ai cũng biết là thừa, User.name, User.email là 2 cái tên ngắn gọn và tốt hơn rất nhiều</p>
+
+<p><strong>7. from devices.device import Device:</strong> move Device import qua <strong>init</strong> là cách tránh tình trạng này rất dễ dàng, nên để nó là from devices import Device</p>
+
+<p>Vậy, tránh việc đặt tên xấu như thế nào?</p>
+
+<p>Thực ra, tên xấu ngay bản thân nó đã thể hiện được cách tránh, đã là cái tên thì phải đọc, đọc lên thấy&hellip;xấu thì phải suy nghĩ ngay:</p>
+
+<p><strong>1. Tên quá dài:</strong> đặt 1 cái tên xong thấy nó quá dài, hãy đọc lại thử 1 lần nữa xem nó có vấn đề gì không. Đừng quá ham nhét nhiều thông tin vào tên biến, tên hàm. Súc tích không có nghĩa là đầy đủ thông tin. Dành thời gian thừa khi nghĩ tên vào việc viết document hoặc comment cho rõ ràng.</p>
+
+<p><strong>2. Tên lặp lại quá nhiều:</strong> khi gọi vào biến đó hoặc hàm đó, bạn thấy rằng có 1 từ đang lặp lại 2 lần hay thậm chí 3 lần, dừng lại và nghĩ xem tại sao nó lặp lại, và việc lặp lại đó có ý nghĩa gì không. Điều này đúng với cả từ trùng nghĩa lặp lại như NotFoundException.</p>
+
+<p><strong>3. Tên đọc thấy&hellip;trẹo lưỡi:</strong> tên xấu, ví dụ như earth.create_a_new_god(), chưa đọc đã thấy nó trẹo cả lưỡi rồi, earth.new_god() có lẽ sẽ tốt hơn rất nhiều, chỉ cần chú ý một chút để sửa.</p>
+
+<p>Cuối cùng, code mình code ra, tên mình đặt, con mình mình nuôi, thế nên chú ý cho nó cái tên hay một chút, sau này có chuyển cho ai nuôi thì người ta cũng thích. Tất nhiên cũng đừng có nghĩ nhiều quá, đôi khi cũng cần một <em>&ldquo;ngoại lệ&rdquo;</em> nho nhỏ, bởi vì dù sao, mình đặt tên ra thì mình là người gọi nhiều nhất, đặt theo ý người khác cũng chả vui gì.</p>
+
+<p><em><em>Bài viết bậy viết bạ đánh dấu 2 năm không blog</em>&nbsp;</em></p>
+</div></article>
+					
+						<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	
+	</div>
+	
+</div>
+
+					
+					
+					
+
+
+				    </div>
+				</div>
+			</div>
+			<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Cong Nguyen
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a>
+<script src="http://localhost:1313//js/slash.js"></script>
+<script src="http://localhost:1313//js/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script></footer>
+		</div>
+	</div>
+	
+</body>
+</html>
