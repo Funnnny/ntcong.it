@@ -29,5 +29,5 @@ author = "Cong Nguyen"
   identifier = "Facebook"
 [[menu.social]]
   pre = "<i class='fa fa-github'></i>"
-  url = "http://github.com/Funnnny"
-  identifier = "Facebook"
+  url = "http://github.com/ntcong"
+  identifier = "GitHub"
