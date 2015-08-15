@@ -52,8 +52,8 @@ Not that simple, turned out they save app&amp;rsquo;s data in /data/data/vietcom
 
 &lt;p&gt;And last, let&amp;rsquo;s take a look at the OTP itself. It seems to be a &lt;em&gt;complicated&lt;/em&gt; algorithm:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #586e75&#34;&gt;gg&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;L&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;str1&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;D&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;str1&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;L&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;D&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;str1&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;))&lt;/span&gt; 
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;
+gg = a(a(y+L+str1+key)+a(y+D+str1+key)+a(L+D+str1+key)) 
 &lt;/p&gt;
 
 &lt;ul&gt;
@@ -123,19 +123,19 @@ Not that simple, turned out they save app&amp;rsquo;s data in /data/data/vietcom
 
 &lt;p&gt;Install everything is easy, if you&amp;rsquo;re using Windows, just download tesseract, python and PIL pre-built binary file (aka .exe) and install. If you&amp;rsquo;re using Linux, install it with your package manager:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #cb4b16&#34;&gt;$sudo&lt;/span&gt; apt-get install tesseract-ocr
-&lt;span style=&#34;color: #cb4b16&#34;&gt;$pip&lt;/span&gt; install pytesseract
-&lt;span style=&#34;color: #cb4b16&#34;&gt;$pip&lt;/span&gt; install pillow
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;
+$sudo apt-get install tesseract-ocr
+$pip install pytesseract
+$pip install pillow
 &lt;/p&gt;
 
 &lt;p&gt;So what do we have to do? First we get a captcha with the &lt;a href=&#34;http://beta.chungta.vn/captcha/show2&#34;&gt;above link&lt;/a&gt;, the response is just a json text file. Then we extract the image id, the image above has id:&amp;ldquo;22b3fefb9d316f98489085252bd0d896&amp;rdquo;. Then we download the image by append the id to the url: &amp;ldquo;&lt;a href=&#34;http://beta.chungta.vn/captcha/viewimg/id/&amp;quot;&#34;&gt;http://beta.chungta.vn/captcha/viewimg/id/&amp;quot;&lt;/a&gt;. And last, some magic:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #cb4b16&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color: #b58900&#34;&gt;PIL&lt;/span&gt; &lt;span style=&#34;color: #cb4b16&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;Image&lt;/span&gt;
-&lt;span style=&#34;color: #cb4b16&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #b58900&#34;&gt;pytesseract&lt;/span&gt;
+&lt;p&gt;
+from PIL import Image
+import pytesseract
 
-&lt;span style=&#34;color: #859900&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;pytesseract&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;image_to_string&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;Image&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;#39;captcha.png&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+print pytesseract.image_to_string(Image.open(&#39;captcha.png&#39;))
 &lt;/p&gt;
 
 &lt;p&gt;and the result is: &amp;lsquo;5y47&amp;rsquo;&lt;/p&gt;
@@ -152,26 +152,26 @@ Not that simple, turned out they save app&amp;rsquo;s data in /data/data/vietcom
 &lt;li&gt;First, convert the image to RGB, then load the image into an array:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #586e75&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;Image&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;open&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;#39;captcha.png&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #586e75&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;img&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;convert&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;#39;RGB&amp;#39;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #586e75&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;img&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;load&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;
+img = Image.open(&#39;captcha.png&#39;)
+img = img.convert(&#39;RGB&#39;)
+data = img.load()
 &lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Then, we flip the color for each pixel: set black for color blacker than a little black, and white for others.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;y&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;xrange&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;img&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;]):&lt;/span&gt;
-    &lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;xrange&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;img&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;]):&lt;/span&gt;
-        &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;should&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;be&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;black&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;:&lt;/span&gt;
-            &lt;span style=&#34;color: #586e75&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;255&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;should&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;be&lt;/span&gt; &lt;span style=&#34;color: #586e75&#34;&gt;white&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;:&lt;/span&gt;
-            &lt;span style=&#34;color: #586e75&#34;&gt;data&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;255&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;255&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;255&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;255&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #93a1a1; font-style: italic&#34;&gt;# and save&lt;/span&gt;
-&lt;span style=&#34;color: #586e75&#34;&gt;img&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #586e75&#34;&gt;save&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;output.png&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
+&lt;p&gt;
+for y in xrange(img.size[1]):
+    for x in xrange(img.size[0]):
+        if data[x,y] should be black:
+            data[x,y] = (0, 0, 0, 255)
+        if data[x,y] should be white:
+            data[x,y] = (255, 255, 255, 255)
+# and save
+img.save(&#34;output.png&#34;)
                 
-&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
 
 &lt;p&gt;And then you can just use pytesseract&amp;rsquo;s image_to_string. Sometimes I have to scale the image, and then do a simple anti-alias. But if you implement a good brute-force bot, you can just retry a few times, because the success rate is high.&lt;/p&gt;
@@ -240,82 +240,74 @@ Not that simple, turned out they save app&amp;rsquo;s data in /data/data/vietcom
 
 &lt;p&gt;The first version of my code is very simple. First it will add myself a Gitcoin to the file &amp;ldquo;LEDGER.txt&amp;rdquo;, get the difficulty, and get the required parameters to build the commit. Those tasks will only do once per block found, so any code will work.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;diff&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;make&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;([]&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;diffString&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;cat&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;difficulty.txt&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(diffString)/&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;i++&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-     &lt;span style=&#34;color: #657b83&#34;&gt;n,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;strconv.ParseInt(diffString[i*&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;:i*&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;],&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;16&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-     &lt;span style=&#34;color: #657b83&#34;&gt;diff&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;append&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(diff,&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(n))&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;tree&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;write-tree&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;parent&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;rev-parse&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;HEAD&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;timestamp&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;date&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;+%s&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;p&gt;diff = make([]byte, 0)
+diffString := strings.Trim(doExec(“cat”, “difficulty.txt”), “\n”)
+for i := 0; i &lt; len(diffString)/2; i++ {
+        n, _ := strconv.ParseInt(diffString[i*2:i*2+2], 16, 0)
+        diff = append(diff, byte(n))
+}
+tree = strings.Trim(doExec(“git”, “write-tree”), “\n”)
+parent = strings.Trim(doExec(“git”, “rev-parse”, “HEAD”), “\n”)
+timestamp = strings.Trim(doExec(“date”, “+%s”), “\n”)&lt;/p&gt;
 &lt;/p&gt;
 
 &lt;p&gt;I calculate diff as a byte array because SHA1 library returned the hash as an array, so I don&amp;rsquo;t have to convert SHA1 everytime; doExec is just a function to run the command and return console output as a string. The commit hash can be calculate by SHA1 the string &amp;ldquo;commit [len_commit]\0[commit_string]&amp;ldquo;. The commit string can be built by this code:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;baseCommit&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;fmt.Sprintf(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;tree %s\nparent %s\nauthor CTF user &amp;amp;lt;%s@stripe-ctf.com&amp;amp;gt; %s +0000\ncommitter CTF user &amp;amp;lt;%s@stripe-ctf.com&amp;amp;gt; %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;tree,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;parent,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;username,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;timestamp,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;username,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;timestamp)&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;p&gt;baseCommit = fmt.Sprintf(“tree %s\nparent %s\nauthor CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\ncommitter CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1”, tree, parent, username, timestamp, username, timestamp)&lt;/p&gt;
 &lt;/p&gt;
 
 &lt;p&gt;You should already notice the last &amp;ldquo;nonce 1&amp;rdquo; in the commit string, I will replace it with &amp;ldquo;nonce 2&amp;rdquo; and so on until I find a commit with hash lower than difficulty. It&amp;rsquo;s surprisingly simple:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;getSHA1(n&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;byte&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
- &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;sha1.Sum([]&lt;/span&gt;&lt;span style=&#34;color: #268bd2&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(baseCommitHash&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;complete&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;goog_259276313&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;&amp;gt;+&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;/complete&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;))&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #859900&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;isHashValid(hash&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
- &lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;i,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;range&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-  &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color: #268bd2&#34;&gt;len&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(diff)&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-   &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;false&lt;/span&gt;
-  &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-  &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;diff[i]&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-   &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;false&lt;/span&gt;
-  &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-  &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;diff[i]&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-   &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;true&lt;/span&gt;
-  &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
- &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
- &lt;span style=&#34;color: #859900&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;false&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;p&gt;func getSHA1(n int) [20]byte {
+    return sha1.Sum([]byte(baseCommitHash &lt;complete id=&#34;goog_259276313&#34;&gt;+ &lt;/complete&gt;“\n”))
+}
+func isHashValid(hash [20]byte) bool {
+    for i, char := range hash {
+    if i &gt;= len(diff) {
+    return false
+    }
+    if char &gt; diff[i] {
+    return false
+    }
+    if char &lt; diff[i] {
+    return true
+    }
+    }
+    return false
+}&lt;/p&gt;
 &lt;/p&gt;
 
 &lt;p&gt;After finding a coin, I&amp;rsquo;ll write the commit and push it, I was lazy and just pipe everything to command line. It works but maybe a little slow.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;pushResult(result&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;done&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;bool&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;n&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;int&lt;/span&gt;
-    &lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;n&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;amp;lt;-result&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;sem&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;amp;lt;-&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;1&lt;/span&gt;  &lt;span style=&#34;color: #93a1a1; font-style: italic&#34;&gt;// Semaphore git command so only one git command at a time&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;c1&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;exec.Command(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;echo&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;getCommit(n,&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;))&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;c2&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;exec.Command(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;hash-object&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;-t&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;commit&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--stdin&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;-w&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;error&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;c2.Stdin,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;c1.StdoutPipe()&lt;/span&gt;
-        &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;err&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #268bd2&#34;&gt;panic&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;(err)&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;c2.Stdout&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;os.Stdout&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;c2.Start()&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;c1.Run()&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;c2.Wait()&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;&amp;amp;lt;-sem&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;reset&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--hard&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;fmt.Sprintf(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;%x&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;getCommitSHA(n)))&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;res&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;push&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;res&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;error&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #93a1a1; font-style: italic&#34;&gt;// done &amp;amp;lt;- true&lt;/span&gt;
-            &lt;span style=&#34;color: #93a1a1; font-style: italic&#34;&gt;// do not stop, just wait for a restart&lt;/span&gt;
-            &lt;span style=&#34;color: #657b83&#34;&gt;time.Sleep(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;10&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;time.Second)&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #657b83&#34;&gt;log.Println(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;Error when push, waiting for miner to restart&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-            &lt;span style=&#34;color: #657b83&#34;&gt;time.Sleep(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;10&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;time.Second)&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;p&gt;func pushResult(result chan int, done chan bool) {
+    var n int
+    for {
+        n = &lt;-result
+        sem &lt;- 1  // Semaphore git command so only one git command at a time
+        c1 := exec.Command(“echo”, getCommit(n, false))
+        c2 := exec.Command(“git”, “hash-object”, “-t”, “commit”, “–stdin”, “-w”)
+        var err error
+        c2.Stdin, err = c1.StdoutPipe()
+        if err != nil {
+            panic(err)
+        }
+        c2.Stdout = os.Stdout
+        _ = c2.Start()
+        _ = c1.Run()
+        _ = c2.Wait()
+        &lt;-sem
+        doExec(“git”, “reset”, “–hard”, fmt.Sprintf(“%x”, getCommitSHA(n)))
+        res := doExec(“git”, “push”)
+        if res != “error” {
+            // done &lt;- true
+            // do not stop, just wait for a restart
+            time.Sleep(10 * time.Second)
+        } else {
+            log.Println(“Error when push, waiting for miner to restart”)
+            time.Sleep(10 * time.Second)
+        }
+    }
+}&lt;/p&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Then I just loop nonce until I found a coin. I use a result channel to communicate between miner thread and pushResult thread, and a done channel to stop when I find a commit. The bot takes about 10 mins to find a block, with just this version I managed to beat it.&lt;/p&gt;
@@ -332,38 +324,34 @@ Not that simple, turned out they save app&amp;rsquo;s data in /data/data/vietcom
 
 &lt;p&gt;Once in a while, the miner will check for stop signal and get out of the loop.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;select&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-&lt;span style=&#34;color: #859900&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;msg&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;amp;lt;-stop:&lt;/span&gt;
-    &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;msg&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #93a1a1; font-style: italic&#34;&gt;// fmt.Printf(&amp;quot;Miner %d stopped! Last i is %d\n&amp;quot;, begin, i)&lt;/span&gt;
-        &lt;span style=&#34;color: #859900&#34;&gt;break&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;jobOuter&lt;/span&gt;
-    &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #859900&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;:&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;p&gt;select {
+case msg := &lt;-stop:
+    if msg {
+        // fmt.Printf(“Miner %d stopped! Last i is %d\n”, begin, i)
+        break jobOuter
+    }
+default:
+}&lt;/p&gt;
 &lt;/p&gt;
 
 &lt;p&gt;The monitor function is pretty straightforward, I have two commit hash, last and current, if last commit has different hash than current commit, I do a git hard reset, and send a stop signal.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #fdf6e3&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;monitor(stop&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;bool&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;hash,&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;newHash&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;string&lt;/span&gt;
-    &lt;span style=&#34;color: #657b83&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;rev-parse&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--short&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;origin/master&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color: #859900&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;fetch&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;origin&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;newHash&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;strings.Trim(doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;rev-parse&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--short&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;origin/master&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color: #859900&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;newHash&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #657b83&#34;&gt;doExec(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;reset&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;--hard&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;origin/master&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #657b83&#34;&gt;)&lt;/span&gt;
-            &lt;span style=&#34;color: #93a1a1; font-style: italic&#34;&gt;// log.Println(&amp;quot;New block found! Reseting miners!&amp;quot;)&lt;/span&gt;
-            &lt;span style=&#34;color: #657b83&#34;&gt;stop&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;&amp;amp;lt;-&lt;/span&gt; &lt;span style=&#34;color: #859900&#34;&gt;true&lt;/span&gt;
-            &lt;span style=&#34;color: #657b83&#34;&gt;hash&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;newHash&lt;/span&gt;
-            &lt;span style=&#34;color: #657b83&#34;&gt;time.Sleep(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;time.Second)&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-        &lt;span style=&#34;color: #657b83&#34;&gt;time.Sleep(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #657b83&#34;&gt;time.Second)&lt;/span&gt;
-    &lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #657b83&#34;&gt;&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;p&gt;func monitor(stop chan bool) {
+    var hash, newHash string
+    hash = strings.Trim(doExec(“git”, “rev-parse”, “–short”, “origin/master”), “\n”)
+    for {
+        doExec(“git”, “fetch”, “origin”)
+        newHash = strings.Trim(doExec(“git”, “rev-parse”, “–short”, “origin/master”), “\n”)
+        if hash != newHash {
+            doExec(“git”, “reset”, “–hard”, “origin/master”)
+            // log.Println(“New block found! Reseting miners!”)
+            stop &lt;- true
+            hash = newHash
+            time.Sleep(1 * time.Second)
+        }
+        time.Sleep(1 * time.Second)
+    }
+}&lt;/p&gt;
 &lt;/p&gt;
 
 &lt;p&gt;That&amp;rsquo;s almost be all, things I can/should do better:&lt;/p&gt;
