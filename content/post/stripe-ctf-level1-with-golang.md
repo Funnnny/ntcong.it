@@ -22,7 +22,7 @@ As I'm learning Golang, I wrote my miner using it, and managed to bring to 1MHas
 
 The first version of my code is very simple. First it will add myself a Gitcoin to the file "LEDGER.txt", get the difficulty, and get the required parameters to build the commit. Those tasks will only do once per block found, so any code will work. 
 
-{{% highlight go %}}
+{{< highlight go >}}
 diff = make([]byte, 0)
 diffString := strings.Trim(doExec("cat", "difficulty.txt"), "\n")
 for i := 0; i < len(diffString)/2; i++ {
@@ -32,18 +32,18 @@ for i := 0; i < len(diffString)/2; i++ {
 tree = strings.Trim(doExec("git", "write-tree"), "\n")
 parent = strings.Trim(doExec("git", "rev-parse", "HEAD"), "\n")
 timestamp = strings.Trim(doExec("date", "+%s"), "\n")
-{{% /highlight %}}
+{{< /highlight >}}
 
 I calculate diff as a byte array because SHA1 library returned the hash as an array, so I don't have to convert SHA1 everytime; doExec is just a function to run the command and return console output as a string. The commit hash can be calculate by SHA1 the string "commit [len_commit]\0[commit_string]". The commit string can be built by this code:  
 
-{{% highlight go %}}
+{{< highlight go >}}
 baseCommit = fmt.Sprintf("tree %s\nparent %s\nauthor CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\ncommitter CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1", tree, parent, username, timestamp, username, timestamp)
-{{% /highlight %}}
+{{< /highlight >}}
 
 You should already notice the last "nonce 1" in the commit string, I will replace it with "nonce 2" and so on until I find a commit with hash lower than difficulty. It's surprisingly simple:
 
 
-{{% highlight go %}}
+{{< highlight go >}}
 func getSHA1(n int) [20]byte {
     return sha1.Sum([]byte(baseCommitHash <complete id="goog_259276313">+ </complete>"\n"))
 }
@@ -61,11 +61,11 @@ func isHashValid(hash [20]byte) bool {
     }
     return false
 }
-{{% /highlight %}}
+{{< /highlight >}}
 
 After finding a coin, I'll write the commit and push it, I was lazy and just pipe everything to command line. It works but maybe a little slow.  
 
-{{% highlight go %}}
+{{< highlight go >}}
 func pushResult(result chan int, done chan bool) {
     var n int
     for {
@@ -95,7 +95,7 @@ func pushResult(result chan int, done chan bool) {
         }
     }
 }
-{{% /highlight %}}
+{{< /highlight >}}
 
 Then I just loop nonce until I found a coin. I use a result channel to communicate between miner thread and pushResult thread, and a done channel to stop when I find a commit. The bot takes about 10 mins to find a block, with just this version I managed to beat it.
 
@@ -111,7 +111,7 @@ And by competing with more people, I have to monitor new block, and restart my m
 
 Once in a while, the miner will check for stop signal and get out of the loop.
 
-{{% highlight go %}}
+{{< highlight go >}}
 select {
 case msg := &lt;-stop:
     if msg {
@@ -120,12 +120,12 @@ case msg := &lt;-stop:
     }
 default:
 }
-{{% /highlight %}}
+{{< /highlight >}}
 
 The monitor function is pretty straightforward, I have two commit hash, last and current, if last commit has different hash than current commit, I do a git hard reset, and send a stop signal.
 
 
-{{% highlight go %}}
+{{< highlight go >}}
 func monitor(stop chan bool) {
     var hash, newHash string
     hash = strings.Trim(doExec("git", "rev-parse", "--short", "origin/master"), "\n")
@@ -142,7 +142,7 @@ func monitor(stop chan bool) {
         time.Sleep(1 * time.Second)
     }
 }
-{{% /highlight %}}
+{{< /highlight >}}
 
 That's almost be all, things I can/should do better:
 

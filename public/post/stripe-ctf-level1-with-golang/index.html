@@ -185,26 +185,29 @@
 
 <p>The first version of my code is very simple. First it will add myself a Gitcoin to the file &ldquo;LEDGER.txt&rdquo;, get the difficulty, and get the required parameters to build the commit. Those tasks will only do once per block found, so any code will work.</p>
 
-<p><p>diff = make([]byte, 0)
-diffString := strings.Trim(doExec(“cat”, “difficulty.txt”), “\n”)
+<p>
+diff = make([]byte, 0)
+diffString := strings.Trim(doExec("cat", "difficulty.txt"), "\n")
 for i := 0; i < len(diffString)/2; i++ {
         n, _ := strconv.ParseInt(diffString[i*2:i*2+2], 16, 0)
         diff = append(diff, byte(n))
 }
-tree = strings.Trim(doExec(“git”, “write-tree”), “\n”)
-parent = strings.Trim(doExec(“git”, “rev-parse”, “HEAD”), “\n”)
-timestamp = strings.Trim(doExec(“date”, “+%s”), “\n”)</p>
+tree = strings.Trim(doExec("git", "write-tree"), "\n")
+parent = strings.Trim(doExec("git", "rev-parse", "HEAD"), "\n")
+timestamp = strings.Trim(doExec("date", "+%s"), "\n")
 </p>
 
 <p>I calculate diff as a byte array because SHA1 library returned the hash as an array, so I don&rsquo;t have to convert SHA1 everytime; doExec is just a function to run the command and return console output as a string. The commit hash can be calculate by SHA1 the string &ldquo;commit [len_commit]\0[commit_string]&ldquo;. The commit string can be built by this code:</p>
 
-<p><p>baseCommit = fmt.Sprintf(“tree %s\nparent %s\nauthor CTF user <%s@stripe-ctf.com> %s +0000\ncommitter CTF user <%s@stripe-ctf.com> %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1”, tree, parent, username, timestamp, username, timestamp)</p>
+<p>
+baseCommit = fmt.Sprintf("tree %s\nparent %s\nauthor CTF user <%s@stripe-ctf.com> %s +0000\ncommitter CTF user <%s@stripe-ctf.com> %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1", tree, parent, username, timestamp, username, timestamp)
 </p>
 
 <p>You should already notice the last &ldquo;nonce 1&rdquo; in the commit string, I will replace it with &ldquo;nonce 2&rdquo; and so on until I find a commit with hash lower than difficulty. It&rsquo;s surprisingly simple:</p>
 
-<p><p>func getSHA1(n int) [20]byte {
-    return sha1.Sum([]byte(baseCommitHash <complete id="goog_259276313">+ </complete>“\n”))
+<p>
+func getSHA1(n int) [20]byte {
+    return sha1.Sum([]byte(baseCommitHash <complete id="goog_259276313">+ </complete>"\n"))
 }
 func isHashValid(hash [20]byte) bool {
     for i, char := range hash {
@@ -219,18 +222,19 @@ func isHashValid(hash [20]byte) bool {
     }
     }
     return false
-}</p>
+}
 </p>
 
 <p>After finding a coin, I&rsquo;ll write the commit and push it, I was lazy and just pipe everything to command line. It works but maybe a little slow.</p>
 
-<p><p>func pushResult(result chan int, done chan bool) {
+<p>
+func pushResult(result chan int, done chan bool) {
     var n int
     for {
         n = <-result
         sem <- 1  // Semaphore git command so only one git command at a time
-        c1 := exec.Command(“echo”, getCommit(n, false))
-        c2 := exec.Command(“git”, “hash-object”, “-t”, “commit”, “–stdin”, “-w”)
+        c1 := exec.Command("echo", getCommit(n, false))
+        c2 := exec.Command("git", "hash-object", "-t", "commit", "--stdin", "-w")
         var err error
         c2.Stdin, err = c1.StdoutPipe()
         if err != nil {
@@ -241,18 +245,18 @@ func isHashValid(hash [20]byte) bool {
         _ = c1.Run()
         _ = c2.Wait()
         <-sem
-        doExec(“git”, “reset”, “–hard”, fmt.Sprintf(“%x”, getCommitSHA(n)))
-        res := doExec(“git”, “push”)
-        if res != “error” {
+        doExec("git", "reset", "--hard", fmt.Sprintf("%x", getCommitSHA(n)))
+        res := doExec("git", "push")
+        if res != "error" {
             // done <- true
             // do not stop, just wait for a restart
             time.Sleep(10 * time.Second)
         } else {
-            log.Println(“Error when push, waiting for miner to restart”)
+            log.Println("Error when push, waiting for miner to restart")
             time.Sleep(10 * time.Second)
         }
     }
-}</p>
+}
 </p>
 
 <p>Then I just loop nonce until I found a coin. I use a result channel to communicate between miner thread and pushResult thread, and a done channel to stop when I find a commit. The bot takes about 10 mins to find a block, with just this version I managed to beat it.</p>
@@ -269,34 +273,36 @@ func isHashValid(hash [20]byte) bool {
 
 <p>Once in a while, the miner will check for stop signal and get out of the loop.</p>
 
-<p><p>select {
+<p>
+select {
 case msg := <-stop:
     if msg {
-        // fmt.Printf(“Miner %d stopped! Last i is %d\n”, begin, i)
+        // fmt.Printf("Miner %d stopped! Last i is %d\n", begin, i)
         break jobOuter
     }
 default:
-}</p>
+}
 </p>
 
 <p>The monitor function is pretty straightforward, I have two commit hash, last and current, if last commit has different hash than current commit, I do a git hard reset, and send a stop signal.</p>
 
-<p><p>func monitor(stop chan bool) {
+<p>
+func monitor(stop chan bool) {
     var hash, newHash string
-    hash = strings.Trim(doExec(“git”, “rev-parse”, “–short”, “origin/master”), “\n”)
+    hash = strings.Trim(doExec("git", "rev-parse", "--short", "origin/master"), "\n")
     for {
-        doExec(“git”, “fetch”, “origin”)
-        newHash = strings.Trim(doExec(“git”, “rev-parse”, “–short”, “origin/master”), “\n”)
+        doExec("git", "fetch", "origin")
+        newHash = strings.Trim(doExec("git", "rev-parse", "--short", "origin/master"), "\n")
         if hash != newHash {
-            doExec(“git”, “reset”, “–hard”, “origin/master”)
-            // log.Println(“New block found! Reseting miners!”)
+            doExec("git", "reset", "--hard", "origin/master")
+            // log.Println("New block found! Reseting miners!")
             stop <- true
             hash = newHash
             time.Sleep(1 * time.Second)
         }
         time.Sleep(1 * time.Second)
     }
-}</p>
+}
 </p>
 
 <p>That&rsquo;s almost be all, things I can/should do better:</p>
