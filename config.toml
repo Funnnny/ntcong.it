@@ -1,14 +1,16 @@
 baseurl = "http://blog.ntcong.it"
 languageCode = "en-us"
 title = "Cong Nguyen"
-pygmentsstyle="solarizedlight"
+pygmentsstyle="solarizeddark"
 disqusShortname="ntcongit"
 theme = "redlounge"
 author = "Cong Nguyen"
 [params]
   sidebartitle = "CongNT"
   sidebartagline = "Thoughts on Programming and anything Computer"
+  sidebarphoto = '/img/avatar.png'
   categoriescss = "/css/categories.css"
+
 [[menu.main]]
   name = "Blog"
   url = "/posts"

@@ -14,7 +14,7 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta name="author" content="Cong Nguyen">
-<meta name="generator" content="Hugo 0.14" />
+<meta name="generator" content="Hugo 0.15" />
 
   <meta property="og:title" content="Stripe-CTF Level 1 with Golang" />
 <meta property="og:description" content="" />
@@ -60,9 +60,11 @@
     <div class="sidebar pure-u-1 pure-u-md-1-4">
   <div class="header">
     
-      <div class="sidebar-avatar-wrapper">
-          <img src="/img/avatar.png" alt class="sidebar-avatar">
-      </div>
+
+	
+	  <img src="/img/avatar.png" class="sidebarphoto">
+	
+
     <h1 class="brand-title">CongNT</h1>
     <h2 class="brand-tagline">Thoughts on Programming and anything Computer</h2>
 
@@ -81,7 +83,11 @@
     <div class="social-buttons">
       
         
-        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
+        <a href="https://facebook.com/ntcong.it" target="_blank"><i class='fa fa-facebook'></i></a>
+        
+      
+        
+        <a href="http://github.com/ntcong" target="_blank"><i class='fa fa-github'></i></a>
         
       
         
@@ -89,11 +95,7 @@
         
       
         
-        <a href="https://facebook.com/ntcong.it" target="_blank"><i class='fa fa-facebook'></i></a>
-        
-      
-        
-        <a href="http://github.com/ntcong" target="_blank"><i class='fa fa-github'></i></a>
+        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
         
       
       
@@ -185,77 +187,77 @@
 
 <p>The first version of my code is very simple. First it will add myself a Gitcoin to the file &ldquo;LEDGER.txt&rdquo;, get the difficulty, and get the required parameters to build the commit. Those tasks will only do once per block found, so any code will work.</p>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #657b83">diff</span> <span style="color: #657b83">=</span> <span style="color: #268bd2">make</span><span style="color: #657b83">([]</span><span style="color: #859900">byte</span><span style="color: #657b83">,</span> <span style="color: #2aa198">0</span><span style="color: #657b83">)</span>
-<span style="color: #657b83">diffString</span> <span style="color: #657b83">:=</span> <span style="color: #657b83">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;cat&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;difficulty.txt&quot;</span><span style="color: #657b83">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #657b83">)</span>
-<span style="color: #859900">for</span> <span style="color: #657b83">i</span> <span style="color: #657b83">:=</span> <span style="color: #2aa198">0</span><span style="color: #657b83">;</span> <span style="color: #657b83">i</span> <span style="color: #657b83">&lt;</span> <span style="color: #268bd2">len</span><span style="color: #657b83">(diffString)/</span><span style="color: #2aa198">2</span><span style="color: #657b83">;</span> <span style="color: #657b83">i++</span> <span style="color: #657b83">{</span>
-        <span style="color: #657b83">n,</span> <span style="color: #657b83">_</span> <span style="color: #657b83">:=</span> <span style="color: #657b83">strconv.ParseInt(diffString[i*</span><span style="color: #2aa198">2</span><span style="color: #657b83">:i*</span><span style="color: #2aa198">2</span><span style="color: #657b83">+</span><span style="color: #2aa198">2</span><span style="color: #657b83">],</span> <span style="color: #2aa198">16</span><span style="color: #657b83">,</span> <span style="color: #2aa198">0</span><span style="color: #657b83">)</span>
-        <span style="color: #657b83">diff</span> <span style="color: #657b83">=</span> <span style="color: #268bd2">append</span><span style="color: #657b83">(diff,</span> <span style="color: #268bd2">byte</span><span style="color: #657b83">(n))</span>
-<span style="color: #657b83">}</span>
-<span style="color: #657b83">tree</span> <span style="color: #657b83">=</span> <span style="color: #657b83">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;write-tree&quot;</span><span style="color: #657b83">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #657b83">)</span>
-<span style="color: #657b83">parent</span> <span style="color: #657b83">=</span> <span style="color: #657b83">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;rev-parse&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;HEAD&quot;</span><span style="color: #657b83">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #657b83">)</span>
-<span style="color: #657b83">timestamp</span> <span style="color: #657b83">=</span> <span style="color: #657b83">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;date&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;+%s&quot;</span><span style="color: #657b83">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #657b83">)</span>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #839496">diff</span> <span style="color: #839496">=</span> <span style="color: #268bd2">make</span><span style="color: #839496">([]</span><span style="color: #859900">byte</span><span style="color: #839496">,</span> <span style="color: #2aa198">0</span><span style="color: #839496">)</span>
+<span style="color: #839496">diffString</span> <span style="color: #839496">:=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;cat&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;difficulty.txt&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+<span style="color: #859900">for</span> <span style="color: #839496">i</span> <span style="color: #839496">:=</span> <span style="color: #2aa198">0</span><span style="color: #839496">;</span> <span style="color: #839496">i</span> <span style="color: #839496">&lt;</span> <span style="color: #268bd2">len</span><span style="color: #839496">(diffString)/</span><span style="color: #2aa198">2</span><span style="color: #839496">;</span> <span style="color: #839496">i++</span> <span style="color: #839496">{</span>
+        <span style="color: #839496">n,</span> <span style="color: #839496">_</span> <span style="color: #839496">:=</span> <span style="color: #839496">strconv.ParseInt(diffString[i*</span><span style="color: #2aa198">2</span><span style="color: #839496">:i*</span><span style="color: #2aa198">2</span><span style="color: #839496">+</span><span style="color: #2aa198">2</span><span style="color: #839496">],</span> <span style="color: #2aa198">16</span><span style="color: #839496">,</span> <span style="color: #2aa198">0</span><span style="color: #839496">)</span>
+        <span style="color: #839496">diff</span> <span style="color: #839496">=</span> <span style="color: #268bd2">append</span><span style="color: #839496">(diff,</span> <span style="color: #268bd2">byte</span><span style="color: #839496">(n))</span>
+<span style="color: #839496">}</span>
+<span style="color: #839496">tree</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;write-tree&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+<span style="color: #839496">parent</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;rev-parse&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;HEAD&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+<span style="color: #839496">timestamp</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;date&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;+%s&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
 </pre></div>
-</p>
+
 
 <p>I calculate diff as a byte array because SHA1 library returned the hash as an array, so I don&rsquo;t have to convert SHA1 everytime; doExec is just a function to run the command and return console output as a string. The commit hash can be calculate by SHA1 the string &ldquo;commit [len_commit]\0[commit_string]&ldquo;. The commit string can be built by this code:</p>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #657b83">baseCommit</span> <span style="color: #657b83">=</span> <span style="color: #657b83">fmt.Sprintf(</span><span style="color: #2aa198">&quot;tree %s\nparent %s\nauthor CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\ncommitter CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1&quot;</span><span style="color: #657b83">,</span> <span style="color: #657b83">tree,</span> <span style="color: #657b83">parent,</span> <span style="color: #657b83">username,</span> <span style="color: #657b83">timestamp,</span> <span style="color: #657b83">username,</span> <span style="color: #657b83">timestamp)</span>
+<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #839496">baseCommit</span> <span style="color: #839496">=</span> <span style="color: #839496">fmt.Sprintf(</span><span style="color: #2aa198">&quot;tree %s\nparent %s\nauthor CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\ncommitter CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1&quot;</span><span style="color: #839496">,</span> <span style="color: #839496">tree,</span> <span style="color: #839496">parent,</span> <span style="color: #839496">username,</span> <span style="color: #839496">timestamp,</span> <span style="color: #839496">username,</span> <span style="color: #839496">timestamp)</span>
 </pre></div>
 </p>
 
 <p>You should already notice the last &ldquo;nonce 1&rdquo; in the commit string, I will replace it with &ldquo;nonce 2&rdquo; and so on until I find a commit with hash lower than difficulty. It&rsquo;s surprisingly simple:</p>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #859900">func</span> <span style="color: #657b83">getSHA1(n</span> <span style="color: #859900">int</span><span style="color: #657b83">)</span> <span style="color: #657b83">[</span><span style="color: #2aa198">20</span><span style="color: #657b83">]</span><span style="color: #859900">byte</span> <span style="color: #657b83">{</span>
-    <span style="color: #859900">return</span> <span style="color: #657b83">sha1.Sum([]</span><span style="color: #268bd2">byte</span><span style="color: #657b83">(baseCommitHash</span> <span style="color: #657b83">&lt;complete</span> <span style="color: #657b83">id=</span><span style="color: #2aa198">&quot;goog_259276313&quot;</span><span style="color: #657b83">&gt;+</span> <span style="color: #657b83">&lt;/complete&gt;</span><span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #657b83">))</span>
-<span style="color: #657b83">}</span>
-<span style="color: #859900">func</span> <span style="color: #657b83">isHashValid(hash</span> <span style="color: #657b83">[</span><span style="color: #2aa198">20</span><span style="color: #657b83">]</span><span style="color: #859900">byte</span><span style="color: #657b83">)</span> <span style="color: #859900">bool</span> <span style="color: #657b83">{</span>
-    <span style="color: #859900">for</span> <span style="color: #657b83">i,</span> <span style="color: #657b83">char</span> <span style="color: #657b83">:=</span> <span style="color: #859900">range</span> <span style="color: #657b83">hash</span> <span style="color: #657b83">{</span>
-    <span style="color: #859900">if</span> <span style="color: #657b83">i</span> <span style="color: #657b83">&gt;=</span> <span style="color: #268bd2">len</span><span style="color: #657b83">(diff)</span> <span style="color: #657b83">{</span>
+<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">func</span> <span style="color: #839496">getSHA1(n</span> <span style="color: #859900">int</span><span style="color: #839496">)</span> <span style="color: #839496">[</span><span style="color: #2aa198">20</span><span style="color: #839496">]</span><span style="color: #859900">byte</span> <span style="color: #839496">{</span>
+    <span style="color: #859900">return</span> <span style="color: #839496">sha1.Sum([]</span><span style="color: #268bd2">byte</span><span style="color: #839496">(baseCommitHash</span> <span style="color: #839496">&lt;complete</span> <span style="color: #839496">id=</span><span style="color: #2aa198">&quot;goog_259276313&quot;</span><span style="color: #839496">&gt;+</span> <span style="color: #839496">&lt;/complete&gt;</span><span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">))</span>
+<span style="color: #839496">}</span>
+<span style="color: #859900">func</span> <span style="color: #839496">isHashValid(hash</span> <span style="color: #839496">[</span><span style="color: #2aa198">20</span><span style="color: #839496">]</span><span style="color: #859900">byte</span><span style="color: #839496">)</span> <span style="color: #859900">bool</span> <span style="color: #839496">{</span>
+    <span style="color: #859900">for</span> <span style="color: #839496">i,</span> <span style="color: #839496">char</span> <span style="color: #839496">:=</span> <span style="color: #859900">range</span> <span style="color: #839496">hash</span> <span style="color: #839496">{</span>
+    <span style="color: #859900">if</span> <span style="color: #839496">i</span> <span style="color: #839496">&gt;=</span> <span style="color: #268bd2">len</span><span style="color: #839496">(diff)</span> <span style="color: #839496">{</span>
     <span style="color: #859900">return</span> <span style="color: #859900">false</span>
-    <span style="color: #657b83">}</span>
-    <span style="color: #859900">if</span> <span style="color: #657b83">char</span> <span style="color: #657b83">&gt;</span> <span style="color: #657b83">diff[i]</span> <span style="color: #657b83">{</span>
+    <span style="color: #839496">}</span>
+    <span style="color: #859900">if</span> <span style="color: #839496">char</span> <span style="color: #839496">&gt;</span> <span style="color: #839496">diff[i]</span> <span style="color: #839496">{</span>
     <span style="color: #859900">return</span> <span style="color: #859900">false</span>
-    <span style="color: #657b83">}</span>
-    <span style="color: #859900">if</span> <span style="color: #657b83">char</span> <span style="color: #657b83">&lt;</span> <span style="color: #657b83">diff[i]</span> <span style="color: #657b83">{</span>
+    <span style="color: #839496">}</span>
+    <span style="color: #859900">if</span> <span style="color: #839496">char</span> <span style="color: #839496">&lt;</span> <span style="color: #839496">diff[i]</span> <span style="color: #839496">{</span>
     <span style="color: #859900">return</span> <span style="color: #859900">true</span>
-    <span style="color: #657b83">}</span>
-    <span style="color: #657b83">}</span>
+    <span style="color: #839496">}</span>
+    <span style="color: #839496">}</span>
     <span style="color: #859900">return</span> <span style="color: #859900">false</span>
-<span style="color: #657b83">}</span>
+<span style="color: #839496">}</span>
 </pre></div>
 </p>
 
 <p>After finding a coin, I&rsquo;ll write the commit and push it, I was lazy and just pipe everything to command line. It works but maybe a little slow.</p>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #859900">func</span> <span style="color: #657b83">pushResult(result</span> <span style="color: #859900">chan</span> <span style="color: #859900">int</span><span style="color: #657b83">,</span> <span style="color: #657b83">done</span> <span style="color: #859900">chan</span> <span style="color: #859900">bool</span><span style="color: #657b83">)</span> <span style="color: #657b83">{</span>
-    <span style="color: #859900">var</span> <span style="color: #657b83">n</span> <span style="color: #859900">int</span>
-    <span style="color: #859900">for</span> <span style="color: #657b83">{</span>
-        <span style="color: #657b83">n</span> <span style="color: #657b83">=</span> <span style="color: #657b83">&lt;-result</span>
-        <span style="color: #657b83">sem</span> <span style="color: #657b83">&lt;-</span> <span style="color: #2aa198">1</span>  <span style="color: #93a1a1; font-style: italic">// Semaphore git command so only one git command at a time</span>
-        <span style="color: #657b83">c1</span> <span style="color: #657b83">:=</span> <span style="color: #657b83">exec.Command(</span><span style="color: #2aa198">&quot;echo&quot;</span><span style="color: #657b83">,</span> <span style="color: #657b83">getCommit(n,</span> <span style="color: #859900">false</span><span style="color: #657b83">))</span>
-        <span style="color: #657b83">c2</span> <span style="color: #657b83">:=</span> <span style="color: #657b83">exec.Command(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;hash-object&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;-t&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;commit&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;--stdin&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;-w&quot;</span><span style="color: #657b83">)</span>
-        <span style="color: #859900">var</span> <span style="color: #657b83">err</span> <span style="color: #859900">error</span>
-        <span style="color: #657b83">c2.Stdin,</span> <span style="color: #657b83">err</span> <span style="color: #657b83">=</span> <span style="color: #657b83">c1.StdoutPipe()</span>
-        <span style="color: #859900">if</span> <span style="color: #657b83">err</span> <span style="color: #657b83">!=</span> <span style="color: #859900">nil</span> <span style="color: #657b83">{</span>
-            <span style="color: #268bd2">panic</span><span style="color: #657b83">(err)</span>
-        <span style="color: #657b83">}</span>
-        <span style="color: #657b83">c2.Stdout</span> <span style="color: #657b83">=</span> <span style="color: #657b83">os.Stdout</span>
-        <span style="color: #657b83">_</span> <span style="color: #657b83">=</span> <span style="color: #657b83">c2.Start()</span>
-        <span style="color: #657b83">_</span> <span style="color: #657b83">=</span> <span style="color: #657b83">c1.Run()</span>
-        <span style="color: #657b83">_</span> <span style="color: #657b83">=</span> <span style="color: #657b83">c2.Wait()</span>
-        <span style="color: #657b83">&lt;-sem</span>
-        <span style="color: #657b83">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;reset&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;--hard&quot;</span><span style="color: #657b83">,</span> <span style="color: #657b83">fmt.Sprintf(</span><span style="color: #2aa198">&quot;%x&quot;</span><span style="color: #657b83">,</span> <span style="color: #657b83">getCommitSHA(n)))</span>
-        <span style="color: #657b83">res</span> <span style="color: #657b83">:=</span> <span style="color: #657b83">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;push&quot;</span><span style="color: #657b83">)</span>
-        <span style="color: #859900">if</span> <span style="color: #657b83">res</span> <span style="color: #657b83">!=</span> <span style="color: #2aa198">&quot;error&quot;</span> <span style="color: #657b83">{</span>
-            <span style="color: #93a1a1; font-style: italic">// done &lt;- true</span>
-            <span style="color: #93a1a1; font-style: italic">// do not stop, just wait for a restart</span>
-            <span style="color: #657b83">time.Sleep(</span><span style="color: #2aa198">10</span> <span style="color: #657b83">*</span> <span style="color: #657b83">time.Second)</span>
-        <span style="color: #657b83">}</span> <span style="color: #859900">else</span> <span style="color: #657b83">{</span>
-            <span style="color: #657b83">log.Println(</span><span style="color: #2aa198">&quot;Error when push, waiting for miner to restart&quot;</span><span style="color: #657b83">)</span>
-            <span style="color: #657b83">time.Sleep(</span><span style="color: #2aa198">10</span> <span style="color: #657b83">*</span> <span style="color: #657b83">time.Second)</span>
-        <span style="color: #657b83">}</span>
-    <span style="color: #657b83">}</span>
-<span style="color: #657b83">}</span>
+<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">func</span> <span style="color: #839496">pushResult(result</span> <span style="color: #859900">chan</span> <span style="color: #859900">int</span><span style="color: #839496">,</span> <span style="color: #839496">done</span> <span style="color: #859900">chan</span> <span style="color: #859900">bool</span><span style="color: #839496">)</span> <span style="color: #839496">{</span>
+    <span style="color: #859900">var</span> <span style="color: #839496">n</span> <span style="color: #859900">int</span>
+    <span style="color: #859900">for</span> <span style="color: #839496">{</span>
+        <span style="color: #839496">n</span> <span style="color: #839496">=</span> <span style="color: #839496">&lt;-result</span>
+        <span style="color: #839496">sem</span> <span style="color: #839496">&lt;-</span> <span style="color: #2aa198">1</span>  <span style="color: #586e75; font-style: italic">// Semaphore git command so only one git command at a time</span>
+        <span style="color: #839496">c1</span> <span style="color: #839496">:=</span> <span style="color: #839496">exec.Command(</span><span style="color: #2aa198">&quot;echo&quot;</span><span style="color: #839496">,</span> <span style="color: #839496">getCommit(n,</span> <span style="color: #859900">false</span><span style="color: #839496">))</span>
+        <span style="color: #839496">c2</span> <span style="color: #839496">:=</span> <span style="color: #839496">exec.Command(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;hash-object&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;-t&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;commit&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--stdin&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;-w&quot;</span><span style="color: #839496">)</span>
+        <span style="color: #859900">var</span> <span style="color: #839496">err</span> <span style="color: #859900">error</span>
+        <span style="color: #839496">c2.Stdin,</span> <span style="color: #839496">err</span> <span style="color: #839496">=</span> <span style="color: #839496">c1.StdoutPipe()</span>
+        <span style="color: #859900">if</span> <span style="color: #839496">err</span> <span style="color: #839496">!=</span> <span style="color: #859900">nil</span> <span style="color: #839496">{</span>
+            <span style="color: #268bd2">panic</span><span style="color: #839496">(err)</span>
+        <span style="color: #839496">}</span>
+        <span style="color: #839496">c2.Stdout</span> <span style="color: #839496">=</span> <span style="color: #839496">os.Stdout</span>
+        <span style="color: #839496">_</span> <span style="color: #839496">=</span> <span style="color: #839496">c2.Start()</span>
+        <span style="color: #839496">_</span> <span style="color: #839496">=</span> <span style="color: #839496">c1.Run()</span>
+        <span style="color: #839496">_</span> <span style="color: #839496">=</span> <span style="color: #839496">c2.Wait()</span>
+        <span style="color: #839496">&lt;-sem</span>
+        <span style="color: #839496">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;reset&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--hard&quot;</span><span style="color: #839496">,</span> <span style="color: #839496">fmt.Sprintf(</span><span style="color: #2aa198">&quot;%x&quot;</span><span style="color: #839496">,</span> <span style="color: #839496">getCommitSHA(n)))</span>
+        <span style="color: #839496">res</span> <span style="color: #839496">:=</span> <span style="color: #839496">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;push&quot;</span><span style="color: #839496">)</span>
+        <span style="color: #859900">if</span> <span style="color: #839496">res</span> <span style="color: #839496">!=</span> <span style="color: #2aa198">&quot;error&quot;</span> <span style="color: #839496">{</span>
+            <span style="color: #586e75; font-style: italic">// done &lt;- true</span>
+            <span style="color: #586e75; font-style: italic">// do not stop, just wait for a restart</span>
+            <span style="color: #839496">time.Sleep(</span><span style="color: #2aa198">10</span> <span style="color: #839496">*</span> <span style="color: #839496">time.Second)</span>
+        <span style="color: #839496">}</span> <span style="color: #859900">else</span> <span style="color: #839496">{</span>
+            <span style="color: #839496">log.Println(</span><span style="color: #2aa198">&quot;Error when push, waiting for miner to restart&quot;</span><span style="color: #839496">)</span>
+            <span style="color: #839496">time.Sleep(</span><span style="color: #2aa198">10</span> <span style="color: #839496">*</span> <span style="color: #839496">time.Second)</span>
+        <span style="color: #839496">}</span>
+    <span style="color: #839496">}</span>
+<span style="color: #839496">}</span>
 </pre></div>
 </p>
 
@@ -273,35 +275,35 @@
 
 <p>Once in a while, the miner will check for stop signal and get out of the loop.</p>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #859900">select</span> <span style="color: #657b83">{</span>
-<span style="color: #859900">case</span> <span style="color: #657b83">msg</span> <span style="color: #657b83">:=</span> <span style="color: #657b83">&lt;-stop:</span>
-    <span style="color: #859900">if</span> <span style="color: #657b83">msg</span> <span style="color: #657b83">{</span>
-        <span style="color: #93a1a1; font-style: italic">// fmt.Printf(&quot;Miner %d stopped! Last i is %d\n&quot;, begin, i)</span>
-        <span style="color: #859900">break</span> <span style="color: #657b83">jobOuter</span>
-    <span style="color: #657b83">}</span>
-<span style="color: #859900">default</span><span style="color: #657b83">:</span>
-<span style="color: #657b83">}</span>
+<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">select</span> <span style="color: #839496">{</span>
+<span style="color: #859900">case</span> <span style="color: #839496">msg</span> <span style="color: #839496">:=</span> <span style="color: #839496">&lt;-stop:</span>
+    <span style="color: #859900">if</span> <span style="color: #839496">msg</span> <span style="color: #839496">{</span>
+        <span style="color: #586e75; font-style: italic">// fmt.Printf(&quot;Miner %d stopped! Last i is %d\n&quot;, begin, i)</span>
+        <span style="color: #859900">break</span> <span style="color: #839496">jobOuter</span>
+    <span style="color: #839496">}</span>
+<span style="color: #859900">default</span><span style="color: #839496">:</span>
+<span style="color: #839496">}</span>
 </pre></div>
 </p>
 
 <p>The monitor function is pretty straightforward, I have two commit hash, last and current, if last commit has different hash than current commit, I do a git hard reset, and send a stop signal.</p>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #859900">func</span> <span style="color: #657b83">monitor(stop</span> <span style="color: #859900">chan</span> <span style="color: #859900">bool</span><span style="color: #657b83">)</span> <span style="color: #657b83">{</span>
-    <span style="color: #859900">var</span> <span style="color: #657b83">hash,</span> <span style="color: #657b83">newHash</span> <span style="color: #859900">string</span>
-    <span style="color: #657b83">hash</span> <span style="color: #657b83">=</span> <span style="color: #657b83">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;rev-parse&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;--short&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;origin/master&quot;</span><span style="color: #657b83">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #657b83">)</span>
-    <span style="color: #859900">for</span> <span style="color: #657b83">{</span>
-        <span style="color: #657b83">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;fetch&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;origin&quot;</span><span style="color: #657b83">)</span>
-        <span style="color: #657b83">newHash</span> <span style="color: #657b83">=</span> <span style="color: #657b83">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;rev-parse&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;--short&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;origin/master&quot;</span><span style="color: #657b83">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #657b83">)</span>
-        <span style="color: #859900">if</span> <span style="color: #657b83">hash</span> <span style="color: #657b83">!=</span> <span style="color: #657b83">newHash</span> <span style="color: #657b83">{</span>
-            <span style="color: #657b83">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;reset&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;--hard&quot;</span><span style="color: #657b83">,</span> <span style="color: #2aa198">&quot;origin/master&quot;</span><span style="color: #657b83">)</span>
-            <span style="color: #93a1a1; font-style: italic">// log.Println(&quot;New block found! Reseting miners!&quot;)</span>
-            <span style="color: #657b83">stop</span> <span style="color: #657b83">&lt;-</span> <span style="color: #859900">true</span>
-            <span style="color: #657b83">hash</span> <span style="color: #657b83">=</span> <span style="color: #657b83">newHash</span>
-            <span style="color: #657b83">time.Sleep(</span><span style="color: #2aa198">1</span> <span style="color: #657b83">*</span> <span style="color: #657b83">time.Second)</span>
-        <span style="color: #657b83">}</span>
-        <span style="color: #657b83">time.Sleep(</span><span style="color: #2aa198">1</span> <span style="color: #657b83">*</span> <span style="color: #657b83">time.Second)</span>
-    <span style="color: #657b83">}</span>
-<span style="color: #657b83">}</span>
+<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">func</span> <span style="color: #839496">monitor(stop</span> <span style="color: #859900">chan</span> <span style="color: #859900">bool</span><span style="color: #839496">)</span> <span style="color: #839496">{</span>
+    <span style="color: #859900">var</span> <span style="color: #839496">hash,</span> <span style="color: #839496">newHash</span> <span style="color: #859900">string</span>
+    <span style="color: #839496">hash</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;rev-parse&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--short&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;origin/master&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+    <span style="color: #859900">for</span> <span style="color: #839496">{</span>
+        <span style="color: #839496">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;fetch&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;origin&quot;</span><span style="color: #839496">)</span>
+        <span style="color: #839496">newHash</span> <span style="color: #839496">=</span> <span style="color: #839496">strings.Trim(doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;rev-parse&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--short&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;origin/master&quot;</span><span style="color: #839496">),</span> <span style="color: #2aa198">&quot;\n&quot;</span><span style="color: #839496">)</span>
+        <span style="color: #859900">if</span> <span style="color: #839496">hash</span> <span style="color: #839496">!=</span> <span style="color: #839496">newHash</span> <span style="color: #839496">{</span>
+            <span style="color: #839496">doExec(</span><span style="color: #2aa198">&quot;git&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;reset&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;--hard&quot;</span><span style="color: #839496">,</span> <span style="color: #2aa198">&quot;origin/master&quot;</span><span style="color: #839496">)</span>
+            <span style="color: #586e75; font-style: italic">// log.Println(&quot;New block found! Reseting miners!&quot;)</span>
+            <span style="color: #839496">stop</span> <span style="color: #839496">&lt;-</span> <span style="color: #859900">true</span>
+            <span style="color: #839496">hash</span> <span style="color: #839496">=</span> <span style="color: #839496">newHash</span>
+            <span style="color: #839496">time.Sleep(</span><span style="color: #2aa198">1</span> <span style="color: #839496">*</span> <span style="color: #839496">time.Second)</span>
+        <span style="color: #839496">}</span>
+        <span style="color: #839496">time.Sleep(</span><span style="color: #2aa198">1</span> <span style="color: #839496">*</span> <span style="color: #839496">time.Second)</span>
+    <span style="color: #839496">}</span>
+<span style="color: #839496">}</span>
 </pre></div>
 </p>
 
