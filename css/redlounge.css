@@ -11,6 +11,7 @@ html, p, nav, section, article {
 }
 pre {
     padding: 0;
+    margin: 0.2em 0;
 }
 p {
 	color: #2d303b;
@@ -108,17 +109,6 @@ h2.brand-tagline {
 	color:#E54028;
 }
 
-.sidebar-avatar-wrapper {
-	width: 80px;
-	height: 80px;
-	border-radius: 80px;
-    overflow: hidden;
-    margin-left: 1rem;
-    float: right;
-}
-.sidebar-avatar {
-    height: 82px;
-}
 /* Nav */
 .nav-list {
     margin: 0;
@@ -475,13 +465,26 @@ hr.thin {
     }
 
     .header {
-        margin: 60% 2rem 0;
+        margin: 30% 2rem 0;
         text-align: right;
     }
+
+    .header .sidebarphoto{
+	    width:100px;
+	    height:100px;
+	    border-radius: 50%;
+	    -moz-border-radius: 50%;
+	    -webkit-border-radius: 50%;
+	}
 
     .sidebar {
         position: fixed;
         top: 0;
         bottom: 0;
     }
+}
+
+.highlight {
+    margin: 0 -3rem;
+    padding: 1px 3rem;
 }

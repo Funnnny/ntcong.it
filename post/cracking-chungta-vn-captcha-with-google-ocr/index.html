@@ -14,7 +14,7 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta name="author" content="Cong Nguyen">
-<meta name="generator" content="Hugo 0.14" />
+<meta name="generator" content="Hugo 0.15" />
 
   <meta property="og:title" content="Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR" />
 <meta property="og:description" content="" />
@@ -60,9 +60,11 @@
     <div class="sidebar pure-u-1 pure-u-md-1-4">
   <div class="header">
     
-      <div class="sidebar-avatar-wrapper">
-          <img src="/img/avatar.png" alt class="sidebar-avatar">
-      </div>
+
+	
+	  <img src="/img/avatar.png" class="sidebarphoto">
+	
+
     <h1 class="brand-title">CongNT</h1>
     <h2 class="brand-tagline">Thoughts on Programming and anything Computer</h2>
 
@@ -81,7 +83,11 @@
     <div class="social-buttons">
       
         
-        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
+        <a href="https://facebook.com/ntcong.it" target="_blank"><i class='fa fa-facebook'></i></a>
+        
+      
+        
+        <a href="http://github.com/ntcong" target="_blank"><i class='fa fa-github'></i></a>
         
       
         
@@ -89,11 +95,7 @@
         
       
         
-        <a href="https://facebook.com/ntcong.it" target="_blank"><i class='fa fa-facebook'></i></a>
-        
-      
-        
-        <a href="http://github.com/ntcong" target="_blank"><i class='fa fa-github'></i></a>
+        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
         
       
       
@@ -174,8 +176,7 @@
 
 <p>Recently, chungta.vn announced a new beta site with new design. Let&rsquo;s take a look into it to know, if the internal is still the same.</p>
 
-<p>Every site has a contact us form: <a href="http://beta.chungta.vn/contactus">http://beta.chungta.vn/contactus</a>, and let&rsquo;s face it, from the look, this captcha is so easy to crack: <img src="/img/captcha.png" alt="easy" />
-</p>
+<p>Every site has a contact us form: <a href="http://beta.chungta.vn/contactus">http://beta.chungta.vn/contactus</a>, and let&rsquo;s face it, from the look, this captcha is so easy to crack: <img src="/img/captcha.png" alt="easy" /></p>
 
 <p>So, it seems that they generate an ID from the server side, generate an image and send back that ID and image to the client. The form have an hidden input with the id, and when you press submit, it will just send back the id in &ldquo;captchaID&rdquo; and the input text with &ldquo;txtCode&rdquo;</p>
 
@@ -191,20 +192,20 @@
 
 <p>Install everything is easy, if you&rsquo;re using Windows, just download tesseract, python and PIL pre-built binary file (aka .exe) and install. If you&rsquo;re using Linux, install it with your package manager:</p>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #cb4b16">$sudo</span> apt-get install tesseract-ocr
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #cb4b16">$sudo</span> apt-get install tesseract-ocr
 <span style="color: #cb4b16">$pip</span> install pytesseract
 <span style="color: #cb4b16">$pip</span> install pillow
 </pre></div>
-</p>
+
 
 <p>So what do we have to do? First we get a captcha with the <a href="http://beta.chungta.vn/captcha/show2">above link</a>, the response is just a json text file. Then we extract the image id, the image above has id:&ldquo;22b3fefb9d316f98489085252bd0d896&rdquo;. Then we download the image by append the id to the url: &ldquo;<a href="http://beta.chungta.vn/captcha/viewimg/id/&quot;">http://beta.chungta.vn/captcha/viewimg/id/&quot;</a>. And last, some magic:</p>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #cb4b16">from</span> <span style="color: #b58900">PIL</span> <span style="color: #cb4b16">import</span> <span style="color: #586e75">Image</span>
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #cb4b16">from</span> <span style="color: #b58900">PIL</span> <span style="color: #cb4b16">import</span> <span style="color: #93a1a1">Image</span>
 <span style="color: #cb4b16">import</span> <span style="color: #b58900">pytesseract</span>
 
-<span style="color: #859900">print</span> <span style="color: #586e75">pytesseract</span><span style="color: #657b83">.</span><span style="color: #586e75">image_to_string</span><span style="color: #657b83">(</span><span style="color: #586e75">Image</span><span style="color: #657b83">.</span><span style="color: #586e75">open</span><span style="color: #657b83">(</span><span style="color: #2aa198">&#39;captcha.png&#39;</span><span style="color: #657b83">))</span>
+<span style="color: #859900">print</span> <span style="color: #93a1a1">pytesseract</span><span style="color: #839496">.</span><span style="color: #93a1a1">image_to_string</span><span style="color: #839496">(</span><span style="color: #93a1a1">Image</span><span style="color: #839496">.</span><span style="color: #93a1a1">open</span><span style="color: #839496">(</span><span style="color: #2aa198">&#39;captcha.png&#39;</span><span style="color: #839496">))</span>
 </pre></div>
-</p>
+
 
 <p>and the result is: &lsquo;5y47&rsquo;</p>
 
@@ -220,9 +221,9 @@
 <li>First, convert the image to RGB, then load the image into an array:</li>
 </ul>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #586e75">img</span> <span style="color: #657b83">=</span> <span style="color: #586e75">Image</span><span style="color: #657b83">.</span><span style="color: #586e75">open</span><span style="color: #657b83">(</span><span style="color: #2aa198">&#39;captcha.png&#39;</span><span style="color: #657b83">)</span>
-<span style="color: #586e75">img</span> <span style="color: #657b83">=</span> <span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">convert</span><span style="color: #657b83">(</span><span style="color: #2aa198">&#39;RGB&#39;</span><span style="color: #657b83">)</span>
-<span style="color: #586e75">data</span> <span style="color: #657b83">=</span> <span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">load</span><span style="color: #657b83">()</span>
+<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #93a1a1">img</span> <span style="color: #839496">=</span> <span style="color: #93a1a1">Image</span><span style="color: #839496">.</span><span style="color: #93a1a1">open</span><span style="color: #839496">(</span><span style="color: #2aa198">&#39;captcha.png&#39;</span><span style="color: #839496">)</span>
+<span style="color: #93a1a1">img</span> <span style="color: #839496">=</span> <span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">convert</span><span style="color: #839496">(</span><span style="color: #2aa198">&#39;RGB&#39;</span><span style="color: #839496">)</span>
+<span style="color: #93a1a1">data</span> <span style="color: #839496">=</span> <span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">load</span><span style="color: #839496">()</span>
 </pre></div>
 </p>
 
@@ -230,14 +231,14 @@
 <li>Then, we flip the color for each pixel: set black for color blacker than a little black, and white for others.</li>
 </ul>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #859900">for</span> <span style="color: #586e75">y</span> <span style="color: #859900">in</span> <span style="color: #268bd2">xrange</span><span style="color: #657b83">(</span><span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">size</span><span style="color: #657b83">[</span><span style="color: #2aa198">1</span><span style="color: #657b83">]):</span>
-    <span style="color: #859900">for</span> <span style="color: #586e75">x</span> <span style="color: #859900">in</span> <span style="color: #268bd2">xrange</span><span style="color: #657b83">(</span><span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">size</span><span style="color: #657b83">[</span><span style="color: #2aa198">0</span><span style="color: #657b83">]):</span>
-        <span style="color: #859900">if</span> <span style="color: #586e75">data</span><span style="color: #657b83">[</span><span style="color: #586e75">x</span><span style="color: #657b83">,</span><span style="color: #586e75">y</span><span style="color: #657b83">]</span> <span style="color: #586e75">should</span> <span style="color: #586e75">be</span> <span style="color: #586e75">black</span><span style="color: #657b83">:</span>
-            <span style="color: #586e75">data</span><span style="color: #657b83">[</span><span style="color: #586e75">x</span><span style="color: #657b83">,</span><span style="color: #586e75">y</span><span style="color: #657b83">]</span> <span style="color: #657b83">=</span> <span style="color: #657b83">(</span><span style="color: #2aa198">0</span><span style="color: #657b83">,</span> <span style="color: #2aa198">0</span><span style="color: #657b83">,</span> <span style="color: #2aa198">0</span><span style="color: #657b83">,</span> <span style="color: #2aa198">255</span><span style="color: #657b83">)</span>
-        <span style="color: #859900">if</span> <span style="color: #586e75">data</span><span style="color: #657b83">[</span><span style="color: #586e75">x</span><span style="color: #657b83">,</span><span style="color: #586e75">y</span><span style="color: #657b83">]</span> <span style="color: #586e75">should</span> <span style="color: #586e75">be</span> <span style="color: #586e75">white</span><span style="color: #657b83">:</span>
-            <span style="color: #586e75">data</span><span style="color: #657b83">[</span><span style="color: #586e75">x</span><span style="color: #657b83">,</span><span style="color: #586e75">y</span><span style="color: #657b83">]</span> <span style="color: #657b83">=</span> <span style="color: #657b83">(</span><span style="color: #2aa198">255</span><span style="color: #657b83">,</span> <span style="color: #2aa198">255</span><span style="color: #657b83">,</span> <span style="color: #2aa198">255</span><span style="color: #657b83">,</span> <span style="color: #2aa198">255</span><span style="color: #657b83">)</span>
-<span style="color: #93a1a1; font-style: italic"># and save</span>
-<span style="color: #586e75">img</span><span style="color: #657b83">.</span><span style="color: #586e75">save</span><span style="color: #657b83">(</span><span style="color: #2aa198">&quot;output.png&quot;</span><span style="color: #657b83">)</span>
+<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">for</span> <span style="color: #93a1a1">y</span> <span style="color: #859900">in</span> <span style="color: #268bd2">xrange</span><span style="color: #839496">(</span><span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">size</span><span style="color: #839496">[</span><span style="color: #2aa198">1</span><span style="color: #839496">]):</span>
+    <span style="color: #859900">for</span> <span style="color: #93a1a1">x</span> <span style="color: #859900">in</span> <span style="color: #268bd2">xrange</span><span style="color: #839496">(</span><span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">size</span><span style="color: #839496">[</span><span style="color: #2aa198">0</span><span style="color: #839496">]):</span>
+        <span style="color: #859900">if</span> <span style="color: #93a1a1">data</span><span style="color: #839496">[</span><span style="color: #93a1a1">x</span><span style="color: #839496">,</span><span style="color: #93a1a1">y</span><span style="color: #839496">]</span> <span style="color: #93a1a1">should</span> <span style="color: #93a1a1">be</span> <span style="color: #93a1a1">black</span><span style="color: #839496">:</span>
+            <span style="color: #93a1a1">data</span><span style="color: #839496">[</span><span style="color: #93a1a1">x</span><span style="color: #839496">,</span><span style="color: #93a1a1">y</span><span style="color: #839496">]</span> <span style="color: #839496">=</span> <span style="color: #839496">(</span><span style="color: #2aa198">0</span><span style="color: #839496">,</span> <span style="color: #2aa198">0</span><span style="color: #839496">,</span> <span style="color: #2aa198">0</span><span style="color: #839496">,</span> <span style="color: #2aa198">255</span><span style="color: #839496">)</span>
+        <span style="color: #859900">if</span> <span style="color: #93a1a1">data</span><span style="color: #839496">[</span><span style="color: #93a1a1">x</span><span style="color: #839496">,</span><span style="color: #93a1a1">y</span><span style="color: #839496">]</span> <span style="color: #93a1a1">should</span> <span style="color: #93a1a1">be</span> <span style="color: #93a1a1">white</span><span style="color: #839496">:</span>
+            <span style="color: #93a1a1">data</span><span style="color: #839496">[</span><span style="color: #93a1a1">x</span><span style="color: #839496">,</span><span style="color: #93a1a1">y</span><span style="color: #839496">]</span> <span style="color: #839496">=</span> <span style="color: #839496">(</span><span style="color: #2aa198">255</span><span style="color: #839496">,</span> <span style="color: #2aa198">255</span><span style="color: #839496">,</span> <span style="color: #2aa198">255</span><span style="color: #839496">,</span> <span style="color: #2aa198">255</span><span style="color: #839496">)</span>
+<span style="color: #586e75; font-style: italic"># and save</span>
+<span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">save</span><span style="color: #839496">(</span><span style="color: #2aa198">&quot;output.png&quot;</span><span style="color: #839496">)</span>
                 
 </pre></div>
 </p>

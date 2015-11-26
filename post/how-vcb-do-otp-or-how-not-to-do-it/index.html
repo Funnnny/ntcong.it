@@ -14,7 +14,7 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta name="author" content="Cong Nguyen">
-<meta name="generator" content="Hugo 0.14" />
+<meta name="generator" content="Hugo 0.15" />
 
   <meta property="og:title" content="How VCB OTP works and How not to do it" />
 <meta property="og:description" content="" />
@@ -60,9 +60,11 @@
     <div class="sidebar pure-u-1 pure-u-md-1-4">
   <div class="header">
     
-      <div class="sidebar-avatar-wrapper">
-          <img src="/img/avatar.png" alt class="sidebar-avatar">
-      </div>
+
+	
+	  <img src="/img/avatar.png" class="sidebarphoto">
+	
+
     <h1 class="brand-title">CongNT</h1>
     <h2 class="brand-tagline">Thoughts on Programming and anything Computer</h2>
 
@@ -81,7 +83,11 @@
     <div class="social-buttons">
       
         
-        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
+        <a href="https://facebook.com/ntcong.it" target="_blank"><i class='fa fa-facebook'></i></a>
+        
+      
+        
+        <a href="http://github.com/ntcong" target="_blank"><i class='fa fa-github'></i></a>
         
       
         
@@ -89,11 +95,7 @@
         
       
         
-        <a href="https://facebook.com/ntcong.it" target="_blank"><i class='fa fa-facebook'></i></a>
-        
-      
-        
-        <a href="http://github.com/ntcong" target="_blank"><i class='fa fa-github'></i></a>
+        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
         
       
       
@@ -181,8 +183,7 @@
 
 <p>First, you have to register your device. In the a/a.java file, they call some webservice from smartotp.vietcombank.com.vn. You will send your number, Mac address and time, and also your confirmation number. Then they will send you back an otp master key. I will trust them to do the right thing and generate that key properly. So let&rsquo;s jump right at the smartotp website.</p>
 
-<p><img src="/img/vcb_web.png" alt="VCB Web" />
-</p>
+<p><img src="/img/vcb_web.png" alt="VCB Web" /></p>
 
 <p>Woa, a big red certificate icon: not a good sign. And they list all the web service methods and HOW to call them. <strong>Classic .Net Service1.asmx :)</strong>. You can study further to know how they encrypt and send the request, or you can have fun just by repeatedly sending confirmation and lock your friends from register.</p>
 
@@ -195,9 +196,9 @@ Not that simple, turned out they save app&rsquo;s data in /data/data/vietcombank
 
 <p>And last, let&rsquo;s take a look at the OTP itself. It seems to be a <em>complicated</em> algorithm:</p>
 
-<p><div class="highlight" style="background: #fdf6e3"><pre style="line-height: 125%"><span style="color: #586e75">gg</span> <span style="color: #657b83">=</span> <span style="color: #586e75">a</span><span style="color: #657b83">(</span><span style="color: #586e75">a</span><span style="color: #657b83">(</span><span style="color: #586e75">y</span><span style="color: #657b83">+</span><span style="color: #586e75">L</span><span style="color: #657b83">+</span><span style="color: #586e75">str1</span><span style="color: #657b83">+</span><span style="color: #586e75">key</span><span style="color: #657b83">)+</span><span style="color: #586e75">a</span><span style="color: #657b83">(</span><span style="color: #586e75">y</span><span style="color: #657b83">+</span><span style="color: #586e75">D</span><span style="color: #657b83">+</span><span style="color: #586e75">str1</span><span style="color: #657b83">+</span><span style="color: #586e75">key</span><span style="color: #657b83">)+</span><span style="color: #586e75">a</span><span style="color: #657b83">(</span><span style="color: #586e75">L</span><span style="color: #657b83">+</span><span style="color: #586e75">D</span><span style="color: #657b83">+</span><span style="color: #586e75">str1</span><span style="color: #657b83">+</span><span style="color: #586e75">key</span><span style="color: #657b83">))</span> 
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #93a1a1">gg</span> <span style="color: #839496">=</span> <span style="color: #93a1a1">a</span><span style="color: #839496">(</span><span style="color: #93a1a1">a</span><span style="color: #839496">(</span><span style="color: #93a1a1">y</span><span style="color: #839496">+</span><span style="color: #93a1a1">L</span><span style="color: #839496">+</span><span style="color: #93a1a1">str1</span><span style="color: #839496">+</span><span style="color: #93a1a1">key</span><span style="color: #839496">)+</span><span style="color: #93a1a1">a</span><span style="color: #839496">(</span><span style="color: #93a1a1">y</span><span style="color: #839496">+</span><span style="color: #93a1a1">D</span><span style="color: #839496">+</span><span style="color: #93a1a1">str1</span><span style="color: #839496">+</span><span style="color: #93a1a1">key</span><span style="color: #839496">)+</span><span style="color: #93a1a1">a</span><span style="color: #839496">(</span><span style="color: #93a1a1">L</span><span style="color: #839496">+</span><span style="color: #93a1a1">D</span><span style="color: #839496">+</span><span style="color: #93a1a1">str1</span><span style="color: #839496">+</span><span style="color: #93a1a1">key</span><span style="color: #839496">))</span> 
 </pre></div>
-</p>
+
 
 <ul>
 <li>str1: just a floor of time/80 (which means the otp will change each 80s)</li>

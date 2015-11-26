@@ -436,7 +436,7 @@
 
 &lt;p&gt;&lt;strong&gt;3.&lt;/strong&gt; &lt;strong&gt;god.Do(action)&lt;/strong&gt; &lt;strong&gt;và&lt;/strong&gt; &lt;strong&gt;_god.DoOrWaitTilDone(action):&lt;/strong&gt; cách gọi thứ 2 tuy giải thích được việc hàm này sẽ thực hiện hoặc chờ nếu action đã đang thực hiện, tuy nhiên việc này nên đặt trong comment thì hơn là đặt vào tên. Nên nhớ nói dài là nói dại.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;4. from what import what_exception:&lt;/strong&gt; hay thường được biết đến với dòng from what.what&lt;em&gt;exception import WhatNotFound. Tại sao lại là what.what_exception ? Bỏ cái đoạn what&lt;/em&gt; có làm nó khó hiểu hơn ko ? Có lẽ tự ai cũng hiểu: from what.exception import WhatNotFound&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. from what import what_exception:&lt;/strong&gt; hay thường được biết đến với dòng from what.what_exception import WhatNotFound. Tại sao lại là what.what&lt;em&gt;exception ? Bỏ cái đoạn what&lt;/em&gt; có làm nó khó hiểu hơn ko ? Có lẽ tự ai cũng hiểu: from what.exception import WhatNotFound&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;5. from what.exception import WhatNotFound&lt;em&gt;Exception&lt;/em&gt;&lt;/strong&gt;: tại sao ??? WhatNotFound tốt, WhatError tốt, WhatYeahException tốt, NotFoundException vừa trùng lặp lại khó nhớ.&lt;/p&gt;
 
