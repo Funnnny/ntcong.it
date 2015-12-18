@@ -488,3 +488,7 @@ hr.thin {
     margin: 0 -3rem;
     padding: 1px 3rem;
 }
+
+#toc {
+    margin-right: -3rem;
+}
