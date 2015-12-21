@@ -1,7 +1,8 @@
 baseurl = "http://blog.ntcong.it"
 languageCode = "en-us"
 title = "Cong Nguyen"
-pygmentsstyle="solarizedlight"
+pygmentsuseclasses=false
+pygmentsstyle="solarizeddark"
 disqusShortname="ntcongit"
 theme = "redlounge"
 author = "Cong Nguyen"
