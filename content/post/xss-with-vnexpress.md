@@ -7,13 +7,13 @@ authorgoogleplus = "https://plus.google.com/+CongNguyen"
 authorlink = "http://ntcong.it"
 date = "2016-03-22T16:20:20+07:00"
 thumbnail = "/img/vne/vne.jpg"
-title = "XSS vulnerablities on VnExpress"
+title = "XSS vulnerabilities on VnExpress"
 
 +++
 
 # XSS on e.vnexpress.net
 
-Recently I found two XSS vulnerablities on vnExpress website. It all begins with the newly introduced English version of VnExpress, and I didn't have to spend a lot of time to find the search box wasn't escaped properly. Just do a search with "> will reveal this.
+Recently I found two XSS vulnerabilities on vnExpress website. It all begins with the newly introduced English version of VnExpress, and I didn't have to spend a lot of time to find the search box wasn't escaped properly. Just do a search with "> will reveal this.
 
 {{< figure src="/img/vne/vne1.png" title="XSS on e.VNE" >}}
 
