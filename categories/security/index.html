@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <title>
-    Programming // Cong Nguyen
+    Security // Cong Nguyen
   </title>
 
   <link href="http://gmpg.org/xfn/11" rel="profile">
@@ -16,11 +16,11 @@
 <meta name="author" content="">
 <meta name="generator" content="Hugo 0.15" />
 
-  <meta property="og:title" content="Programming" />
+  <meta property="og:title" content="Security" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:url" content="http://blog.ntcong.it/categories/programming/" />
+<meta property="og:url" content="http://blog.ntcong.it/categories/security/" />
 
 
   
@@ -42,7 +42,7 @@
   <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="http://blog.ntcong.it/categories/programming/index.xml" rel="alternate" type="application/rss+xml" title="Cong Nguyen" />
+  <link href="http://blog.ntcong.it/categories/security/index.xml" rel="alternate" type="application/rss+xml" title="Cong Nguyen" />
 
   
 
@@ -114,41 +114,39 @@
             <header class="post-header">
             
             <div class="post-avatar-wrapper">
-              <img class="post-avatar" alt="" src="/img/cap_logo.png">
+              <img class="post-avatar" alt="" src="/img/vne/vne.jpg">
             </div>
             
             <h1 class="post-title">
-              <a href="/post/cracking-chungta-vn-captcha-with-google-ocr/">Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR</a>
+              <a href="/post/xss-with-vnexpress/">XSS vulnerablities on VnExpress</a>
             </h1>
             </header>
             <p class="post-meta">
             	
 		          <span class="post-date">
-		            <span class="post-date-day"><sup>18</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Dec</span> <span class="post-date-year">2014</span>
+		            <span class="post-date-day"><sup>22</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2016</span>
 		          </span>
       				
       				
       					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
       				
               
-                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>3 min. read</em></span>
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>4 min. read</em></span>
               
       				
       					<div class="post-categories">
 				        
       					
-					        <a class="post-category post-category-programming" href="http://blog.ntcong.it/categories/programming">programming</a>
-      					
-					        <a class="post-category post-category-python" href="http://blog.ntcong.it/categories/python">python</a>
+					        <a class="post-category post-category-security" href="http://blog.ntcong.it/categories/security">security</a>
       					
       					</div>
       				
             </p>
             <article class="post-summary">
-            	The Captcha VNExpress, Chungta.vn, ngoisao.net, they&rsquo;re all using a simple Captcha system to prevent bot voting/submit email. But unfortunately, the system is so easy, we can get around it in five minutes. (So, the voting poll, and all the competition based on voting in VNExpress is useless) Recently, chungta.vn announced a new beta site with new design. Let&rsquo;s take a look into it to know, if the internal is still the same.
+            	XSS on e.vnexpress.net Recently I found two XSS vulnerablities on vnExpress website. It all begins with the newly introduced English version of VnExpress, and I didn&rsquo;t have to spend a lot of time to find the search box wasn&rsquo;t escaped properly. Just do a search with &ldquo;&gt; will reveal this. XSS on e.VNE Pretty serious problem if anyone still doesn&rsquo;t care about escaping user-input, especially on a search box. Luckily, a normal XSS payload will only works on Firefox, because Chrome and IE have XSS Auditor for a while now (you can still bypass it, which I will tell you later).
             </article>
 			<div class="read-more-link">
-				<a href="/post/cracking-chungta-vn-captcha-with-google-ocr/"><span class="read-more-slashes">//</span>Read More...</a>
+				<a href="/post/xss-with-vnexpress/"><span class="read-more-slashes">//</span>Read More...</a>
 			</div>
           </section>
         
