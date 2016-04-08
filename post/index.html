@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Posts // Cong Nguyen
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.15" />
+
+  <meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="http://blog.ntcong.it/post/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="http://blog.ntcong.it/css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:900,500,100,300,700,400' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  <link href="http://blog.ntcong.it/post/index.xml" rel="alternate" type="application/rss+xml" title="Cong Nguyen" />
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="/css/categories.css">
+  
+
+  
+</head>
+
+<body>
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+	  <img src="/img/avatar.png" class="sidebarphoto">
+	
+
+    <h1 class="brand-title">CongNT</h1>
+    <h2 class="brand-tagline">Thoughts on Programming and anything Computer</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://blog.ntcong.it">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/about/">About</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/posts/">Blog</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+      
+        
+        <a href="https://facebook.com/ntcong.it" target="_blank"><i class='fa fa-facebook'></i></a>
+        
+      
+        
+        <a href="http://github.com/ntcong" target="_blank"><i class='fa fa-github'></i></a>
+        
+      
+        
+        <a href="https://plus.google.com/&#43;CongNguyen" target="_blank"><i class='fa fa-google-plus'></i></a>
+        
+      
+        
+        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+      <a name="top"></a>
+      
+
+      <div class="posts">
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <div class="post-avatar-wrapper">
+              <img class="post-avatar" alt="" src="/img/vne/vne.jpg">
+            </div>
+            
+            <h1 class="post-title">
+              <a href="/post/xss-with-vnexpress/">XSS vulnerabilities on VnExpress</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>22</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2016</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>4 min. read</em></span>
+              
+      				
+      					<div class="post-categories">
+				        
+      					
+					        <a class="post-category post-category-security" href="http://blog.ntcong.it/categories/security">security</a>
+      					
+      					</div>
+      				
+            </p>
+            <article class="post-summary">
+            	XSS on e.vnexpress.net Recently I found two XSS vulnerabilities on vnExpress website. It all begins with the newly introduced English version of VnExpress, and I didn&rsquo;t have to spend a lot of time to find the search box wasn&rsquo;t escaped properly. Just do a search with &ldquo;&gt; will reveal this. XSS on e.VNE Pretty serious problem if anyone still doesn&rsquo;t care about escaping user-input, especially on a search box. Luckily, a normal XSS payload will only works on Firefox, because Chrome and IE have XSS Auditor for a while now (you can still bypass it, which I will tell you later).
+            </article>
+			<div class="read-more-link">
+				<a href="/post/xss-with-vnexpress/"><span class="read-more-slashes">//</span>Read More...</a>
+			</div>
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <div class="post-avatar-wrapper">
+              <img class="post-avatar" alt="" src="/img/avatar.png">
+            </div>
+            
+            <h1 class="post-title">
+              <a href="/post/how-vcb-do-otp-or-how-not-to-do-it/">How VCB OTP works and How not to do it</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>24</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Apr</span> <span class="post-date-year">2015</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>4 min. read</em></span>
+              
+      				
+            </p>
+            <article class="post-summary">
+            	The App So recently Vietcombank released a Smart OTP app for Android (not so recently anymore since I&rsquo;m holding up the post for a while). They seem to be the first bank to release a app-based OTP, so let&rsquo;s take a look at how they did it. I&rsquo;m not an Android programmer by any mean, so it takes a while to be able to understand the code and to collect the tools, you may have better results if you are.
+            </article>
+			<div class="read-more-link">
+				<a href="/post/how-vcb-do-otp-or-how-not-to-do-it/"><span class="read-more-slashes">//</span>Read More...</a>
+			</div>
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <div class="post-avatar-wrapper">
+              <img class="post-avatar" alt="" src="/img/cap_logo.png">
+            </div>
+            
+            <h1 class="post-title">
+              <a href="/post/cracking-chungta-vn-captcha-with-google-ocr/">Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>18</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Dec</span> <span class="post-date-year">2014</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>3 min. read</em></span>
+              
+      				
+      					<div class="post-categories">
+				        
+      					
+					        <a class="post-category post-category-programming" href="http://blog.ntcong.it/categories/programming">programming</a>
+      					
+					        <a class="post-category post-category-python" href="http://blog.ntcong.it/categories/python">python</a>
+      					
+      					</div>
+      				
+            </p>
+            <article class="post-summary">
+            	The Captcha VNExpress, Chungta.vn, ngoisao.net, they&rsquo;re all using a simple Captcha system to prevent bot voting/submit email. But unfortunately, the system is so easy, we can get around it in five minutes. (So, the voting poll, and all the competition based on voting in VNExpress is useless) Recently, chungta.vn announced a new beta site with new design. Let&rsquo;s take a look into it to know, if the internal is still the same.
+            </article>
+			<div class="read-more-link">
+				<a href="/post/cracking-chungta-vn-captcha-with-google-ocr/"><span class="read-more-slashes">//</span>Read More...</a>
+			</div>
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <div class="post-avatar-wrapper">
+              <img class="post-avatar" alt="" src="/img/hugo.png">
+            </div>
+            
+            <h1 class="post-title">
+              <a href="/post/goodbye-blogspot-hello-hugo/">Goodbye Blogspot, Hello Hugo</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>8</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Dec</span> <span class="post-date-year">2014</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>3 min. read</em></span>
+              
+      				
+      					<div class="post-categories">
+				        
+      					
+					        <a class="post-category post-category-blog" href="http://blog.ntcong.it/categories/blog">blog</a>
+      					
+					        <a class="post-category post-category-go" href="http://blog.ntcong.it/categories/go">go</a>
+      					
+      					</div>
+      				
+            </p>
+            <article class="post-summary">
+            	Goodbye (any) traditional blogging system I used Wordpress for like 8 years, wrote some plugins myself (some that I already published), eventually got tired of managing my own hosting, and switched to wordpress.com. Then Wordpress.com want 15 dollar a year just for custom domain feature, and I switched to Blogspot. I happily used Blogspot for a while, but even so, the experience is not that great. Some example: Bloated: there are so many features I don&rsquo;t use, and the feature I use, I have to code it in manually.
+            </article>
+			<div class="read-more-link">
+				<a href="/post/goodbye-blogspot-hello-hugo/"><span class="read-more-slashes">//</span>Read More...</a>
+			</div>
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <div class="post-avatar-wrapper">
+              <img class="post-avatar" alt="" src="/img/stripe.png">
+            </div>
+            
+            <h1 class="post-title">
+              <a href="/post/stripe-ctf-level1-with-golang/">Stripe-CTF Level 1 with Golang</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>7</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Feb</span> <span class="post-date-year">2014</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>5 min. read</em></span>
+              
+      				
+      					<div class="post-categories">
+				        
+      					
+					        <a class="post-category post-category-development" href="http://blog.ntcong.it/categories/development">development</a>
+      					
+					        <a class="post-category post-category-go" href="http://blog.ntcong.it/categories/go">go</a>
+      					
+      					</div>
+      				
+            </p>
+            <article class="post-summary">
+            	This year&rsquo;s Stripe-CTF brings some interesting things to the table: Cryptocurrency. I&rsquo;ve already known about cryptocurrency and Bitcoin in general, but it&rsquo;s amazing how Bitcoin relates to Git. The level is here:&nbsp;https://stripe-ctf.com/levels/1 Basically, like Bitcoin, you have to find a block, in this case is a git commit. The commit must have its hash lower than the target difficulty, specified in the file difficulty.txt. You will compete against a bot, and you have to find and submit a block/commit before it does.
+            </article>
+			<div class="read-more-link">
+				<a href="/post/stripe-ctf-level1-with-golang/"><span class="read-more-slashes">//</span>Read More...</a>
+			</div>
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <div class="post-avatar-wrapper">
+              <img class="post-avatar" alt="" src="/img/bitcoin.png">
+            </div>
+            
+            <h1 class="post-title">
+              <a href="/post/bitcoin-protocol-the-basic/">Bitcoin Protocol: The Basic</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>19</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jan</span> <span class="post-date-year">2014</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>9 min. read</em></span>
+              
+      				
+      					<div class="post-categories">
+				        
+      					
+					        <a class="post-category post-category-thought" href="http://blog.ntcong.it/categories/thought">thought</a>
+      					
+					        <a class="post-category post-category-bitcoin" href="http://blog.ntcong.it/categories/bitcoin">bitcoin</a>
+      					
+      					</div>
+      				
+            </p>
+            <article class="post-summary">
+            	Ở bài trước, các bạn đã biết thế nào là cryptocurrency nói chung, và cách hoạt động của nó. Tuy nhiên bài viết chỉ rờ đến một trong những điểm nổi nhất của hệ thống Bitcoin, nếu muốn tìm hiểu một cách chuyên sâu hơn 1 chút, thì Bitcoin hoạt động như thế nào? Bài viết nhằm phân tích ý nghĩa và phương thích hoạt động của loại tiền mặt này.
+            </article>
+			<div class="read-more-link">
+				<a href="/post/bitcoin-protocol-the-basic/"><span class="read-more-slashes">//</span>Read More...</a>
+			</div>
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <div class="post-avatar-wrapper">
+              <img class="post-avatar" alt="" src="/img/silkroad.png">
+            </div>
+            
+            <h1 class="post-title">
+              <a href="/post/silk-road-va-nhung-dieu-ban-can-biet/">Silk Road và những điều bạn cần biết</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>9</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Oct</span> <span class="post-date-year">2013</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>4 min. read</em></span>
+              
+      				
+      					<div class="post-categories">
+				        
+      					
+					        <a class="post-category post-category-thought" href="http://blog.ntcong.it/categories/thought">thought</a>
+      					
+					        <a class="post-category post-category-bitcoin" href="http://blog.ntcong.it/categories/bitcoin">bitcoin</a>
+      					
+      					</div>
+      				
+            </p>
+            <article class="post-summary">
+            	Nhân tiện một buổi họp công nghệ và bắt gặp 1 dòng chữ &ldquo;Silk road bảo mật website như thế nào?&rdquo;, mình phát hiện ra 1 điều là mọi người đọc báo và biết về Silk Road, chứ ko hề hiểu nó là cái gì. Và vì thế, lại 1 bài chém gió ra đời. Vậy, câu hỏi đầu tiên, Silk Road là cái gì? Silk Road là một chợ đen hoạt động trên mạng Tor.
+            </article>
+			<div class="read-more-link">
+				<a href="/post/silk-road-va-nhung-dieu-ban-can-biet/"><span class="read-more-slashes">//</span>Read More...</a>
+			</div>
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <div class="post-avatar-wrapper">
+              <img class="post-avatar" alt="" src="/img/bitcoin.png">
+            </div>
+            
+            <h1 class="post-title">
+              <a href="/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/">Bitcoin - Người ta đã làm ra nó như thế nào</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>12</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Sep</span> <span class="post-date-year">2013</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>9 min. read</em></span>
+              
+      				
+      					<div class="post-categories">
+				        
+      					
+					        <a class="post-category post-category-thought" href="http://blog.ntcong.it/categories/thought">thought</a>
+      					
+					        <a class="post-category post-category-bitcoin" href="http://blog.ntcong.it/categories/bitcoin">bitcoin</a>
+      					
+      					</div>
+      				
+            </p>
+            <article class="post-summary">
+            	Bitcoin không còn là mới, nó đã xuất hiện được vài năm nay. Nhưng chỉ trong thời gian gần đây nó mới bùng nổ thành một hình thức thanh toán cực kì tiện lợi. Bitcoin là một cryptocurrency, để hiểu được một cách chính xác Bitcoin là gì cần một lượng kiến thức về software, crypto, network nhất định. Tuy nhiên chúng ta có thể tiếp cận Bitcoin để hiểu nó như một người sử dụng &ldquo;có hiểu biết&rdquo;.
+            </article>
+			<div class="read-more-link">
+				<a href="/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/"><span class="read-more-slashes">//</span>Read More...</a>
+			</div>
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <h1 class="post-title">
+              <a href="/post/chuyen_dat_ten/">Phiếm bàn chuyện đặt tên</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>21</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jan</span> <span class="post-date-year">2013</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" href="http://ntcong.it">Cong Nguyen</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>4 min. read</em></span>
+              
+      				
+      					<div class="post-categories">
+				        
+      					
+					        <a class="post-category post-category-development" href="http://blog.ntcong.it/categories/development">development</a>
+      					
+					        <a class="post-category post-category-thought" href="http://blog.ntcong.it/categories/thought">thought</a>
+      					
+      					</div>
+      				
+            </p>
+            <article class="post-summary">
+            	Code mình viết ra cũng như con đẻ của mình vậy, chuyện đặt cho nó cái tên để gọi là chuyện vô cùng quan trọng. Đặt tên sao để cho tên nó hay, có ý nghĩa, lại còn phải để người khác dễ gọi, chưa kể là còn phải tránh tên dễ suy luận không là bạn bè của con nó chửi xéo. Chắc 100% người đụng vào code đều biết mấy kiểu đặt tên họ: viết_thường_kèm_gạch_dưới ViếtHoaChữCáiĐầu VIẾT_HOA_KÈM_GẠCH một vài loại biến thể khác Ngoài ra một số quy tắc khác như tên biến int thì bắt đầu bằng chữ i, class bắt đầu bằng cls, rồi thì là const thì viết hoa tất, quy tắc thì có lẽ chỉ dành cho project manager ngồi bịa ra viết tài liệu rồi cho các bạn đọc, đọc xong rồi nhớ áp dụng là xong.
+            </article>
+			<div class="read-more-link">
+				<a href="/post/chuyen_dat_ten/"><span class="read-more-slashes">//</span>Read More...</a>
+			</div>
+          </section>
+        
+      </div>
+
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2016. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+  
+</body>
+</html>
