@@ -1,4 +1,4 @@
-baseurl = "http://blog.ntcong.it"
+baseurl = "http://blog.ntcong.it/"
 languageCode = "en-us"
 title = "Cong Nguyen"
 pygmentsuseclasses=true
