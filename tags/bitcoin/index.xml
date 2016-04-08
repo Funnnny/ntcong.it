@@ -6,6 +6,8 @@
     <description>Recent content in Bitcoin on Cong Nguyen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <managingEditor>ntcong.it@gmail.com (Cong Nguyen)</managingEditor>
+    <webMaster>ntcong.it@gmail.com (Cong Nguyen)</webMaster>
     <lastBuildDate>Sun, 19 Jan 2014 12:51:42 +0700</lastBuildDate>
     <atom:link href="http://blog.ntcong.it/tags/bitcoin/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +15,7 @@
       <title>Bitcoin Protocol: The Basic</title>
       <link>http://blog.ntcong.it/post/bitcoin-protocol-the-basic/</link>
       <pubDate>Sun, 19 Jan 2014 12:51:42 +0700</pubDate>
-      
+      <author>ntcong.it@gmail.com (Cong Nguyen)</author>
       <guid>http://blog.ntcong.it/post/bitcoin-protocol-the-basic/</guid>
       <description>
 
@@ -249,7 +251,7 @@
       <title>Silk Road và những điều bạn cần biết</title>
       <link>http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</link>
       <pubDate>Wed, 09 Oct 2013 21:06:00 +0700</pubDate>
-      
+      <author>ntcong.it@gmail.com (Cong Nguyen)</author>
       <guid>http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</guid>
       <description>&lt;p&gt;Nhân tiện một buổi họp công nghệ và bắt gặp 1 dòng chữ &amp;ldquo;Silk road bảo mật website như thế nào?&amp;rdquo;, mình phát hiện ra 1 điều là mọi người đọc báo và biết về Silk Road, chứ ko hề hiểu nó là cái gì. Và vì thế, lại 1 bài chém gió ra đời.&lt;/p&gt;
 
@@ -318,7 +320,7 @@
       <title>Bitcoin - Người ta đã làm ra nó như thế nào</title>
       <link>http://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</link>
       <pubDate>Thu, 12 Sep 2013 16:06:44 +0700</pubDate>
-      
+      <author>ntcong.it@gmail.com (Cong Nguyen)</author>
       <guid>http://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</guid>
       <description>
 

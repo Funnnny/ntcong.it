@@ -6,6 +6,8 @@
     <description>Recent content in Thought on Cong Nguyen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <managingEditor>ntcong.it@gmail.com (Cong Nguyen)</managingEditor>
+    <webMaster>ntcong.it@gmail.com (Cong Nguyen)</webMaster>
     <lastBuildDate>Sun, 19 Jan 2014 12:51:42 +0700</lastBuildDate>
     <atom:link href="http://blog.ntcong.it/tags/thought/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +15,7 @@
       <title>Bitcoin Protocol: The Basic</title>
       <link>http://blog.ntcong.it/post/bitcoin-protocol-the-basic/</link>
       <pubDate>Sun, 19 Jan 2014 12:51:42 +0700</pubDate>
-      
+      <author>ntcong.it@gmail.com (Cong Nguyen)</author>
       <guid>http://blog.ntcong.it/post/bitcoin-protocol-the-basic/</guid>
       <description>
 
@@ -249,7 +251,7 @@
       <title>Silk Road và những điều bạn cần biết</title>
       <link>http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</link>
       <pubDate>Wed, 09 Oct 2013 21:06:00 +0700</pubDate>
-      
+      <author>ntcong.it@gmail.com (Cong Nguyen)</author>
       <guid>http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</guid>
       <description>&lt;p&gt;Nhân tiện một buổi họp công nghệ và bắt gặp 1 dòng chữ &amp;ldquo;Silk road bảo mật website như thế nào?&amp;rdquo;, mình phát hiện ra 1 điều là mọi người đọc báo và biết về Silk Road, chứ ko hề hiểu nó là cái gì. Và vì thế, lại 1 bài chém gió ra đời.&lt;/p&gt;
 
@@ -318,7 +320,7 @@
       <title>Bitcoin - Người ta đã làm ra nó như thế nào</title>
       <link>http://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</link>
       <pubDate>Thu, 12 Sep 2013 16:06:44 +0700</pubDate>
-      
+      <author>ntcong.it@gmail.com (Cong Nguyen)</author>
       <guid>http://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</guid>
       <description>
 
@@ -403,7 +405,7 @@
       <title>Phiếm bàn chuyện đặt tên</title>
       <link>http://blog.ntcong.it/post/chuyen_dat_ten/</link>
       <pubDate>Mon, 21 Jan 2013 16:18:00 +0700</pubDate>
-      
+      <author>ntcong.it@gmail.com (Cong Nguyen)</author>
       <guid>http://blog.ntcong.it/post/chuyen_dat_ten/</guid>
       <description>&lt;p&gt;Code mình viết ra cũng như con đẻ của mình vậy, chuyện đặt cho nó cái tên để gọi là chuyện vô cùng quan trọng. Đặt tên sao để cho tên nó hay, có ý nghĩa, lại còn phải để người khác dễ gọi, chưa kể là còn phải tránh tên dễ suy luận không là bạn bè của con nó chửi xéo.&lt;/p&gt;
 

@@ -1,174 +1,120 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
-<head>
-  <title>
-    Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR // Cong Nguyen
-  </title>
+<html lang="en">
 
-  <link href="http://gmpg.org/xfn/11" rel="profile">
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
+  <title>Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="author" content="Cong Nguyen" />
+  
+  
 
-<meta name="description" content="">
-<meta name="keywords" content="">
-<meta name="author" content="Cong Nguyen">
-<meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.15" />
 
+  <link rel="alternate" href="http://blog.ntcong.it/index.xml" type="application/rss+xml" title="Cong Nguyen">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="http://blog.ntcong.itcss/bootstrap.min.css" />
+  <link rel="stylesheet" href="http://blog.ntcong.itcss/main.css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="http://blog.ntcong.itcss/pygment_highlights.css" />
+  
+  
   <meta property="og:title" content="Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:url" content="http://blog.ntcong.it/post/cracking-chungta-vn-captcha-with-google-ocr/" />
-
-
-  
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
-  
-  
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
-  
-  
-
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/redlounge.css">
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href='http://fonts.googleapis.com/css?family=Roboto:900,500,100,300,700,400' rel='stylesheet' type='text/css'>
-  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
-
-  
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="Cong Nguyen" />
-
-  
-
-  
-    <link rel="stylesheet" type="text/css" href="/css/categories.css">
-  
-
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="/" />
+  <meta property="og:image" content="/img/avatar.png" />
   
 </head>
 
-<body>
-	
 
-	<div id="layout" class="pure-g">
-    <div class="sidebar pure-u-1 pure-u-md-1-4">
-  <div class="header">
-    
+  <body>
 
-	
-	  <img src="/img/avatar.png" class="sidebarphoto">
-	
-
-    <h1 class="brand-title">CongNT</h1>
-    <h2 class="brand-tagline">Thoughts on Programming and anything Computer</h2>
-
-    <nav class="nav">
-      <ul class="nav-list">
-        <li class="nav-item"><span class="nav-item-separator">//</span><a href="http://blog.ntcong.it">Home</a></li>
-        
-          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/about/">About</a></li>
-        
-          <li class="nav-item"><span class="nav-item-separator">//</span><a href="/posts/">Blog</a></li>
-        
-      </ul>
-    </nav>
-
-    
-    <div class="social-buttons">
-      
-        
-        <a href="https://facebook.com/ntcong.it" target="_blank"><i class='fa fa-facebook'></i></a>
-        
-      
-        
-        <a href="http://github.com/ntcong" target="_blank"><i class='fa fa-github'></i></a>
-        
-      
-        
-        <a href="https://plus.google.com/&#43;CongNguyen" target="_blank"><i class='fa fa-google-plus'></i></a>
-        
-      
-        
-        <a href="http://blog.ntcong.it/posts/index.xml" target="_blank"><i class='fa fa-rss'></i></a>
-        
-      
-      
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://blog.ntcong.it">Cong Nguyen</a>
     </div>
-    
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+          <a title="About" href="/about/">About</a>
+  	      </li>
+  	    
+      
+        
+          <li>
+          <a title="Blog" href="/">Blog</a>
+  	      </li>
+  	    
+      
+      </ul>
+    </div>
+
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+      
+          <a title="Cong Nguyen" href="http://blog.ntcong.it">
+              <img class="avatar-img" src="http://blog.ntcong.it/img/avatar.png" alt="Cong Nguyen" />
+          </a>
+      
+	  </div>
+	</div>
 
   </div>
-</div>
-
-	
-	
-
-    <div class="content pure-u-1 pure-u-md-3-4">
-		<a name="top"></a>
-		
-
-		
-			
-		    <div id="toc" class="pure-u-1 pure-u-md-1-4">
-				<small class="toc-label">Contents</small>
-		   	 	<nav id="TableOfContents">
-<ul>
-<li><a href="#the-captcha:02a117938cf5deaed3c0cd35f6f81d2c">The Captcha</a></li>
-<li><a href="#break-it-with-python-and-google-tesseract:02a117938cf5deaed3c0cd35f6f81d2c">Break it with Python and Google Tesseract</a></li>
-<li><a href="#wait-is-it-that-simple:02a117938cf5deaed3c0cd35f6f81d2c">Wait, is it that simple?</a></li>
-</ul>
 </nav>
-		    </div>
-		    
-	    
-  		<section class="post">
-            <h1 class="post-title">
-              <a href="/post/cracking-chungta-vn-captcha-with-google-ocr/">Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR</a>
-            </h1>
-            <h3 class="post-subtitle">
-            	
-            </h3>
-            
-            	<span class="post-date">
-                	<span class="post-date-day"><sup>18</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Dec</span> <span class="post-date-year">2014</span>
-            	</span>
-            	
-            
-            	
-            		<span class="post-author-single">By <a class="post-author" href="http://ntcong.it" target="">Cong Nguyen</a></span>
-            		
-      <span class="post-author-social post-author-facebook"><a href="http://facebook.com/ntcong.it" target="_blank"><i class="fa fa-facebook"></i></a></span>
 
 
-      <span class="post-author-social post-author-google-plus"><a href="https://plus.google.com/&#43;CongNguyen" target="_blank"><i class="fa fa-google-plus"></i></a></span>
+    <div role="main" class="container main-content">
+
+      
+        
 
 
 
 
-            	
-            
 
-			
-			
-				<div class="post-categories">
-				
-					<a class="post-category post-category-programming" href="http://blog.ntcong.it/categories/programming">programming</a>
-				
-					<a class="post-category post-category-python" href="http://blog.ntcong.it/categories/python">python</a>
-				
-				</div>
-			
+<header class="header-section ">
 
-			
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR</h1>
+      
+      
+      
+      <span class="post-meta">Posted on December 18, 2014</span>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
 
-			
 
-            
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+          
 
 <h1 id="the-captcha:02a117938cf5deaed3c0cd35f6f81d2c">The Captcha</h1>
 
@@ -192,19 +138,19 @@
 
 <p>Install everything is easy, if you&rsquo;re using Windows, just download tesseract, python and PIL pre-built binary file (aka .exe) and install. If you&rsquo;re using Linux, install it with your package manager:</p>
 
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #cb4b16">$sudo</span> apt-get install tesseract-ocr
-<span style="color: #cb4b16">$pip</span> install pytesseract
-<span style="color: #cb4b16">$pip</span> install pillow
-</pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span><span class="nv">$sudo</span> apt-get install tesseract-ocr
+<span class="nv">$pip</span> install pytesseract
+<span class="nv">$pip</span> install pillow
+</code></pre></div>
 
 
 <p>So what do we have to do? First we get a captcha with the <a href="http://beta.chungta.vn/captcha/show2">above link</a>, the response is just a json text file. Then we extract the image id, the image above has id:&ldquo;22b3fefb9d316f98489085252bd0d896&rdquo;. Then we download the image by append the id to the url: &ldquo;<a href="http://beta.chungta.vn/captcha/viewimg/id/&quot;">http://beta.chungta.vn/captcha/viewimg/id/&quot;</a>. And last, some magic:</p>
 
-<div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #cb4b16">from</span> <span style="color: #b58900">PIL</span> <span style="color: #cb4b16">import</span> <span style="color: #93a1a1">Image</span>
-<span style="color: #cb4b16">import</span> <span style="color: #b58900">pytesseract</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">pytesseract</span>
 
-<span style="color: #859900">print</span> <span style="color: #93a1a1">pytesseract</span><span style="color: #839496">.</span><span style="color: #93a1a1">image_to_string</span><span style="color: #839496">(</span><span style="color: #93a1a1">Image</span><span style="color: #839496">.</span><span style="color: #93a1a1">open</span><span style="color: #839496">(</span><span style="color: #2aa198">&#39;captcha.png&#39;</span><span style="color: #839496">))</span>
-</pre></div>
+<span class="k">print</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;captcha.png&#39;</span><span class="p">))</span>
+</code></pre></div>
 
 
 <p>and the result is: &lsquo;5y47&rsquo;</p>
@@ -221,67 +167,50 @@
 <li>First, convert the image to RGB, then load the image into an array:</li>
 </ul>
 
-<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #93a1a1">img</span> <span style="color: #839496">=</span> <span style="color: #93a1a1">Image</span><span style="color: #839496">.</span><span style="color: #93a1a1">open</span><span style="color: #839496">(</span><span style="color: #2aa198">&#39;captcha.png&#39;</span><span style="color: #839496">)</span>
-<span style="color: #93a1a1">img</span> <span style="color: #839496">=</span> <span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">convert</span><span style="color: #839496">(</span><span style="color: #2aa198">&#39;RGB&#39;</span><span style="color: #839496">)</span>
-<span style="color: #93a1a1">data</span> <span style="color: #839496">=</span> <span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">load</span><span style="color: #839496">()</span>
-</pre></div>
+<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;captcha.png&#39;</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</code></pre></div>
 </p>
 
 <ul>
 <li>Then, we flip the color for each pixel: set black for color blacker than a little black, and white for others.</li>
 </ul>
 
-<p><div class="highlight" style="background: #002b36"><pre style="line-height: 125%"><span style="color: #859900">for</span> <span style="color: #93a1a1">y</span> <span style="color: #859900">in</span> <span style="color: #268bd2">xrange</span><span style="color: #839496">(</span><span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">size</span><span style="color: #839496">[</span><span style="color: #2aa198">1</span><span style="color: #839496">]):</span>
-    <span style="color: #859900">for</span> <span style="color: #93a1a1">x</span> <span style="color: #859900">in</span> <span style="color: #268bd2">xrange</span><span style="color: #839496">(</span><span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">size</span><span style="color: #839496">[</span><span style="color: #2aa198">0</span><span style="color: #839496">]):</span>
-        <span style="color: #859900">if</span> <span style="color: #93a1a1">data</span><span style="color: #839496">[</span><span style="color: #93a1a1">x</span><span style="color: #839496">,</span><span style="color: #93a1a1">y</span><span style="color: #839496">]</span> <span style="color: #93a1a1">should</span> <span style="color: #93a1a1">be</span> <span style="color: #93a1a1">black</span><span style="color: #839496">:</span>
-            <span style="color: #93a1a1">data</span><span style="color: #839496">[</span><span style="color: #93a1a1">x</span><span style="color: #839496">,</span><span style="color: #93a1a1">y</span><span style="color: #839496">]</span> <span style="color: #839496">=</span> <span style="color: #839496">(</span><span style="color: #2aa198">0</span><span style="color: #839496">,</span> <span style="color: #2aa198">0</span><span style="color: #839496">,</span> <span style="color: #2aa198">0</span><span style="color: #839496">,</span> <span style="color: #2aa198">255</span><span style="color: #839496">)</span>
-        <span style="color: #859900">if</span> <span style="color: #93a1a1">data</span><span style="color: #839496">[</span><span style="color: #93a1a1">x</span><span style="color: #839496">,</span><span style="color: #93a1a1">y</span><span style="color: #839496">]</span> <span style="color: #93a1a1">should</span> <span style="color: #93a1a1">be</span> <span style="color: #93a1a1">white</span><span style="color: #839496">:</span>
-            <span style="color: #93a1a1">data</span><span style="color: #839496">[</span><span style="color: #93a1a1">x</span><span style="color: #839496">,</span><span style="color: #93a1a1">y</span><span style="color: #839496">]</span> <span style="color: #839496">=</span> <span style="color: #839496">(</span><span style="color: #2aa198">255</span><span style="color: #839496">,</span> <span style="color: #2aa198">255</span><span style="color: #839496">,</span> <span style="color: #2aa198">255</span><span style="color: #839496">,</span> <span style="color: #2aa198">255</span><span style="color: #839496">)</span>
-<span style="color: #586e75; font-style: italic"># and save</span>
-<span style="color: #93a1a1">img</span><span style="color: #839496">.</span><span style="color: #93a1a1">save</span><span style="color: #839496">(</span><span style="color: #2aa198">&quot;output.png&quot;</span><span style="color: #839496">)</span>
+<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="n">should</span> <span class="n">be</span> <span class="n">black</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="n">should</span> <span class="n">be</span> <span class="n">white</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="c1"># and save</span>
+<span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;output.png&quot;</span><span class="p">)</span>
                 
-</pre></div>
+</code></pre></div>
 </p>
 
 <p>And then you can just use pytesseract&rsquo;s image_to_string. Sometimes I have to scale the image, and then do a simple anti-alias. But if you implement a good brute-force bot, you can just retry a few times, because the success rate is high.</p>
 
 <p>I&rsquo;ll leave the rest for your imagination. You can send a few thousand contact emails to say hello, or do some voting manipulation for science.</p>
 
-	
-			
+      </article>
 
-			
-				<div class="tags-list">
-					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
-					
-	                <a class="post-tag post-tag-programming" href="http://blog.ntcong.it/tags/programming">programming</a>,
-	                
-	                <a class="post-tag post-tag-python" href="http://blog.ntcong.it/tags/python">python</a>,
-	                
-				</div>
-			
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="http://blog.ntcong.it/post/goodbye-blogspot-hello-hugo/" data-toggle="tooltip" data-placement="top" title="Goodbye Blogspot, Hello Hugo">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="http://blog.ntcong.it/post/how-vcb-do-otp-or-how-not-to-do-it/" data-toggle="tooltip" data-placement="top" title="How VCB OTP works and How not to do it">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
 
-			
-				<div class="paging">
-					<span class="paging-label">More Reading</span>
-					
-					<div class="paging-newer">
-						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
-						<a class="paging-link" href="/post/how-vcb-do-otp-or-how-not-to-do-it/">How VCB OTP works and How not to do it</a>
-		            </div>
-		            
-
-					
-					<div class="paging-older">
-						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
-			            <a class="paging-link" href="/post/goodbye-blogspot-hello-hugo/">Goodbye Blogspot, Hello Hugo</a>
-		            </div>
-		            
-	            </div>
-            
-          </section>
-          
-          	<div id="disqus_thread"></div>
+      
+      <div class="disqus-comments">
+        <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
     var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
@@ -296,24 +225,141 @@
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-          
-        
-      <div class="footer">
-	<hr class="thin" />
-	<div class="pure-menu pure-menu-horizontal pure-menu-open">
-		<ul class="footer-menu">
-		
-		</ul>
-	</div>
+      </div>
+      
 
-	<p>&copy; 2016. All rights reserved.</p>
-</div>
     </div>
   </div>
-	
+</div>
 
-	
+      
 
-  
-</body>
+      
+      <div class="row disqus-comments">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ntcongit';
+    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
+    var disqus_title = 'Breaking Chungta (or VNExpress) captcha with Google\x27s OCR';
+    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+      </div>
+      
+
+    </div>
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          <li>
+            <a href="https://www.facebook.com/ntcong.it" title="Facebook">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
+            <a href="https://github.com/ntcong" title="GitHub">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+		      
+          <li>
+            <a href="mailto:ntcong.it@gmail.com" title="Email me">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+		      
+          <li>
+            <a href="https://linkedin.com/in/ntcong" title="LinkedIn">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+	    	  
+          <li>
+            <a href="https://stackoverflow.com/users/104011/fu4ny" title="StackOverflow">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+
+    		  <li>
+      			<a href="http://blog.ntcong.itindex.xml" title="RSS">
+      			  <span class="fa-stack fa-lg">
+        				<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+      			  </span>
+      			</a>
+    		  </li>		
+
+        </ul>
+        <p class="copyright text-muted">
+    		  Cong Nguyen
+    		  &nbsp;&bull;&nbsp;
+    		  2016
+    		  
+    		  
+    		  &nbsp;&bull;&nbsp;
+    		  <a href="http://blog.ntcong.it">Cong Nguyen</a>
+    		  
+  	    </p>
+  	        
+    		<p class="theme-by text-muted">
+    		  Theme by
+    		  <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    		</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="http://blog.ntcong.itjs/jquery-1.11.2.min.js"></script>
+<script src="http://blog.ntcong.itjs/bootstrap.min.js"></script>
+<script src="http://blog.ntcong.itjs/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-76172988-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  </body>
 </html>
