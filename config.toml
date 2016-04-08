@@ -1,20 +1,33 @@
 baseurl = "http://blog.ntcong.it"
 languageCode = "en-us"
 title = "Cong Nguyen"
-pygmentsuseclasses=false
+pygmentsuseclasses=true
 pygmentsstyle="solarizeddark"
 disqusShortname="ntcongit"
-theme = "redlounge"
+#theme = "redlounge"
+theme = "beautifulhugo"
 author = "Cong Nguyen"
+googleAnalytics = "UA-76172988-1"
+
 [params]
   sidebartitle = "CongNT"
   sidebartagline = "Thoughts on Programming and anything Computer"
+  subtitle = "Thoughts on Programming and anything Computer"
   sidebarphoto = '/img/avatar.png'
+  logo = '/img/avatar.png'
   categoriescss = "/css/categories.css"
+
+[Author]
+  name = "Cong Nguyen"
+  email = "ntcong.it@gmail.com"
+  facebook = "ntcong.it"
+  github = "ntcong"
+  linkedin = "in/ntcong"
+  stackoverflow = "104011/fu4ny"
 
 [[menu.main]]
   name = "Blog"
-  url = "/posts"
+  url = "/"
 [[menu.main]]
   name = "About"
   url = "/about"
