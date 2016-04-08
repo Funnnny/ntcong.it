@@ -8,5 +8,4 @@ notoc = true
 noauthor = true
 +++
 
-I'm a programmer from Vietnam. Nothing to see much here since I'm still building the site.
-
+I'm a system engineer from Vietnam. In this blog I document mostly about my finding/tricks/anything about programming and security to improve my skills. I'm not a good writer *and* English speaker but I write in English anyway, so my posts maybe are a little rough (and bad), but no one actually read it so who cares :)
