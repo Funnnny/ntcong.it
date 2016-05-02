@@ -8,4 +8,8 @@ notoc = true
 noauthor = true
 +++
 
-I'm a system engineer from Vietnam. In this blog I document mostly about my finding/tricks/anything about programming and security to improve my skills. I'm not a good writer *and* English speaker but I write in English anyway, so my posts maybe are a little rough (and bad), but no one actually read it so who cares :)
+I'm a system engineer from Vietnam. In this blog I write mostly about my finding/tricks/anything about programming and security to improve my skills. I'm not a good writer *and* my English is bad but I'm trying write anyway. Maybe my posts are a little rough (or just plain bad), but no one actually reads it so who cares :)
+
+My contact information is in the footer, drop me an email if you want to talk more about computer, or have some project I can contribute to (I love FOSS anyway).
+
+Other than Vietnamese and English, I prefer to talk in Python and Go, and I use Vim (in Emacs, that's evil huh?).

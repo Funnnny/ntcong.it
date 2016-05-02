@@ -968,7 +968,11 @@ Not that simple, turned out they save app&amp;rsquo;s data in /data/data/vietcom
       <pubDate>Wed, 05 Dec 2012 14:32:48 +0700</pubDate>
       <author>ntcong.it@gmail.com (Cong Nguyen)</author>
       <guid>http://blog.ntcong.it/about/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;m a system engineer from Vietnam. In this blog I document mostly about my finding/tricks/anything about programming and security to improve my skills. I&amp;rsquo;m not a good writer &lt;em&gt;and&lt;/em&gt; English speaker but I write in English anyway, so my posts maybe are a little rough (and bad), but no one actually read it so who cares :)&lt;/p&gt;
+      <description>&lt;p&gt;I&amp;rsquo;m a system engineer from Vietnam. In this blog I write mostly about my finding/tricks/anything about programming and security to improve my skills. I&amp;rsquo;m not a good writer &lt;em&gt;and&lt;/em&gt; my English is bad but I&amp;rsquo;m trying write anyway. Maybe my posts are a little rough (or just plain bad), but no one actually reads it so who cares :)&lt;/p&gt;
+
+&lt;p&gt;My contact information is in the footer, drop me an email if you want to talk more about computer, or have some project I can contribute to (I love FOSS anyway).&lt;/p&gt;
+
+&lt;p&gt;Other than Vietnamese and English, I prefer to talk in Python and Go, and I use Vim (in Emacs, that&amp;rsquo;s evil huh?).&lt;/p&gt;
 </description>
     </item>
     
