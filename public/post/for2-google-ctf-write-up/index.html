@@ -12,16 +12,16 @@
   
   
 
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.16" />
 
-  <link rel="alternate" href="http://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
+  <link rel="alternate" href="https://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/main.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/main.css" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/pygment_highlights.css" />
   
   
   <meta property="og:title" content="Forensics:For2 Google&#39;s CTF Writeup" />
@@ -43,7 +43,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://blog.ntcong.it/">CongNT</a>
+      <a class="navbar-brand" href="https://blog.ntcong.it/">CongNT</a>
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar">
@@ -51,7 +51,7 @@
       
         
           <li>
-          <a title="About" href="/about/">About</a>
+          <a title="About" href="/about">About</a>
   	      </li>
   	    
       
@@ -67,8 +67,8 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
       
-          <a title="CongNT" href="http://blog.ntcong.it/">
-              <img class="avatar-img" src="http://blog.ntcong.it//img/avatar.png" alt="CongNT" />
+          <a title="CongNT" href="https://blog.ntcong.it/">
+              <img class="avatar-img" src="https://blog.ntcong.it//img/avatar.png" alt="CongNT" />
           </a>
       
 	  </div>
@@ -119,12 +119,12 @@ So, I can solve some Web challenges, a plaintext IRC log extraction, and move my
 
 <p>The challenge is <a href="https://capturetheflag.withgoogle.com/challenges/forensics">here</a>. It&rsquo;s a simple pcap file, Wireshark tells us it&rsquo;s USB protocol, I looked down a bit and saw a &ldquo;GET DESCRIPTOR&rdquo; request/response, it said &ldquo;Logitech Optical Mouse&rdquo;. It&rsquo;s must be an USB mouse then.<br />
 The rest of the traffic is USB Interrupt, so the mouse is doing something. I used Python with dpkt to read the pcap file and extract the information.
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span>
   <span class="n">pcap</span> <span class="o">=</span> <span class="n">dpkt</span><span class="o">.</span><span class="n">pcap</span><span class="o">.</span><span class="n">Reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
   <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">buf</span> <span class="ow">in</span> <span class="n">pcap</span><span class="p">:</span>
-      <span class="n">irp</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">buf</span><span class="p">[:</span><span class="mi">10</span><span class="p">]))</span>
-      <span class="k">if</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">irp</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;1b0060fc790280faffff&#39;</span><span class="p">:</span>
+      <span class="n">irp</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">buf</span><span class="p">[:</span><span class="mi">10</span><span class="p">]))</span>
+      <span class="k">if</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">irp</span><span class="p">)</span> <span class="o">!=</span> <span class="s">&#39;1b0060fc790280faffff&#39;</span><span class="p">:</span>
           <span class="k">continue</span>
       <span class="k">print</span> <span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">27</span><span class="p">:])</span>
 </code></pre></div>
@@ -133,18 +133,18 @@ The rest of the traffic is USB Interrupt, so the mouse is doing something. I use
 <p>irp is the USB pcap header length plus IRP ID, the USB Interrupt packet has length equals 1b00. The raw data is in this form: &ldquo;00(or 1) aa bb 00&rdquo;, I search for USB mouse data and found <a href="http://www.usbmadesimple.co.uk/ums_5.htm">this</a>. So first 8 bits are the mouse 1-5 button, two next 8 bits are for xx and yy movement, and last 8 bits are mouse wheel.<br />
 There&rsquo;s only 00 and 01 for first 8 bit, 01 is a left click (or whatever). We just need to track the mouse movement, record when there&rsquo;s a click. X and Y coordinate is straightforward: value higher than 128 mean it&rsquo;s moving left/down, lower than 128 mean it&rsquo;s moving right/up. You don&rsquo;t need to be right about left/down right/up, just make sure you define a rule and flip/rotate the result as needed.</p>
 
-<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">vel</span><span class="p">):</span>
+<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">vel</span><span class="p">):</span>
     <span class="n">vel</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">vel</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">vel</span> <span class="k">if</span> <span class="n">vel</span> <span class="o">&lt;</span> <span class="mi">127</span> <span class="k">else</span> <span class="n">vel</span> <span class="o">-</span> <span class="mi">256</span>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">xx</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">yy</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">click</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+        <span class="n">click</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span>
         <span class="n">xx</span> <span class="o">+=</span> <span class="n">move</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">yy</span> <span class="o">+=</span> <span class="n">move</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">click</span> <span class="o">==</span> <span class="s1">&#39;01&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">click</span> <span class="o">==</span> <span class="s">&#39;01&#39;</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">)</span>
 </code></pre></div>
 </p>
@@ -165,9 +165,13 @@ There&rsquo;s only 00 and 01 for first 8 bit, 01 is a left click (or whatever). 
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="http://blog.ntcong.it/post/xss-with-vnexpress/" data-toggle="tooltip" data-placement="top" title="XSS vulnerabilities on VnExpress">&larr; Previous Post</a>
+          <a href="https://blog.ntcong.it/post/xss-with-vnexpress/" data-toggle="tooltip" data-placement="top" title="XSS vulnerabilities on VnExpress">&larr; Previous Post</a>
         </li>
         
+        
+        <li class="next">
+          <a href="https://blog.ntcong.it/post/network-interrupts-and-how-it-kills-your-server/" data-toggle="tooltip" data-placement="top" title="Network Interrupts and How It Kills Your Server">Next Post &rarr;</a>
+        </li>
         
       </ul>
 
@@ -176,9 +180,9 @@ There&rsquo;s only 00 and 01 for first 8 bit, 01 is a left click (or whatever). 
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/for2-google-ctf-write-up\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/for2-google-ctf-write-up\/';
     var disqus_title = 'Forensics:For2 Google\x27s CTF Writeup';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/for2-google-ctf-write-up\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/for2-google-ctf-write-up\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -203,9 +207,9 @@ There&rsquo;s only 00 and 01 for first 8 bit, 01 is a left click (or whatever). 
           <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/for2-google-ctf-write-up\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/for2-google-ctf-write-up\/';
     var disqus_title = 'Forensics:For2 Google\x27s CTF Writeup';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/for2-google-ctf-write-up\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/for2-google-ctf-write-up\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -279,7 +283,7 @@ There&rsquo;s only 00 and 01 for first 8 bit, 01 is a left click (or whatever). 
           
 
     		  <li>
-      			<a href="http://blog.ntcong.it/index.xml" title="RSS">
+      			<a href="https://blog.ntcong.it/index.xml" title="RSS">
       			  <span class="fa-stack fa-lg">
         				<i class="fa fa-circle fa-stack-2x"></i>
         				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -295,7 +299,7 @@ There&rsquo;s only 00 and 01 for first 8 bit, 01 is a left click (or whatever). 
     		  
     		  
     		  &nbsp;&bull;&nbsp;
-    		  <a href="http://blog.ntcong.it/">CongNT</a>
+    		  <a href="https://blog.ntcong.it/">CongNT</a>
     		  
   	    </p>
   	        
@@ -308,9 +312,9 @@ There&rsquo;s only 00 and 01 for first 8 bit, 01 is a left click (or whatever). 
   </div>
 </footer>
 
-<script src="http://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
-<script src="http://blog.ntcong.it/js/bootstrap.min.js"></script>
-<script src="http://blog.ntcong.it/js/main.js"></script>
+<script src="https://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
+<script src="https://blog.ntcong.it/js/bootstrap.min.js"></script>
+<script src="https://blog.ntcong.it/js/main.js"></script>
 
 
 <script>

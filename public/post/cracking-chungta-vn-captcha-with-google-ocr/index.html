@@ -12,16 +12,16 @@
   
   
 
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.16" />
 
-  <link rel="alternate" href="http://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
+  <link rel="alternate" href="https://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/main.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/main.css" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/pygment_highlights.css" />
   
   
   <meta property="og:title" content="Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR" />
@@ -43,7 +43,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://blog.ntcong.it/">CongNT</a>
+      <a class="navbar-brand" href="https://blog.ntcong.it/">CongNT</a>
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar">
@@ -51,7 +51,7 @@
       
         
           <li>
-          <a title="About" href="/about/">About</a>
+          <a title="About" href="/about">About</a>
   	      </li>
   	    
       
@@ -67,8 +67,8 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
       
-          <a title="CongNT" href="http://blog.ntcong.it/">
-              <img class="avatar-img" src="http://blog.ntcong.it//img/avatar.png" alt="CongNT" />
+          <a title="CongNT" href="https://blog.ntcong.it/">
+              <img class="avatar-img" src="https://blog.ntcong.it//img/avatar.png" alt="CongNT" />
           </a>
       
 	  </div>
@@ -116,7 +116,7 @@
       <article role="main" class="blog-post">
           
 
-<h1 id="the-captcha:02a117938cf5deaed3c0cd35f6f81d2c">The Captcha</h1>
+<h1 id="the-captcha">The Captcha</h1>
 
 <p>VNExpress, Chungta.vn, ngoisao.net, they&rsquo;re all using a simple Captcha system to prevent bot voting/submit email. But unfortunately, the system is so easy, we can get around it in five minutes. (So, the voting poll, and all the competition based on voting in VNExpress is useless)</p>
 
@@ -132,13 +132,13 @@
 
 <p>So you can download the file, store it somewhere, use OCR on it, do some other transformation, and compare the result. If it does not give a acceptable accurate answer, I can just request another (and do it cheap). They are generous enough to give me a link to do it: <a href="http://beta.chungta.vn/captcha/show2">http://beta.chungta.vn/captcha/show2</a></p>
 
-<h1 id="break-it-with-python-and-google-tesseract:02a117938cf5deaed3c0cd35f6f81d2c">Break it with Python and Google Tesseract</h1>
+<h1 id="break-it-with-python-and-google-tesseract">Break it with Python and Google Tesseract</h1>
 
 <p><a href="https://code.google.com/p/tesseract-ocr/">Google Tesseract</a> is a very popular OCR engine, with a very accurate result. Combined with Python (because I know it) and PIL, you can do a lot of different thing with it.</p>
 
 <p>Install everything is easy, if you&rsquo;re using Windows, just download tesseract, python and PIL pre-built binary file (aka .exe) and install. If you&rsquo;re using Linux, install it with your package manager:</p>
 
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span><span class="nv">$sudo</span> apt-get install tesseract-ocr
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$sudo</span> apt-get install tesseract-ocr
 <span class="nv">$pip</span> install pytesseract
 <span class="nv">$pip</span> install pillow
 </code></pre></div>
@@ -146,16 +146,16 @@
 
 <p>So what do we have to do? First we get a captcha with the <a href="http://beta.chungta.vn/captcha/show2">above link</a>, the response is just a json text file. Then we extract the image id, the image above has id:&ldquo;22b3fefb9d316f98489085252bd0d896&rdquo;. Then we download the image by append the id to the url: &ldquo;<a href="http://beta.chungta.vn/captcha/viewimg/id/&quot;">http://beta.chungta.vn/captcha/viewimg/id/&quot;</a>. And last, some magic:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">pytesseract</span>
 
-<span class="k">print</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;captcha.png&#39;</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;captcha.png&#39;</span><span class="p">))</span>
 </code></pre></div>
 
 
 <p>and the result is: &lsquo;5y47&rsquo;</p>
 
-<h1 id="wait-is-it-that-simple:02a117938cf5deaed3c0cd35f6f81d2c">Wait, is it that simple?</h1>
+<h1 id="wait-is-it-that-simple">Wait, is it that simple?</h1>
 
 <p>It is, it showed how ridiculous easy the captcha is. Now we just need to pre-fill the POST data with the id and captcha text, and also the mail content, and what left to do is automated-contact-us-spam-bot.</p>
 
@@ -167,27 +167,27 @@
 <li>First, convert the image to RGB, then load the image into an array:</li>
 </ul>
 
-<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;captcha.png&#39;</span><span class="p">)</span>
-<span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;captcha.png&#39;</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&#39;RGB&#39;</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 </code></pre></div>
-</p>
+
 
 <ul>
 <li>Then, we flip the color for each pixel: set black for color blacker than a little black, and white for others.</li>
 </ul>
 
-<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="n">should</span> <span class="n">be</span> <span class="n">black</span><span class="p">:</span>
             <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="n">should</span> <span class="n">be</span> <span class="n">white</span><span class="p">:</span>
             <span class="n">data</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
-<span class="c1"># and save</span>
-<span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;output.png&quot;</span><span class="p">)</span>
+<span class="c"># and save</span>
+<span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;output.png&quot;</span><span class="p">)</span>
                 
 </code></pre></div>
-</p>
+
 
 <p>And then you can just use pytesseract&rsquo;s image_to_string. Sometimes I have to scale the image, and then do a simple anti-alias. But if you implement a good brute-force bot, you can just retry a few times, because the success rate is high.</p>
 
@@ -198,12 +198,12 @@
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="http://blog.ntcong.it/post/goodbye-blogspot-hello-hugo/" data-toggle="tooltip" data-placement="top" title="Goodbye Blogspot, Hello Hugo">&larr; Previous Post</a>
+          <a href="https://blog.ntcong.it/post/goodbye-blogspot-hello-hugo/" data-toggle="tooltip" data-placement="top" title="Goodbye Blogspot, Hello Hugo">&larr; Previous Post</a>
         </li>
         
         
         <li class="next">
-          <a href="http://blog.ntcong.it/post/how-vcb-do-otp-or-how-not-to-do-it/" data-toggle="tooltip" data-placement="top" title="How VCB OTP works and How not to do it">Next Post &rarr;</a>
+          <a href="https://blog.ntcong.it/post/how-vcb-do-otp-or-how-not-to-do-it/" data-toggle="tooltip" data-placement="top" title="How VCB OTP works and How not to do it">Next Post &rarr;</a>
         </li>
         
       </ul>
@@ -213,9 +213,9 @@
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
     var disqus_title = 'Breaking Chungta (or VNExpress) captcha with Google\x27s OCR';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -240,9 +240,9 @@
           <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
     var disqus_title = 'Breaking Chungta (or VNExpress) captcha with Google\x27s OCR';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/cracking-chungta-vn-captcha-with-google-ocr\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -316,7 +316,7 @@
           
 
     		  <li>
-      			<a href="http://blog.ntcong.it/index.xml" title="RSS">
+      			<a href="https://blog.ntcong.it/index.xml" title="RSS">
       			  <span class="fa-stack fa-lg">
         				<i class="fa fa-circle fa-stack-2x"></i>
         				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -332,7 +332,7 @@
     		  
     		  
     		  &nbsp;&bull;&nbsp;
-    		  <a href="http://blog.ntcong.it/">CongNT</a>
+    		  <a href="https://blog.ntcong.it/">CongNT</a>
     		  
   	    </p>
   	        
@@ -345,9 +345,9 @@
   </div>
 </footer>
 
-<script src="http://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
-<script src="http://blog.ntcong.it/js/bootstrap.min.js"></script>
-<script src="http://blog.ntcong.it/js/main.js"></script>
+<script src="https://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
+<script src="https://blog.ntcong.it/js/bootstrap.min.js"></script>
+<script src="https://blog.ntcong.it/js/main.js"></script>
 
 
 <script>

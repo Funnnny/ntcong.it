@@ -1,4 +1,4 @@
-baseurl = "http://blog.ntcong.it/"
+baseurl = "https://blog.ntcong.it/"
 languageCode = "en-us"
 title = "CongNT"
 pygmentsuseclasses=true
@@ -33,7 +33,7 @@ googleAnalytics = "UA-76172988-1"
   url = "/about"
 [[menu.social]]
   pre = "<i class='fa fa-rss'></i>"
-  url = "http://blog.ntcong.it/posts/index.xml"
+  url = "https://blog.ntcong.it/posts/index.xml"
   identifier = "RSS"
 [[menu.social]]
   pre = "<i class='fa fa-google-plus'></i>"
@@ -45,5 +45,5 @@ googleAnalytics = "UA-76172988-1"
   identifier = "Facebook"
 [[menu.social]]
   pre = "<i class='fa fa-github'></i>"
-  url = "http://github.com/ntcong"
+  url = "https://github.com/ntcong"
   identifier = "GitHub"

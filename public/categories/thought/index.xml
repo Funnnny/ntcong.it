@@ -2,28 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Thought on CongNT</title>
-    <link>http://blog.ntcong.it/categories/thought/</link>
+    <link>https://blog.ntcong.it/categories/thought/</link>
     <description>Recent content in Thought on CongNT</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>ntcong.it@gmail.com (Cong Nguyen)</managingEditor>
     <webMaster>ntcong.it@gmail.com (Cong Nguyen)</webMaster>
     <lastBuildDate>Sun, 19 Jan 2014 12:51:42 +0700</lastBuildDate>
-    <atom:link href="http://blog.ntcong.it/categories/thought/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.ntcong.it/categories/thought/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Bitcoin Protocol: The Basic</title>
-      <link>http://blog.ntcong.it/post/bitcoin-protocol-the-basic/</link>
+      <link>https://blog.ntcong.it/post/bitcoin-protocol-the-basic/</link>
       <pubDate>Sun, 19 Jan 2014 12:51:42 +0700</pubDate>
       <author>ntcong.it@gmail.com (Cong Nguyen)</author>
-      <guid>http://blog.ntcong.it/post/bitcoin-protocol-the-basic/</guid>
+      <guid>https://blog.ntcong.it/post/bitcoin-protocol-the-basic/</guid>
       <description>
 
 &lt;p&gt;Ở bài trước, các bạn đã biết thế nào là cryptocurrency nói chung, và cách hoạt động của nó. Tuy nhiên bài viết chỉ rờ đến một trong những điểm nổi nhất của hệ thống Bitcoin, nếu muốn tìm hiểu một cách chuyên sâu hơn 1 chút, thì Bitcoin hoạt động như thế nào?&lt;/p&gt;
 
 &lt;p&gt;Bài viết nhằm phân tích ý nghĩa và phương thích hoạt động của loại tiền mặt này. Trước tiên, nhắc lại một chút về Cryptocurrency&lt;/p&gt;
 
-&lt;h2 id=&#34;1-cryptocurrency-bitcoin:c66977f06cc64c0193b8c0dd0c1bd023&#34;&gt;1. Cryptocurrency/Bitcoin?&lt;/h2&gt;
+&lt;h2 id=&#34;1-cryptocurrency-bitcoin&#34;&gt;1. Cryptocurrency/Bitcoin?&lt;/h2&gt;
 
 &lt;p&gt;Cryptocurrency được chỉ một loại tiền mặt thỏa mãn các điều kiện&lt;/p&gt;
 
@@ -36,19 +36,19 @@
 
 &lt;p&gt;Bitcoin là đồng tiền đầu tiên áp dụng cryptocurrency.&lt;/p&gt;
 
-&lt;h2 id=&#34;2-bitcoin-hoạt-động-thế-nào:c66977f06cc64c0193b8c0dd0c1bd023&#34;&gt;2. Bitcoin hoạt động thế nào?&lt;/h2&gt;
+&lt;h2 id=&#34;2-bitcoin-hoạt-động-thế-nào&#34;&gt;2. Bitcoin hoạt động thế nào?&lt;/h2&gt;
 
 &lt;p&gt;Bitcoin, cũng như cryptocurrency nói chung, sử dụng các thuật toán mã hóa để xác nhận giao dịch, trong quá trình xác nhận giao dịch này, người thực thi thành công việc xác nhận một nhóm giao dịch, được thưởng một số lượng tiền tương ứng, với Bitcoin(BTC) là 25 đồng. Số lượng tiền này được giảm đi 1 nửa sau mỗi 4 năm, nhằm mục đích hạn chế số lượng BTC tối đa là 21 triệu.&lt;/p&gt;
 
 &lt;p&gt;Giống như RFC của một protocol, Bitcoin được định nghĩa bởi các thành phần riêng lẻ, và các giao thức để kết nối các thành phần lại với nhau, vì vậy ta sẽ tìm hiểu Bitcoin bằng cách phân tích các thành phần này:&lt;/p&gt;
 
-&lt;h3 id=&#34;a-address:c66977f06cc64c0193b8c0dd0c1bd023&#34;&gt;a. Address&lt;/h3&gt;
+&lt;h3 id=&#34;a-address&#34;&gt;a. Address&lt;/h3&gt;
 
 &lt;p&gt;Address là một dãy số, dài từ&amp;nbsp;27-34 kí tự, bắt đầu bằng 1 hoặc 3, ví dụ:&amp;nbsp;&lt;strong&gt;13q1kfWwR56AwTxeJoJV8bgRnQ2WYxWiY5&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Address&lt;/strong&gt;&amp;nbsp;được sinh ra rất đơn giản, enduser tạo ra 1 cặp&lt;a href=&#34;http://en.wikipedia.org/wiki/Public-key_cryptography&#34;&gt; private-public key&lt;/a&gt;, sau đó &lt;a href=&#34;https://en.bitcoin.it/wiki/Technical_background_of_Bitcoin_addresses&#34;&gt;hash public key này bằng một thuật toán có sẵn&lt;/a&gt; tạo ra Address.&lt;/p&gt;
 
-&lt;h3 id=&#34;b-transaction:c66977f06cc64c0193b8c0dd0c1bd023&#34;&gt;b. Transaction&lt;/h3&gt;
+&lt;h3 id=&#34;b-transaction&#34;&gt;b. Transaction&lt;/h3&gt;
 
 &lt;p&gt;Một transaction chứa các thông tin sau:&lt;/p&gt;
 
@@ -146,7 +146,7 @@
 
 &lt;p&gt;Như vậy, chỉ có Alice mới tạo được gói tin tiêu số tiền trong address của mình, và cũng chỉ có Bob mới tạo được gói tin mới tiêu số tiền mà Bob nhận được.&lt;/p&gt;
 
-&lt;h3 id=&#34;c-blocks:c66977f06cc64c0193b8c0dd0c1bd023&#34;&gt;c. Blocks&lt;/h3&gt;
+&lt;h3 id=&#34;c-blocks&#34;&gt;c. Blocks&lt;/h3&gt;
 
 &lt;p&gt;Block là một tập hợp các transaction, thỏa mãn 1 số điều kiện nhất định. Thông tin trong 1 block gồm có:&lt;/p&gt;
 
@@ -170,7 +170,7 @@
 
 &lt;p&gt;Để nói về chuyện tìm block, thì cần phải nói đến các miners và mining&lt;/p&gt;
 
-&lt;h3 id=&#34;d-mining:c66977f06cc64c0193b8c0dd0c1bd023&#34;&gt;d. Mining&lt;/h3&gt;
+&lt;h3 id=&#34;d-mining&#34;&gt;d. Mining&lt;/h3&gt;
 
 &lt;p&gt;Mining là quá trình miner đi tìm block, với 1 lần tìm thấy block, miner sẽ được hưởng 1 số tiền nhất định (hiện tại là 25BTC), và được nhận bởi transaction đầu tiên trong block: transaction không có người gửi và người nhận là miner. Transaction đầu tiên này gọi là &lt;a href=&#34;https://en.bitcoin.it/wiki/Coinbase&#34;&gt;coinbase&lt;/a&gt;.&lt;/p&gt;
 
@@ -203,7 +203,7 @@
 
 &lt;p&gt;Các miners thường tập hợp lại thành 1 Pool, trong đó pool sẽ phân chia các miner tính, ví dụ miner1 tính nonce từ 0-&amp;gt;1 tỉ, miner2 tình từ 1 tỉ-&amp;gt;2 tỉ, mỗi block từ 0-&amp;gt;1 tỉ gọi là 1 share, khi tìm ra block, các miner sẽ được chia đều dựa trên số share mình submit được (càng nhiều share càng được chia nhiều). Thực tế, share được hình thành phức tạp hơn, dựa trên nguyên tắc sinh block nhưng với target thấp hơn, tuy nhiên về bản chất nó cũng chính là hình thức phân chia việc tính nonce này.&lt;/p&gt;
 
-&lt;h2 id=&#34;3-faq:c66977f06cc64c0193b8c0dd0c1bd023&#34;&gt;3. FAQ&lt;/h2&gt;
+&lt;h2 id=&#34;3-faq&#34;&gt;3. FAQ&lt;/h2&gt;
 
 &lt;p&gt;Thực chất mạng lưới Bitcoin về mặt concept hoạt động rất đơn giản, đó là lí do tại sao các Altcoin ra đời liên tục. Tuy nhiên để hiểu được nó lại cần một số kiến thức về tin học nhất định, đó là lí do tại sao nhiều người còn chưa biết nó là gì. Qua đó nảy sinh 1 số câu hỏi:&lt;/p&gt;
 
@@ -249,10 +249,10 @@
     
     <item>
       <title>Silk Road và những điều bạn cần biết</title>
-      <link>http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</link>
+      <link>https://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</link>
       <pubDate>Wed, 09 Oct 2013 21:06:00 +0700</pubDate>
       <author>ntcong.it@gmail.com (Cong Nguyen)</author>
-      <guid>http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</guid>
+      <guid>https://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/</guid>
       <description>&lt;p&gt;Nhân tiện một buổi họp công nghệ và bắt gặp 1 dòng chữ &amp;ldquo;Silk road bảo mật website như thế nào?&amp;rdquo;, mình phát hiện ra 1 điều là mọi người đọc báo và biết về Silk Road, chứ ko hề hiểu nó là cái gì. Và vì thế, lại 1 bài chém gió ra đời.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Vậy, câu hỏi đầu tiên, Silk Road là cái gì?&lt;/strong&gt;&lt;/p&gt;
@@ -318,10 +318,10 @@
     
     <item>
       <title>Bitcoin - Người ta đã làm ra nó như thế nào</title>
-      <link>http://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</link>
+      <link>https://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</link>
       <pubDate>Thu, 12 Sep 2013 16:06:44 +0700</pubDate>
       <author>ntcong.it@gmail.com (Cong Nguyen)</author>
-      <guid>http://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</guid>
+      <guid>https://blog.ntcong.it/post/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao/</guid>
       <description>
 
 &lt;p&gt;Bitcoin không còn là mới, nó đã xuất hiện được vài năm nay. Nhưng chỉ trong thời gian gần đây nó mới bùng nổ thành một hình thức thanh toán cực kì tiện lợi.&lt;/p&gt;
@@ -330,7 +330,7 @@
 
 &lt;p&gt;Như vậy, Bitcoin được hình thành trên những concept gì?&lt;/p&gt;
 
-&lt;h2 id=&#34;1-mô-hình-không-tập-trung:9c6ec2a66c173599131eabd88ab51061&#34;&gt;1. Mô hình không tập trung&lt;/h2&gt;
+&lt;h2 id=&#34;1-mô-hình-không-tập-trung&#34;&gt;1. Mô hình không tập trung&lt;/h2&gt;
 
 &lt;p&gt;Tiền mặt thông thường được lưu qua các tài khoản. Việc bạn gửi tiền từ tài khoản của mình sang tài khoản người khác được thực hiện thông qua việc gặp trực tiếp, hoặc qua ngân hàng.&lt;/p&gt;
 
@@ -338,13 +338,13 @@
 
 &lt;p&gt;Bitcoin được sinh ra với mục tiêu không có ai là đơn vị quản lí tập trung nó cả, tức là sẽ không có ai kiểm tra tiền đó có thật không, không ai đảm bảo rằng bạn không chuyển tiền 2 lần cả. Vì vậy nó phải sinh ra một số phương pháp để phục vụ mục đích này.&lt;/p&gt;
 
-&lt;h2 id=&#34;2-định-danh-người-chữ-kí-điện-tử:9c6ec2a66c173599131eabd88ab51061&#34;&gt;2. Định danh người - Chữ kí điện tử&lt;/h2&gt;
+&lt;h2 id=&#34;2-định-danh-người-chữ-kí-điện-tử&#34;&gt;2. Định danh người - Chữ kí điện tử&lt;/h2&gt;
 
 &lt;p&gt;Việc đầu tiên trong quá trình chuyển một cục tiền điện tử, là xác định xem người gửi và người nhận là ai. Đơn cử như dùng Facebook thì phải login, dùng ngân hàng thì phải xuất thẻ CMND. Giả sử, bạn A muốn gửi cho bạn B một đồng tiền, bạn ấy sẽ viết &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng&amp;rdquo;. Làm thế nào để bạn B biết chắc chắn rằng đó là từ bạn A gửi?&lt;/p&gt;
 
 &lt;p&gt;Điều này được thực hiện bằng một thuật ngữ gọi là &lt;strong&gt;public-key cryptography&lt;/strong&gt;, tương tự như việc đóng dấu. Bạn có một con dấu và cung cấp cái hình con dấu cho mọi người biết, một khi mọi người nhìn thấy văn bản được đóng dấu, tức là tài liệu đó đã được tin tưởng rằng do bạn viết ra (coi như là con dấu không thể làm giả). Tương tự như vậy, đối với public-key crypto, bạn có một private-key (con dấu) và một public-key (hình). Bạn sẽ kí bằng private-key vào dãy &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng&amp;rdquo; ra một văn bản khác. Người nhận khi nhận được văn bản đó, sẽ dùng public-key để giải mã ra được &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng&amp;rdquo;. Như vậy, thông tin giao dịch chắc chắn đã được đảm bảo, bất cứ ai cũng có thể biết A gửi cho B 1 đồng, nhưng không thể có con dấu để giả thông báo đó được.&lt;/p&gt;
 
-&lt;h2 id=&#34;3-định-danh-tiền:9c6ec2a66c173599131eabd88ab51061&#34;&gt;3. Định danh tiền&lt;/h2&gt;
+&lt;h2 id=&#34;3-định-danh-tiền&#34;&gt;3. Định danh tiền&lt;/h2&gt;
 
 &lt;p&gt;Liệu, khi bạn A gửi &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng&amp;rdquo; cho B, sau đó B gửi liên tục thông báo này đi, thì A có bị mất tiền nhiều lần không? Điều này được giải quyết một cách rất đơn giản, mỗi đồng tiền sẽ có một cái tên nhất định: &amp;ldquo;Tôi, tên là A, gửi cho B 1 đồng với mã số 007&amp;rdquo;. Tất nhiên B có gửi thông báo này đi bao nhiêu lần thì cũng chỉ có đồng 007 này được gửi cho B mà thôi.&lt;/p&gt;
 
@@ -356,7 +356,7 @@
 
 &lt;p&gt;Để chắc chắn rằng A không &amp;ldquo;double-spending&amp;rdquo;, hệ thống cần đảm bảo được cả B và C khi tra định danh đồng tiền đó đều tra từ một điểm chung duy nhất. Việc đảm bảo này được thực hiện thông qua cơ chế &amp;ldquo;proof-of-work&amp;rdquo;&lt;/p&gt;
 
-&lt;h2 id=&#34;4-proof-of-work:9c6ec2a66c173599131eabd88ab51061&#34;&gt;4. Proof of work&lt;/h2&gt;
+&lt;h2 id=&#34;4-proof-of-work&#34;&gt;4. Proof of work&lt;/h2&gt;
 
 &lt;p&gt;Proof of work, nôm na gọi là &amp;ldquo;bằng chứng về công việc&amp;rdquo;, là một mô hình được đặt ra nhằm đảm bảo rằng, để A sinh ra được mã 007 và 008, A hoặc một người nào đó phải bỏ một công sức nhất định mà rất khó làm được 2 lần (ví dụ bắt A chạy 100km rồi mới cho A lấy tiền). Tất nhiên chuyện A chạy 100km là khó, hoặc A cũng có thể chạy 200km rồi sinh ra 2 mã kiếm tiền, đó cũng là một vấn đề mà ta sẽ nhắc đến sau.&lt;/p&gt;
 
@@ -370,7 +370,7 @@
 
 &lt;p&gt;Như vậy, đồng thời với việc kiểm tra giao dịch, ta cũng giải quyết được vấn đề &lt;strong&gt;in và cấp tiền&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;5-bitcoin:9c6ec2a66c173599131eabd88ab51061&#34;&gt;5. Bitcoin&lt;/h2&gt;
+&lt;h2 id=&#34;5-bitcoin&#34;&gt;5. Bitcoin&lt;/h2&gt;
 
 &lt;p&gt;Như vậy, Bitcoin được tổ chức như thế nào?&lt;/p&gt;
 
@@ -384,7 +384,7 @@
 
 &lt;p&gt;Những block được kết nối với nhau thành một cây, block sau chứa dãy serial của block trước, cây này gọi là &lt;strong&gt;block chain.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;6-kết-luận:9c6ec2a66c173599131eabd88ab51061&#34;&gt;6. Kết luận&lt;/h2&gt;
+&lt;h2 id=&#34;6-kết-luận&#34;&gt;6. Kết luận&lt;/h2&gt;
 
 &lt;p&gt;Tuy đã giải quyết được phần lớn vấn đề của một đồng tiền điện tử. Bitcoin vẫn có rất nhiều vấn đề còn tồn tại:&lt;/p&gt;
 
@@ -403,10 +403,10 @@
     
     <item>
       <title>Phiếm bàn chuyện đặt tên</title>
-      <link>http://blog.ntcong.it/post/chuyen_dat_ten/</link>
+      <link>https://blog.ntcong.it/post/chuyen_dat_ten/</link>
       <pubDate>Mon, 21 Jan 2013 16:18:00 +0700</pubDate>
       <author>ntcong.it@gmail.com (Cong Nguyen)</author>
-      <guid>http://blog.ntcong.it/post/chuyen_dat_ten/</guid>
+      <guid>https://blog.ntcong.it/post/chuyen_dat_ten/</guid>
       <description>&lt;p&gt;Code mình viết ra cũng như con đẻ của mình vậy, chuyện đặt cho nó cái tên để gọi là chuyện vô cùng quan trọng. Đặt tên sao để cho tên nó hay, có ý nghĩa, lại còn phải để người khác dễ gọi, chưa kể là còn phải tránh tên dễ suy luận không là bạn bè của con nó chửi xéo.&lt;/p&gt;
 
 &lt;p&gt;Chắc 100% người đụng vào code đều biết mấy kiểu đặt tên họ:&lt;/p&gt;

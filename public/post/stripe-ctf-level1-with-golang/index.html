@@ -12,16 +12,16 @@
   
   
 
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.16" />
 
-  <link rel="alternate" href="http://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
+  <link rel="alternate" href="https://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/main.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/main.css" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/pygment_highlights.css" />
   
   
   <meta property="og:title" content="Stripe-CTF Level 1 with Golang" />
@@ -43,7 +43,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://blog.ntcong.it/">CongNT</a>
+      <a class="navbar-brand" href="https://blog.ntcong.it/">CongNT</a>
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar">
@@ -51,7 +51,7 @@
       
         
           <li>
-          <a title="About" href="/about/">About</a>
+          <a title="About" href="/about">About</a>
   	      </li>
   	    
       
@@ -67,8 +67,8 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
       
-          <a title="CongNT" href="http://blog.ntcong.it/">
-              <img class="avatar-img" src="http://blog.ntcong.it//img/avatar.png" alt="CongNT" />
+          <a title="CongNT" href="https://blog.ntcong.it/">
+              <img class="avatar-img" src="https://blog.ntcong.it//img/avatar.png" alt="CongNT" />
           </a>
       
 	  </div>
@@ -124,11 +124,11 @@
 
 <p>As I&rsquo;m learning Golang, I wrote my miner using it, and managed to bring to 1MHash/s. Some people are going higher, specifically those using OpenCL/GPU to mine.</p>
 
-<h3 id="basic:08a8d9808c645f9e5c4f35caf364b6d7">Basic</h3>
+<h3 id="basic">Basic</h3>
 
 <p>The first version of my code is very simple. First it will add myself a Gitcoin to the file &ldquo;LEDGER.txt&rdquo;, get the difficulty, and get the required parameters to build the commit. Those tasks will only do once per block found, so any code will work.</p>
 
-<div class="highlight"><pre><code class="language-go" data-lang="go"><span></span><span class="nx">diff</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="nx">diff</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="nx">diffString</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Trim</span><span class="p">(</span><span class="nx">doExec</span><span class="p">(</span><span class="s">&quot;cat&quot;</span><span class="p">,</span> <span class="s">&quot;difficulty.txt&quot;</span><span class="p">),</span> <span class="s">&quot;\n&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">diffString</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
         <span class="nx">n</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">ParseInt</span><span class="p">(</span><span class="nx">diffString</span><span class="p">[</span><span class="nx">i</span><span class="o">*</span><span class="mi">2</span><span class="p">:</span><span class="nx">i</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -142,13 +142,13 @@
 
 <p>I calculate diff as a byte array because SHA1 library returned the hash as an array, so I don&rsquo;t have to convert SHA1 everytime; doExec is just a function to run the command and return console output as a string. The commit hash can be calculate by SHA1 the string &ldquo;commit [len_commit]\0[commit_string]&ldquo;. The commit string can be built by this code:</p>
 
-<p><div class="highlight"><pre><code class="language-go" data-lang="go"><span></span><span class="nx">baseCommit</span> <span class="p">=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;tree %s\nparent %s\nauthor CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\ncommitter CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1&quot;</span><span class="p">,</span> <span class="nx">tree</span><span class="p">,</span> <span class="nx">parent</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">timestamp</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">timestamp</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="nx">baseCommit</span> <span class="p">=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;tree %s\nparent %s\nauthor CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\ncommitter CTF user &lt;%s@stripe-ctf.com&gt; %s +0000\n\nFu[4]ny got a Gitcoin\nnonce 1&quot;</span><span class="p">,</span> <span class="nx">tree</span><span class="p">,</span> <span class="nx">parent</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">timestamp</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">timestamp</span><span class="p">)</span>
 </code></pre></div>
-</p>
+
 
 <p>You should already notice the last &ldquo;nonce 1&rdquo; in the commit string, I will replace it with &ldquo;nonce 2&rdquo; and so on until I find a commit with hash lower than difficulty. It&rsquo;s surprisingly simple:</p>
 
-<p><div class="highlight"><pre><code class="language-go" data-lang="go"><span></span><span class="kd">func</span> <span class="nx">getSHA1</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">getSHA1</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="kt">byte</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">sha1</span><span class="p">.</span><span class="nx">Sum</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">baseCommitHash</span> <span class="p">&lt;</span><span class="nx">complete</span> <span class="nx">id</span><span class="p">=</span><span class="s">&quot;goog_259276313&quot;</span><span class="p">&gt;</span><span class="o">+</span> <span class="p">&lt;</span><span class="o">/</span><span class="nx">complete</span><span class="p">&gt;</span><span class="s">&quot;\n&quot;</span><span class="p">))</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="nx">isHashValid</span><span class="p">(</span><span class="nx">hash</span> <span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
@@ -166,11 +166,11 @@
     <span class="k">return</span> <span class="kc">false</span>
 <span class="p">}</span>
 </code></pre></div>
-</p>
+
 
 <p>After finding a coin, I&rsquo;ll write the commit and push it, I was lazy and just pipe everything to command line. It works but maybe a little slow.</p>
 
-<p><div class="highlight"><pre><code class="language-go" data-lang="go"><span></span><span class="kd">func</span> <span class="nx">pushResult</span><span class="p">(</span><span class="nx">result</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">done</span> <span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">pushResult</span><span class="p">(</span><span class="nx">result</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">done</span> <span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">n</span> <span class="kt">int</span>
     <span class="k">for</span> <span class="p">{</span>
         <span class="nx">n</span> <span class="p">=</span> <span class="o">&lt;-</span><span class="nx">result</span>
@@ -200,11 +200,11 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-</p>
+
 
 <p>Then I just loop nonce until I found a coin. I use a result channel to communicate between miner thread and pushResult thread, and a done channel to stop when I find a commit. The bot takes about 10 mins to find a block, with just this version I managed to beat it.</p>
 
-<h3 id="optimize-further:08a8d9808c645f9e5c4f35caf364b6d7">Optimize further</h3>
+<h3 id="optimize-further">Optimize further</h3>
 
 <p>After finishing the task, I can join a Gitcoin instance with all players in Stripe-CTF. I knew that I have to optimize it because I can push it only to 200kH/s</p>
 
@@ -216,7 +216,7 @@
 
 <p>Once in a while, the miner will check for stop signal and get out of the loop.</p>
 
-<p><div class="highlight"><pre><code class="language-go" data-lang="go"><span></span><span class="k">select</span> <span class="p">{</span>
+<p><div class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">select</span> <span class="p">{</span>
 <span class="k">case</span> <span class="nx">msg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">stop</span><span class="p">:</span>
     <span class="k">if</span> <span class="nx">msg</span> <span class="p">{</span>
         <span class="c1">// fmt.Printf(&quot;Miner %d stopped! Last i is %d\n&quot;, begin, i)</span>
@@ -229,7 +229,7 @@
 
 <p>The monitor function is pretty straightforward, I have two commit hash, last and current, if last commit has different hash than current commit, I do a git hard reset, and send a stop signal.</p>
 
-<p><div class="highlight"><pre><code class="language-go" data-lang="go"><span></span><span class="kd">func</span> <span class="nx">monitor</span><span class="p">(</span><span class="nx">stop</span> <span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nx">monitor</span><span class="p">(</span><span class="nx">stop</span> <span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">hash</span><span class="p">,</span> <span class="nx">newHash</span> <span class="kt">string</span>
     <span class="nx">hash</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Trim</span><span class="p">(</span><span class="nx">doExec</span><span class="p">(</span><span class="s">&quot;git&quot;</span><span class="p">,</span> <span class="s">&quot;rev-parse&quot;</span><span class="p">,</span> <span class="s">&quot;--short&quot;</span><span class="p">,</span> <span class="s">&quot;origin/master&quot;</span><span class="p">),</span> <span class="s">&quot;\n&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="p">{</span>
@@ -246,7 +246,7 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-</p>
+
 
 <p>That&rsquo;s almost be all, things I can/should do better:</p>
 
@@ -262,12 +262,12 @@
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="http://blog.ntcong.it/post/bitcoin-protocol-the-basic/" data-toggle="tooltip" data-placement="top" title="Bitcoin Protocol: The Basic">&larr; Previous Post</a>
+          <a href="https://blog.ntcong.it/post/bitcoin-protocol-the-basic/" data-toggle="tooltip" data-placement="top" title="Bitcoin Protocol: The Basic">&larr; Previous Post</a>
         </li>
         
         
         <li class="next">
-          <a href="http://blog.ntcong.it/post/goodbye-blogspot-hello-hugo/" data-toggle="tooltip" data-placement="top" title="Goodbye Blogspot, Hello Hugo">Next Post &rarr;</a>
+          <a href="https://blog.ntcong.it/post/goodbye-blogspot-hello-hugo/" data-toggle="tooltip" data-placement="top" title="Goodbye Blogspot, Hello Hugo">Next Post &rarr;</a>
         </li>
         
       </ul>
@@ -277,9 +277,9 @@
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/stripe-ctf-level1-with-golang\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/stripe-ctf-level1-with-golang\/';
     var disqus_title = 'Stripe-CTF Level 1 with Golang';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/stripe-ctf-level1-with-golang\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/stripe-ctf-level1-with-golang\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -304,9 +304,9 @@
           <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/stripe-ctf-level1-with-golang\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/stripe-ctf-level1-with-golang\/';
     var disqus_title = 'Stripe-CTF Level 1 with Golang';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/stripe-ctf-level1-with-golang\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/stripe-ctf-level1-with-golang\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -380,7 +380,7 @@
           
 
     		  <li>
-      			<a href="http://blog.ntcong.it/index.xml" title="RSS">
+      			<a href="https://blog.ntcong.it/index.xml" title="RSS">
       			  <span class="fa-stack fa-lg">
         				<i class="fa fa-circle fa-stack-2x"></i>
         				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -396,7 +396,7 @@
     		  
     		  
     		  &nbsp;&bull;&nbsp;
-    		  <a href="http://blog.ntcong.it/">CongNT</a>
+    		  <a href="https://blog.ntcong.it/">CongNT</a>
     		  
   	    </p>
   	        
@@ -409,9 +409,9 @@
   </div>
 </footer>
 
-<script src="http://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
-<script src="http://blog.ntcong.it/js/bootstrap.min.js"></script>
-<script src="http://blog.ntcong.it/js/main.js"></script>
+<script src="https://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
+<script src="https://blog.ntcong.it/js/bootstrap.min.js"></script>
+<script src="https://blog.ntcong.it/js/main.js"></script>
 
 
 <script>

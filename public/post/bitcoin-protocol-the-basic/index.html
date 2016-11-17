@@ -12,16 +12,16 @@
   
   
 
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.16" />
 
-  <link rel="alternate" href="http://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
+  <link rel="alternate" href="https://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/main.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/main.css" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/pygment_highlights.css" />
   
   
   <meta property="og:title" content="Bitcoin Protocol: The Basic" />
@@ -43,7 +43,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://blog.ntcong.it/">CongNT</a>
+      <a class="navbar-brand" href="https://blog.ntcong.it/">CongNT</a>
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar">
@@ -51,7 +51,7 @@
       
         
           <li>
-          <a title="About" href="/about/">About</a>
+          <a title="About" href="/about">About</a>
   	      </li>
   	    
       
@@ -67,8 +67,8 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
       
-          <a title="CongNT" href="http://blog.ntcong.it/">
-              <img class="avatar-img" src="http://blog.ntcong.it//img/avatar.png" alt="CongNT" />
+          <a title="CongNT" href="https://blog.ntcong.it/">
+              <img class="avatar-img" src="https://blog.ntcong.it//img/avatar.png" alt="CongNT" />
           </a>
       
 	  </div>
@@ -120,7 +120,7 @@
 
 <p>Bài viết nhằm phân tích ý nghĩa và phương thích hoạt động của loại tiền mặt này. Trước tiên, nhắc lại một chút về Cryptocurrency</p>
 
-<h2 id="1-cryptocurrency-bitcoin:c66977f06cc64c0193b8c0dd0c1bd023">1. Cryptocurrency/Bitcoin?</h2>
+<h2 id="1-cryptocurrency-bitcoin">1. Cryptocurrency/Bitcoin?</h2>
 
 <p>Cryptocurrency được chỉ một loại tiền mặt thỏa mãn các điều kiện</p>
 
@@ -133,19 +133,19 @@
 
 <p>Bitcoin là đồng tiền đầu tiên áp dụng cryptocurrency.</p>
 
-<h2 id="2-bitcoin-hoạt-động-thế-nào:c66977f06cc64c0193b8c0dd0c1bd023">2. Bitcoin hoạt động thế nào?</h2>
+<h2 id="2-bitcoin-hoạt-động-thế-nào">2. Bitcoin hoạt động thế nào?</h2>
 
 <p>Bitcoin, cũng như cryptocurrency nói chung, sử dụng các thuật toán mã hóa để xác nhận giao dịch, trong quá trình xác nhận giao dịch này, người thực thi thành công việc xác nhận một nhóm giao dịch, được thưởng một số lượng tiền tương ứng, với Bitcoin(BTC) là 25 đồng. Số lượng tiền này được giảm đi 1 nửa sau mỗi 4 năm, nhằm mục đích hạn chế số lượng BTC tối đa là 21 triệu.</p>
 
 <p>Giống như RFC của một protocol, Bitcoin được định nghĩa bởi các thành phần riêng lẻ, và các giao thức để kết nối các thành phần lại với nhau, vì vậy ta sẽ tìm hiểu Bitcoin bằng cách phân tích các thành phần này:</p>
 
-<h3 id="a-address:c66977f06cc64c0193b8c0dd0c1bd023">a. Address</h3>
+<h3 id="a-address">a. Address</h3>
 
 <p>Address là một dãy số, dài từ&nbsp;27-34 kí tự, bắt đầu bằng 1 hoặc 3, ví dụ:&nbsp;<strong>13q1kfWwR56AwTxeJoJV8bgRnQ2WYxWiY5</strong></p>
 
 <p><strong>Address</strong>&nbsp;được sinh ra rất đơn giản, enduser tạo ra 1 cặp<a href="http://en.wikipedia.org/wiki/Public-key_cryptography"> private-public key</a>, sau đó <a href="https://en.bitcoin.it/wiki/Technical_background_of_Bitcoin_addresses">hash public key này bằng một thuật toán có sẵn</a> tạo ra Address.</p>
 
-<h3 id="b-transaction:c66977f06cc64c0193b8c0dd0c1bd023">b. Transaction</h3>
+<h3 id="b-transaction">b. Transaction</h3>
 
 <p>Một transaction chứa các thông tin sau:</p>
 
@@ -243,7 +243,7 @@
 
 <p>Như vậy, chỉ có Alice mới tạo được gói tin tiêu số tiền trong address của mình, và cũng chỉ có Bob mới tạo được gói tin mới tiêu số tiền mà Bob nhận được.</p>
 
-<h3 id="c-blocks:c66977f06cc64c0193b8c0dd0c1bd023">c. Blocks</h3>
+<h3 id="c-blocks">c. Blocks</h3>
 
 <p>Block là một tập hợp các transaction, thỏa mãn 1 số điều kiện nhất định. Thông tin trong 1 block gồm có:</p>
 
@@ -267,7 +267,7 @@
 
 <p>Để nói về chuyện tìm block, thì cần phải nói đến các miners và mining</p>
 
-<h3 id="d-mining:c66977f06cc64c0193b8c0dd0c1bd023">d. Mining</h3>
+<h3 id="d-mining">d. Mining</h3>
 
 <p>Mining là quá trình miner đi tìm block, với 1 lần tìm thấy block, miner sẽ được hưởng 1 số tiền nhất định (hiện tại là 25BTC), và được nhận bởi transaction đầu tiên trong block: transaction không có người gửi và người nhận là miner. Transaction đầu tiên này gọi là <a href="https://en.bitcoin.it/wiki/Coinbase">coinbase</a>.</p>
 
@@ -300,7 +300,7 @@
 
 <p>Các miners thường tập hợp lại thành 1 Pool, trong đó pool sẽ phân chia các miner tính, ví dụ miner1 tính nonce từ 0-&gt;1 tỉ, miner2 tình từ 1 tỉ-&gt;2 tỉ, mỗi block từ 0-&gt;1 tỉ gọi là 1 share, khi tìm ra block, các miner sẽ được chia đều dựa trên số share mình submit được (càng nhiều share càng được chia nhiều). Thực tế, share được hình thành phức tạp hơn, dựa trên nguyên tắc sinh block nhưng với target thấp hơn, tuy nhiên về bản chất nó cũng chính là hình thức phân chia việc tính nonce này.</p>
 
-<h2 id="3-faq:c66977f06cc64c0193b8c0dd0c1bd023">3. FAQ</h2>
+<h2 id="3-faq">3. FAQ</h2>
 
 <p>Thực chất mạng lưới Bitcoin về mặt concept hoạt động rất đơn giản, đó là lí do tại sao các Altcoin ra đời liên tục. Tuy nhiên để hiểu được nó lại cần một số kiến thức về tin học nhất định, đó là lí do tại sao nhiều người còn chưa biết nó là gì. Qua đó nảy sinh 1 số câu hỏi:</p>
 
@@ -347,12 +347,12 @@
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/" data-toggle="tooltip" data-placement="top" title="Silk Road và những điều bạn cần biết">&larr; Previous Post</a>
+          <a href="https://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/" data-toggle="tooltip" data-placement="top" title="Silk Road và những điều bạn cần biết">&larr; Previous Post</a>
         </li>
         
         
         <li class="next">
-          <a href="http://blog.ntcong.it/post/stripe-ctf-level1-with-golang/" data-toggle="tooltip" data-placement="top" title="Stripe-CTF Level 1 with Golang">Next Post &rarr;</a>
+          <a href="https://blog.ntcong.it/post/stripe-ctf-level1-with-golang/" data-toggle="tooltip" data-placement="top" title="Stripe-CTF Level 1 with Golang">Next Post &rarr;</a>
         </li>
         
       </ul>
@@ -362,9 +362,9 @@
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/bitcoin-protocol-the-basic\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/bitcoin-protocol-the-basic\/';
     var disqus_title = 'Bitcoin Protocol: The Basic';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/bitcoin-protocol-the-basic\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/bitcoin-protocol-the-basic\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -389,9 +389,9 @@
           <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/bitcoin-protocol-the-basic\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/bitcoin-protocol-the-basic\/';
     var disqus_title = 'Bitcoin Protocol: The Basic';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/bitcoin-protocol-the-basic\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/bitcoin-protocol-the-basic\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -465,7 +465,7 @@
           
 
     		  <li>
-      			<a href="http://blog.ntcong.it/index.xml" title="RSS">
+      			<a href="https://blog.ntcong.it/index.xml" title="RSS">
       			  <span class="fa-stack fa-lg">
         				<i class="fa fa-circle fa-stack-2x"></i>
         				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -481,7 +481,7 @@
     		  
     		  
     		  &nbsp;&bull;&nbsp;
-    		  <a href="http://blog.ntcong.it/">CongNT</a>
+    		  <a href="https://blog.ntcong.it/">CongNT</a>
     		  
   	    </p>
   	        
@@ -494,9 +494,9 @@
   </div>
 </footer>
 
-<script src="http://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
-<script src="http://blog.ntcong.it/js/bootstrap.min.js"></script>
-<script src="http://blog.ntcong.it/js/main.js"></script>
+<script src="https://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
+<script src="https://blog.ntcong.it/js/bootstrap.min.js"></script>
+<script src="https://blog.ntcong.it/js/main.js"></script>
 
 
 <script>
