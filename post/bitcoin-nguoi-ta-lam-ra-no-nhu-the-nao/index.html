@@ -12,16 +12,16 @@
   
   
 
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.16" />
 
-  <link rel="alternate" href="http://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
+  <link rel="alternate" href="https://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/main.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/main.css" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/pygment_highlights.css" />
   
   
   <meta property="og:title" content="Bitcoin - Người ta đã làm ra nó như thế nào" />
@@ -43,7 +43,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://blog.ntcong.it/">CongNT</a>
+      <a class="navbar-brand" href="https://blog.ntcong.it/">CongNT</a>
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar">
@@ -51,7 +51,7 @@
       
         
           <li>
-          <a title="About" href="/about/">About</a>
+          <a title="About" href="/about">About</a>
   	      </li>
   	    
       
@@ -67,8 +67,8 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
       
-          <a title="CongNT" href="http://blog.ntcong.it/">
-              <img class="avatar-img" src="http://blog.ntcong.it//img/avatar.png" alt="CongNT" />
+          <a title="CongNT" href="https://blog.ntcong.it/">
+              <img class="avatar-img" src="https://blog.ntcong.it//img/avatar.png" alt="CongNT" />
           </a>
       
 	  </div>
@@ -122,7 +122,7 @@
 
 <p>Như vậy, Bitcoin được hình thành trên những concept gì?</p>
 
-<h2 id="1-mô-hình-không-tập-trung:9c6ec2a66c173599131eabd88ab51061">1. Mô hình không tập trung</h2>
+<h2 id="1-mô-hình-không-tập-trung">1. Mô hình không tập trung</h2>
 
 <p>Tiền mặt thông thường được lưu qua các tài khoản. Việc bạn gửi tiền từ tài khoản của mình sang tài khoản người khác được thực hiện thông qua việc gặp trực tiếp, hoặc qua ngân hàng.</p>
 
@@ -130,13 +130,13 @@
 
 <p>Bitcoin được sinh ra với mục tiêu không có ai là đơn vị quản lí tập trung nó cả, tức là sẽ không có ai kiểm tra tiền đó có thật không, không ai đảm bảo rằng bạn không chuyển tiền 2 lần cả. Vì vậy nó phải sinh ra một số phương pháp để phục vụ mục đích này.</p>
 
-<h2 id="2-định-danh-người-chữ-kí-điện-tử:9c6ec2a66c173599131eabd88ab51061">2. Định danh người - Chữ kí điện tử</h2>
+<h2 id="2-định-danh-người-chữ-kí-điện-tử">2. Định danh người - Chữ kí điện tử</h2>
 
 <p>Việc đầu tiên trong quá trình chuyển một cục tiền điện tử, là xác định xem người gửi và người nhận là ai. Đơn cử như dùng Facebook thì phải login, dùng ngân hàng thì phải xuất thẻ CMND. Giả sử, bạn A muốn gửi cho bạn B một đồng tiền, bạn ấy sẽ viết &ldquo;Tôi, tên là A, gửi cho B 1 đồng&rdquo;. Làm thế nào để bạn B biết chắc chắn rằng đó là từ bạn A gửi?</p>
 
 <p>Điều này được thực hiện bằng một thuật ngữ gọi là <strong>public-key cryptography</strong>, tương tự như việc đóng dấu. Bạn có một con dấu và cung cấp cái hình con dấu cho mọi người biết, một khi mọi người nhìn thấy văn bản được đóng dấu, tức là tài liệu đó đã được tin tưởng rằng do bạn viết ra (coi như là con dấu không thể làm giả). Tương tự như vậy, đối với public-key crypto, bạn có một private-key (con dấu) và một public-key (hình). Bạn sẽ kí bằng private-key vào dãy &ldquo;Tôi, tên là A, gửi cho B 1 đồng&rdquo; ra một văn bản khác. Người nhận khi nhận được văn bản đó, sẽ dùng public-key để giải mã ra được &ldquo;Tôi, tên là A, gửi cho B 1 đồng&rdquo;. Như vậy, thông tin giao dịch chắc chắn đã được đảm bảo, bất cứ ai cũng có thể biết A gửi cho B 1 đồng, nhưng không thể có con dấu để giả thông báo đó được.</p>
 
-<h2 id="3-định-danh-tiền:9c6ec2a66c173599131eabd88ab51061">3. Định danh tiền</h2>
+<h2 id="3-định-danh-tiền">3. Định danh tiền</h2>
 
 <p>Liệu, khi bạn A gửi &ldquo;Tôi, tên là A, gửi cho B 1 đồng&rdquo; cho B, sau đó B gửi liên tục thông báo này đi, thì A có bị mất tiền nhiều lần không? Điều này được giải quyết một cách rất đơn giản, mỗi đồng tiền sẽ có một cái tên nhất định: &ldquo;Tôi, tên là A, gửi cho B 1 đồng với mã số 007&rdquo;. Tất nhiên B có gửi thông báo này đi bao nhiêu lần thì cũng chỉ có đồng 007 này được gửi cho B mà thôi.</p>
 
@@ -148,7 +148,7 @@
 
 <p>Để chắc chắn rằng A không &ldquo;double-spending&rdquo;, hệ thống cần đảm bảo được cả B và C khi tra định danh đồng tiền đó đều tra từ một điểm chung duy nhất. Việc đảm bảo này được thực hiện thông qua cơ chế &ldquo;proof-of-work&rdquo;</p>
 
-<h2 id="4-proof-of-work:9c6ec2a66c173599131eabd88ab51061">4. Proof of work</h2>
+<h2 id="4-proof-of-work">4. Proof of work</h2>
 
 <p>Proof of work, nôm na gọi là &ldquo;bằng chứng về công việc&rdquo;, là một mô hình được đặt ra nhằm đảm bảo rằng, để A sinh ra được mã 007 và 008, A hoặc một người nào đó phải bỏ một công sức nhất định mà rất khó làm được 2 lần (ví dụ bắt A chạy 100km rồi mới cho A lấy tiền). Tất nhiên chuyện A chạy 100km là khó, hoặc A cũng có thể chạy 200km rồi sinh ra 2 mã kiếm tiền, đó cũng là một vấn đề mà ta sẽ nhắc đến sau.</p>
 
@@ -162,7 +162,7 @@
 
 <p>Như vậy, đồng thời với việc kiểm tra giao dịch, ta cũng giải quyết được vấn đề <strong>in và cấp tiền</strong></p>
 
-<h2 id="5-bitcoin:9c6ec2a66c173599131eabd88ab51061">5. Bitcoin</h2>
+<h2 id="5-bitcoin">5. Bitcoin</h2>
 
 <p>Như vậy, Bitcoin được tổ chức như thế nào?</p>
 
@@ -176,7 +176,7 @@
 
 <p>Những block được kết nối với nhau thành một cây, block sau chứa dãy serial của block trước, cây này gọi là <strong>block chain.</strong></p>
 
-<h2 id="6-kết-luận:9c6ec2a66c173599131eabd88ab51061">6. Kết luận</h2>
+<h2 id="6-kết-luận">6. Kết luận</h2>
 
 <p>Tuy đã giải quyết được phần lớn vấn đề của một đồng tiền điện tử. Bitcoin vẫn có rất nhiều vấn đề còn tồn tại:</p>
 
@@ -196,12 +196,12 @@
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="http://blog.ntcong.it/post/chuyen_dat_ten/" data-toggle="tooltip" data-placement="top" title="Phiếm bàn chuyện đặt tên">&larr; Previous Post</a>
+          <a href="https://blog.ntcong.it/post/chuyen_dat_ten/" data-toggle="tooltip" data-placement="top" title="Phiếm bàn chuyện đặt tên">&larr; Previous Post</a>
         </li>
         
         
         <li class="next">
-          <a href="http://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/" data-toggle="tooltip" data-placement="top" title="Silk Road và những điều bạn cần biết">Next Post &rarr;</a>
+          <a href="https://blog.ntcong.it/post/silk-road-va-nhung-dieu-ban-can-biet/" data-toggle="tooltip" data-placement="top" title="Silk Road và những điều bạn cần biết">Next Post &rarr;</a>
         </li>
         
       </ul>
@@ -211,9 +211,9 @@
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao\/';
     var disqus_title = 'Bitcoin - Người ta đã làm ra nó như thế nào';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -238,9 +238,9 @@
           <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao\/';
     var disqus_title = 'Bitcoin - Người ta đã làm ra nó như thế nào';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/bitcoin-nguoi-ta-lam-ra-no-nhu-the-nao\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -314,7 +314,7 @@
           
 
     		  <li>
-      			<a href="http://blog.ntcong.it/index.xml" title="RSS">
+      			<a href="https://blog.ntcong.it/index.xml" title="RSS">
       			  <span class="fa-stack fa-lg">
         				<i class="fa fa-circle fa-stack-2x"></i>
         				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -330,7 +330,7 @@
     		  
     		  
     		  &nbsp;&bull;&nbsp;
-    		  <a href="http://blog.ntcong.it/">CongNT</a>
+    		  <a href="https://blog.ntcong.it/">CongNT</a>
     		  
   	    </p>
   	        
@@ -343,9 +343,9 @@
   </div>
 </footer>
 
-<script src="http://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
-<script src="http://blog.ntcong.it/js/bootstrap.min.js"></script>
-<script src="http://blog.ntcong.it/js/main.js"></script>
+<script src="https://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
+<script src="https://blog.ntcong.it/js/bootstrap.min.js"></script>
+<script src="https://blog.ntcong.it/js/main.js"></script>
 
 
 <script>

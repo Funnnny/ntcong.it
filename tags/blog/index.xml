@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blog on CongNT</title>
-    <link>http://blog.ntcong.it/tags/blog/</link>
+    <link>https://blog.ntcong.it/tags/blog/</link>
     <description>Recent content in Blog on CongNT</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>ntcong.it@gmail.com (Cong Nguyen)</managingEditor>
     <webMaster>ntcong.it@gmail.com (Cong Nguyen)</webMaster>
     <lastBuildDate>Mon, 08 Dec 2014 11:22:36 +0700</lastBuildDate>
-    <atom:link href="http://blog.ntcong.it/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.ntcong.it/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Goodbye Blogspot, Hello Hugo</title>
-      <link>http://blog.ntcong.it/post/goodbye-blogspot-hello-hugo/</link>
+      <link>https://blog.ntcong.it/post/goodbye-blogspot-hello-hugo/</link>
       <pubDate>Mon, 08 Dec 2014 11:22:36 +0700</pubDate>
       <author>ntcong.it@gmail.com (Cong Nguyen)</author>
-      <guid>http://blog.ntcong.it/post/goodbye-blogspot-hello-hugo/</guid>
+      <guid>https://blog.ntcong.it/post/goodbye-blogspot-hello-hugo/</guid>
       <description>
 
-&lt;h1 id=&#34;goodbye-any-traditional-blogging-system:6bf65216e2bb0f20637aa35fde252b26&#34;&gt;Goodbye (any) traditional blogging system&lt;/h1&gt;
+&lt;h1 id=&#34;goodbye-any-traditional-blogging-system&#34;&gt;Goodbye (any) traditional blogging system&lt;/h1&gt;
 
 &lt;p&gt;I used Wordpress for like 8 years, wrote some plugins myself (some that I already published), eventually got tired of managing my own hosting, and switched to wordpress.com. Then Wordpress.com want 15 dollar a year just for custom domain feature, and I switched to Blogspot. I happily used Blogspot for a while, but even so, the experience is not that great. Some example:&lt;/p&gt;
 
@@ -35,7 +35,7 @@
 
 &lt;p&gt;Then I heard about Jekyll, and then Octopress, and some alternatives like Brunch, Hyde. But nothing catches my attention (maybe because I don&amp;rsquo;t really like Ruby). One day, I read about Hugo and decided it&amp;rsquo;s time to switch.&lt;/p&gt;
 
-&lt;h1 id=&#34;hello-static-website-generator-hugo:6bf65216e2bb0f20637aa35fde252b26&#34;&gt;Hello static website generator (Hugo)&lt;/h1&gt;
+&lt;h1 id=&#34;hello-static-website-generator-hugo&#34;&gt;Hello static website generator (Hugo)&lt;/h1&gt;
 
 &lt;p&gt;I install hugo, build some test page with it, and then deploy the page to Github Pages in like 30 minutes. And I really like it:&lt;/p&gt;
 

