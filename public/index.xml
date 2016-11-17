@@ -8,58 +8,8 @@
     <language>en-us</language>
     <managingEditor>ntcong.it@gmail.com (Cong Nguyen)</managingEditor>
     <webMaster>ntcong.it@gmail.com (Cong Nguyen)</webMaster>
-    <lastBuildDate>Mon, 12 Sep 2016 10:16:11 +0700</lastBuildDate>
+    <lastBuildDate>Tue, 03 May 2016 01:43:07 +0700</lastBuildDate>
     <atom:link href="https://blog.ntcong.it/index.xml" rel="self" type="application/rss+xml" />
-    
-    <item>
-      <title>Network Interrupts and How It Kills Your Server</title>
-      <link>https://blog.ntcong.it/post/network-interrupts-and-how-it-kills-your-server/</link>
-      <pubDate>Mon, 12 Sep 2016 10:16:11 +0700</pubDate>
-      <author>ntcong.it@gmail.com (Cong Nguyen)</author>
-      <guid>https://blog.ntcong.it/post/network-interrupts-and-how-it-kills-your-server/</guid>
-      <description>
-
-&lt;p&gt;Two years ago when I was in a SA class, I talked about interrupt storm and how can it kill your server. Some people asked me about the detail technical aspect of how it happens. I think this is a very interesting topic and maybe I should pay my debt.&lt;/p&gt;
-
-&lt;h2 id=&#34;preface&#34;&gt;Preface&lt;/h2&gt;
-
-&lt;p&gt;The problem only occur in a very high performance networking setup. In my case it&amp;rsquo;s a server with two 10Gbps card. If your server only have 2 or 4 1Gbps card, there might be some problems, but generally it&amp;rsquo;s because of unoptimized configuration.&lt;br /&gt;
-I worked on a DDOS-mitigation system, that&amp;rsquo;s why I receive a lot of abnormal traffics, which will put more workload in the system. So if you have a caching server with 2 10Gbps, YMMV.&lt;br /&gt;
-Linux networking stack is young, many iptables/netfilter path optimization only happened in 2014-2015. Most of the time if you asked people about Linux networking stack, they will just tell you &amp;ldquo;it&amp;rsquo;s slow&amp;rdquo;. In contrast to FreeBSD, which is using for a long time by ISPs, even its toolings are superior to Linux.&lt;/p&gt;
-
-&lt;p&gt;Now it&amp;rsquo;s 2016, receiving million of packets per second is not a problem for Linux anymore, but let&amp;rsquo;s first take a look at why send/receive packet in Linux is so slow.&lt;/p&gt;
-
-&lt;h2 id=&#34;interrupts&#34;&gt;Interrupts&lt;/h2&gt;
-
-&lt;p&gt;Interrupts are core part of how a processing unit work (either a hardware like CPU, or a software like kernel). Once the CPU receives an interrupt, it will stop the execution, save its context, call the interrupt handle, after that restore its context and then resume the execution. Linux kernel also uses interrupts to handle its processing, called softirq. Nowaday many drivers and core part of the kernel don&amp;rsquo;t use softirq anymore (correct me if I&amp;rsquo;m wrong), the network still uses it.&lt;/p&gt;
-
-&lt;p&gt;Everytime you receive a packet, the network card will issue an IRQ (Interrupt Request) to the CPU, the CPU will in turn copy the packet to the memory, and uses netfilter to process it. I will address this after.&lt;br /&gt;
-Interrupts is very costly, each interrupt costs about 200 to 2000 instructions. So for a famous i5-2500k Intel running at 83G instruction per second, each interrupt is about 12ns.&lt;/p&gt;
-
-&lt;h2 id=&#34;optimizing-interrupts&#34;&gt;Optimizing Interrupts&lt;/h2&gt;
-
-&lt;p&gt;Before jumping on some calculation about the challenge of processing a network packet, let&amp;rsquo;s optimize the interrupt handler so it won&amp;rsquo;t die easily.&lt;br /&gt;
-By default Linux will process all your IRQ in a single CPU core. A few years ago most Linux distro had irqbalance, which will distribute irq across all CPU cores.&lt;/p&gt;
-
-&lt;p&gt;But sadly, it&amp;rsquo;s not enough. irqbalance tries to distribute the IRQ across cores, which sometime is not what we wanted: a RX queue receives a lot of packets will scatter over all cores, reducing performance. Nowaday most network cards have multiple RX queue, imagine it&amp;rsquo;s like having multiple network card, the packet from same IP or same target will be sent in a specified queue.&lt;br /&gt;
-In order to maximize the performance, we need to bind each RX queue to a CPU core, this can be done in a simple script:
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;  &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;let &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;CPU&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;0&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; /sys/class/net/eth0/device/msi_irqs/&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;  
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; IRQ in *&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
-      &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$CPU&lt;/span&gt; &amp;gt; /proc/irq/&lt;span class=&#34;nv&#34;&gt;$IRQ&lt;/span&gt;/smp_affinity_list
-      &lt;span class=&#34;nb&#34;&gt;let &lt;/span&gt;CPU+&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1
-    &lt;span class=&#34;k&#34;&gt;done&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;h2 id=&#34;the-problem-with-10gbps&#34;&gt;The problem with 10Gbps&lt;/h2&gt;
-
-&lt;p&gt;With the rise of 10Gbps network card, the interrupt problem is getting harder to solve. Let&amp;rsquo;s say you receive a large number of DNS respond, around 10G/8/250 = 5M pps. With a i5-2500k@3.3Ghz and 4 cores, you only have 3.3G*4/5M = 2.5k cycle to process each packet, or 1s*4/5M=800ns.&lt;/p&gt;
-
-&lt;p&gt;Seems like a lot, but 1 interrupt already costs you 12ns, let&amp;rsquo;s get this very simple and assume each iptables rule only cost 1 interrupt (ignore its processing time), and in a perfect world you can have like 30 iptables rules and lose half of your processing power. And still each cache miss costs around 30-50ns, a lock/unlock costs 16ns, a syscall costs 70ns, leaving you very very little room to process. Your server probably won&amp;rsquo;t have like 50% idle time reserved for networking. Don&amp;rsquo;t let me talk about 2 10Gbps cards.&lt;/p&gt;
-
-&lt;p&gt;So, an interrupt storm is when you receive a lot of network packets, overload your system with interrupts. When this happens, your server won&amp;rsquo;t response to keyboard, IO or anything.&lt;/p&gt;
-</description>
-    </item>
     
     <item>
       <title>Forensics:For2 Google&#39;s CTF Writeup</title>

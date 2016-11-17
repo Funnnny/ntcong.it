@@ -8,6 +8,7 @@ authorlink = "http://ntcong.it"
 date = "2016-09-12T10:16:11+07:00"
 thumbnail = "/img/avatar.png"
 title = "Network Interrupts and How It Kills Your Server"
+draft = true
 
 +++
 Two years ago when I was in a SA class, I talked about interrupt storm and how can it kill your server. Some people asked me about the detail technical aspect of how it happens. I think this is a very interesting topic and maybe I should pay my debt.
