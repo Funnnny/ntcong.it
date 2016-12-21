@@ -11,8 +11,8 @@ googleAnalytics = "UA-76172988-1"
 
 [params]
   sidebartitle = "CongNT"
-  sidebartagline = "Thoughts on Programming and anything Computer"
-  subtitle = "Thoughts on Programming and anything Computer"
+  sidebartagline = "Thoughts about Programming and Security"
+  subtitle = "Thoughts about Programming and Security"
   sidebarphoto = '/img/avatar.png'
   logo = '/img/avatar.png'
   categoriescss = "/css/categories.css"
