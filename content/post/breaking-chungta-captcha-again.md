@@ -15,7 +15,7 @@ So, previously I wrote about [breaking Chungta.vn's captcha with Tesseract](http
 
 **Disclaimer: I did contact and advised them to use a better captcha library or Google's reCaptcha, I saw they use it a few times and then they just went back to this horrible captcha implement.**
 
-Let's take a look at the new captcha: ![test](/img/vne/m1.png). They added some line and plus sign to make it harder for OCR to detect. Unfortunately this is also easy to bypass.
+Let's take a look at the new captcha: ![test](/img/vne/m1.png). I took it from http://chungta.vn/tin-tuc/nguoi-fpt/binh-chon-lanh-dao-cua-nam-2016-54844.html. They added some line and plus sign to make it harder for OCR to detect. Unfortunately this is also easy to bypass.
 
 First, we do the usual stuff: open the image, convert it to black and white. But this time I upscale it with Image's average algorithm to make it easier to process.
 
@@ -68,11 +68,10 @@ for threshold in range(2,5):
         break
 '29f9'
 {{< /highlight >}}
-
+<br>
 #### 2.Blur and average image ####
 
-One of the other trick I learned is to **blur** the image and then average the black/white value of the current pixel (or really just check only the current pixel)
-
+One of the other trick I learned is to **blur** the image and then average the black/white value of the current pixel (or really just check only the current pixel)  
 So, I run the captcha through two image filter. I found that 1 filter is not enough, and 3 is too much, but sometime 3 may help.
 
 {{< highlight python >}}
