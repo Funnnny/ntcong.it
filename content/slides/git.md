@@ -11,15 +11,19 @@ title = "git"
 
 +++
 
-class: animated center middle fadeIn
+class: animated center middle fadeIn 
 
 ![test](/img/FPT_logo.png)
 
 ---
 
-class: animated center middle fadeIn
+class: animated left middle fadeIn inverse
 
-# Title
+<div class='gdbar'><img src="/img/FPT_logo.png"></div>
+
+# Git
+## Introduction and use cases
+@ntcong
 
 ---
 
