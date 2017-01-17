@@ -40,3 +40,25 @@ class: animated fadeIn
 background-image: url("https://git-scm.com/book/en/v2/book/10-git-internals/images/data-model-4.png")
 
 # Introduction
+
+---
+
+# Code Test
+
+```python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!"
+
+if __name__ == "__main__":
+    app.run()
+```
+```bash
+export FLASK_APP=app.py
+flask runserver
+flask shell
+```
+
